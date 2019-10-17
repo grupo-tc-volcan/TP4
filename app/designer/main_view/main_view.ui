@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1080</width>
+    <height>778</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Filters Tool</string>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Triangular</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="process_tabs">
+      <property name="tabShape">
+       <enum>QTabWidget::Triangular</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+      <property name="movable">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="tab_approx">
+       <attribute name="title">
+        <string>Filter and Approximation</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="3" column="0">
+         <widget class="QStackedWidget" name="filter_data">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Panel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="page_3">
+           <widget class="QLabel" name="label_2">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>55</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Butter</string>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="page_7">
+           <widget class="QLabel" name="label_5">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>55</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Bessel</string>
+            </property>
+           </widget>
+          </widget>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QComboBox" name="filger_selector">
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>Low pass</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>High pass</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Band pass</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Band reject</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Group delay</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QComboBox" name="approx_selector">
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>Butterworth</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Chebyshev I</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Chebyshev II</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Legendre</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Bessel</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Gauss</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Cauer</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTableView" name="tableView">
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>200</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" rowspan="4">
+         <widget class="QTabWidget" name="approx_plot">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="tabShape">
+           <enum>QTabWidget::Triangular</enum>
+          </property>
+          <property name="currentIndex">
+           <number>7</number>
+          </property>
+          <property name="documentMode">
+           <bool>false</bool>
+          </property>
+          <widget class="QWidget" name="attenuation">
+           <attribute name="title">
+            <string>Attenuation</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="0" column="0">
+             <widget class="QStackedWidget" name="stackedWidget">
+              <widget class="QWidget" name="page"/>
+              <widget class="QWidget" name="page_2"/>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="norm_att">
+           <attribute name="title">
+            <string>Normalised Att.</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <widget class="QStackedWidget" name="stackedWidget_2">
+              <widget class="QWidget" name="page_10"/>
+              <widget class="QWidget" name="page_11"/>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="phase">
+           <attribute name="title">
+            <string>Phase</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_5">
+            <item row="0" column="0">
+             <widget class="QStackedWidget" name="stackedWidget_3">
+              <widget class="QWidget" name="page_12"/>
+              <widget class="QWidget" name="page_13"/>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="group_delay">
+           <attribute name="title">
+            <string>Group Delay</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="0" column="0">
+             <widget class="QStackedWidget" name="stackedWidget_4">
+              <widget class="QWidget" name="page_14"/>
+              <widget class="QWidget" name="page_15"/>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="poles_zeros">
+           <attribute name="title">
+            <string>Poles and Zeros</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_7">
+            <item row="0" column="0">
+             <widget class="QStackedWidget" name="stackedWidget_5">
+              <widget class="QWidget" name="page_16"/>
+              <widget class="QWidget" name="page_17"/>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="q_factor">
+           <attribute name="title">
+            <string>Q factor</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_8">
+            <item row="0" column="0">
+             <widget class="QStackedWidget" name="stackedWidget_6">
+              <widget class="QWidget" name="page_18"/>
+              <widget class="QWidget" name="page_19"/>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="impulse_res">
+           <attribute name="title">
+            <string>Impulse Response</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_9">
+            <item row="0" column="0">
+             <widget class="QStackedWidget" name="stackedWidget_7">
+              <widget class="QWidget" name="page_20"/>
+              <widget class="QWidget" name="page_21"/>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="step_res">
+           <attribute name="title">
+            <string>Step Response</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_10">
+            <item row="0" column="0">
+             <widget class="QStackedWidget" name="stackedWidget_8">
+              <widget class="QWidget" name="page_22"/>
+              <widget class="QWidget" name="page_23"/>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_stages">
+       <attribute name="title">
+        <string>Stages</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_cells">
+       <attribute name="title">
+        <string>Cells</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
