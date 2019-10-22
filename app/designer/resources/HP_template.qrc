@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="hp_template">
+    <file>HP_template.jpg</file>
+  </qresource>
+</RCC>

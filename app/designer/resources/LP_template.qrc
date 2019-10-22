@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="lp_template">
+    <file>LP_template.jpg</file>
+  </qresource>
+</RCC>

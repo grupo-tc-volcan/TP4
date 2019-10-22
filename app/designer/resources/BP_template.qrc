@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="bp_template">
+    <file>BP_template.jpg</file>
+  </qresource>
+</RCC>
