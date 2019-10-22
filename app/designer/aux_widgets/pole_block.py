@@ -10,13 +10,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(200, 62)
-        self.gridLayout = QtWidgets.QGridLayout(Form)
+class Ui_PoleBlock(object):
+    def setupUi(self, PoleBlock):
+        PoleBlock.setObjectName("PoleBlock")
+        PoleBlock.resize(200, 62)
+        self.gridLayout = QtWidgets.QGridLayout(PoleBlock)
         self.gridLayout.setObjectName("gridLayout")
-        self.frame = QtWidgets.QFrame(Form)
+        self.frame = QtWidgets.QFrame(PoleBlock)
         self.frame.setAutoFillBackground(False)
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Sunken)
@@ -45,25 +45,25 @@ class Ui_Form(object):
         self.gridLayout_2.addWidget(self.label_2, 0, 3, 1, 1)
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.retranslateUi(PoleBlock)
+        QtCore.QMetaObject.connectSlotsByName(PoleBlock)
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, PoleBlock):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.label_4.setText(_translate("Form", "<html><head/><body><p align=\"right\">Q:</p></body></html>"))
-        self.label_3.setText(_translate("Form", "<html><head/><body><p align=\"right\">wp:</p></body></html>"))
-        self.q_val.setText(_translate("Form", "<html><head/><body><p>5</p></body></html>"))
-        self.wp.setText(_translate("Form", "<html><head/><body><p>1Khz</p></body></html>"))
-        self.label.setText(_translate("Form", "n:"))
-        self.label_2.setText(_translate("Form", "2"))
+        PoleBlock.setWindowTitle(_translate("PoleBlock", "Form"))
+        self.label_4.setText(_translate("PoleBlock", "<html><head/><body><p align=\"right\">Q:</p></body></html>"))
+        self.label_3.setText(_translate("PoleBlock", "<html><head/><body><p align=\"right\">wp:</p></body></html>"))
+        self.q_val.setText(_translate("PoleBlock", "<html><head/><body><p>5</p></body></html>"))
+        self.wp.setText(_translate("PoleBlock", "<html><head/><body><p>1Khz</p></body></html>"))
+        self.label.setText(_translate("PoleBlock", "n:"))
+        self.label_2.setText(_translate("PoleBlock", "2"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
+    PoleBlock = QtWidgets.QWidget()
+    ui = Ui_PoleBlock()
+    ui.setupUi(PoleBlock)
+    PoleBlock.show()
     sys.exit(app.exec_())

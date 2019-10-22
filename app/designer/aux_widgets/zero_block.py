@@ -10,13 +10,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(200, 62)
-        self.gridLayout = QtWidgets.QGridLayout(Form)
+class Ui_ZeroBlock(object):
+    def setupUi(self, ZeroBlock):
+        ZeroBlock.setObjectName("ZeroBlock")
+        ZeroBlock.resize(200, 62)
+        self.gridLayout = QtWidgets.QGridLayout(ZeroBlock)
         self.gridLayout.setObjectName("gridLayout")
-        self.frame = QtWidgets.QFrame(Form)
+        self.frame = QtWidgets.QFrame(ZeroBlock)
         self.frame.setAutoFillBackground(False)
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Sunken)
@@ -45,25 +45,25 @@ class Ui_Form(object):
         self.gridLayout_2.addWidget(self.q_val, 0, 5, 1, 1)
         self.gridLayout.addWidget(self.frame, 1, 0, 1, 1)
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.retranslateUi(ZeroBlock)
+        QtCore.QMetaObject.connectSlotsByName(ZeroBlock)
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, ZeroBlock):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.label_3.setText(_translate("Form", "<html><head/><body><p align=\"right\">w0:</p></body></html>"))
-        self.wp.setText(_translate("Form", "<html><head/><body><p>1Khz</p></body></html>"))
-        self.label.setText(_translate("Form", "n:"))
-        self.label_2.setText(_translate("Form", "2"))
-        self.label_4.setText(_translate("Form", "<html><head/><body><p align=\"right\">Q:</p></body></html>"))
-        self.q_val.setText(_translate("Form", "<html><head/><body><p>5</p></body></html>"))
+        ZeroBlock.setWindowTitle(_translate("ZeroBlock", "Form"))
+        self.label_3.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\">w0:</p></body></html>"))
+        self.wp.setText(_translate("ZeroBlock", "<html><head/><body><p>1Khz</p></body></html>"))
+        self.label.setText(_translate("ZeroBlock", "n:"))
+        self.label_2.setText(_translate("ZeroBlock", "2"))
+        self.label_4.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\">Q:</p></body></html>"))
+        self.q_val.setText(_translate("ZeroBlock", "<html><head/><body><p>5</p></body></html>"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
+    ZeroBlock = QtWidgets.QWidget()
+    ui = Ui_ZeroBlock()
+    ui.setupUi(ZeroBlock)
+    ZeroBlock.show()
     sys.exit(app.exec_())

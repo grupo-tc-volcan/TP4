@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>group_delay_data</class>
- <widget class="QWidget" name="group_delay_data">
+ <class>GroupDelayData</class>
+ <widget class="QWidget" name="GroupDelayData">
   <property name="geometry">
    <rect>
     <x>0</x>

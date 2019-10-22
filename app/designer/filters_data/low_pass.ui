@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>low_pass_data</class>
- <widget class="QWidget" name="low_pass_data">
+ <class>LowPassData</class>
+ <widget class="QWidget" name="LowPassData">
   <property name="geometry">
    <rect>
     <x>0</x>

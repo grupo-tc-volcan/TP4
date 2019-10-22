@@ -10,18 +10,18 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_stage_block(object):
-    def setupUi(self, stage_block):
-        stage_block.setObjectName("stage_block")
-        stage_block.resize(241, 200)
-        stage_block.setMaximumSize(QtCore.QSize(259, 200))
+class Ui_CellBlock(object):
+    def setupUi(self, CellBlock):
+        CellBlock.setObjectName("CellBlock")
+        CellBlock.resize(241, 200)
+        CellBlock.setMaximumSize(QtCore.QSize(259, 200))
         font = QtGui.QFont()
         font.setFamily("Cambria")
-        stage_block.setFont(font)
-        stage_block.setAutoFillBackground(False)
-        self.gridLayout = QtWidgets.QGridLayout(stage_block)
+        CellBlock.setFont(font)
+        CellBlock.setAutoFillBackground(False)
+        self.gridLayout = QtWidgets.QGridLayout(CellBlock)
         self.gridLayout.setObjectName("gridLayout")
-        self.frame = QtWidgets.QFrame(stage_block)
+        self.frame = QtWidgets.QFrame(CellBlock)
         self.frame.setAcceptDrops(True)
         self.frame.setAutoFillBackground(False)
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -94,33 +94,33 @@ class Ui_stage_block(object):
         self.gridLayout_2.addWidget(self.label_7, 2, 2, 1, 1)
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
 
-        self.retranslateUi(stage_block)
-        QtCore.QMetaObject.connectSlotsByName(stage_block)
+        self.retranslateUi(CellBlock)
+        QtCore.QMetaObject.connectSlotsByName(CellBlock)
 
-    def retranslateUi(self, stage_block):
+    def retranslateUi(self, CellBlock):
         _translate = QtCore.QCoreApplication.translate
-        stage_block.setWindowTitle(_translate("stage_block", "Form"))
-        self.order_2.setText(_translate("stage_block", "<html><head/><body><p><span style=\" font-size:10pt;\">40dB</span></p></body></html>"))
-        self.label_6.setText(_translate("stage_block", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">DR:</span></p></body></html>"))
-        self.wp_2.setText(_translate("stage_block", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">1.5KHz</span></p></body></html>"))
-        self.label_3.setText(_translate("stage_block", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">w</span><span style=\" font-size:10pt; vertical-align:sub;\">p</span><span style=\" font-size:10pt;\">:</span></p></body></html>"))
-        self.wp.setText(_translate("stage_block", "<html><head/><body><p><span style=\" font-size:10pt;\">1KHz</span></p></body></html>"))
-        self.q_val.setText(_translate("stage_block", "<html><head/><body><p><span style=\" font-size:10pt;\">5</span></p></body></html>"))
-        self.label_4.setText(_translate("stage_block", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">Q:</span></p></body></html>"))
-        self.label_2.setText(_translate("stage_block", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">Type:</span></p></body></html>"))
-        self.label_78.setText(_translate("stage_block", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">V</span><span style=\" font-size:10pt; vertical-align:sub;\">min</span></p></body></html>"))
-        self.label_74.setText(_translate("stage_block", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">V</span><span style=\" font-size:10pt; vertical-align:sub;\">max</span></p></body></html>"))
-        self.order.setText(_translate("stage_block", "<html><head/><body><p><span style=\" font-size:10pt;\">2</span></p></body></html>"))
-        self.label_5.setText(_translate("stage_block", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">Order:</span></p></body></html>"))
-        self.type.setText(_translate("stage_block", "<html><head/><body><p><span style=\" font-size:10pt;\">Low-Pass</span></p></body></html>"))
-        self.label_7.setText(_translate("stage_block", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">w</span><span style=\" font-size:10pt; vertical-align:sub;\">0</span><span style=\" font-size:10pt;\">:</span></p></body></html>"))
+        CellBlock.setWindowTitle(_translate("CellBlock", "Form"))
+        self.order_2.setText(_translate("CellBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">40dB</span></p></body></html>"))
+        self.label_6.setText(_translate("CellBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">DR:</span></p></body></html>"))
+        self.wp_2.setText(_translate("CellBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">1.5KHz</span></p></body></html>"))
+        self.label_3.setText(_translate("CellBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">w</span><span style=\" font-size:10pt; vertical-align:sub;\">p</span><span style=\" font-size:10pt;\">:</span></p></body></html>"))
+        self.wp.setText(_translate("CellBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">1KHz</span></p></body></html>"))
+        self.q_val.setText(_translate("CellBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">5</span></p></body></html>"))
+        self.label_4.setText(_translate("CellBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">Q:</span></p></body></html>"))
+        self.label_2.setText(_translate("CellBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">Type:</span></p></body></html>"))
+        self.label_78.setText(_translate("CellBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">V</span><span style=\" font-size:10pt; vertical-align:sub;\">min</span></p></body></html>"))
+        self.label_74.setText(_translate("CellBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">V</span><span style=\" font-size:10pt; vertical-align:sub;\">max</span></p></body></html>"))
+        self.order.setText(_translate("CellBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">2</span></p></body></html>"))
+        self.label_5.setText(_translate("CellBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">Order:</span></p></body></html>"))
+        self.type.setText(_translate("CellBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">Low-Pass</span></p></body></html>"))
+        self.label_7.setText(_translate("CellBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">w</span><span style=\" font-size:10pt; vertical-align:sub;\">0</span><span style=\" font-size:10pt;\">:</span></p></body></html>"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    stage_block = QtWidgets.QWidget()
-    ui = Ui_stage_block()
-    ui.setupUi(stage_block)
-    stage_block.show()
+    CellBlock = QtWidgets.QWidget()
+    ui = Ui_CellBlock()
+    ui.setupUi(CellBlock)
+    CellBlock.show()
     sys.exit(app.exec_())

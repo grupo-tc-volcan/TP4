@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>band_pass_data</class>
- <widget class="QWidget" name="band_pass_data">
+ <class>BandPassData</class>
+ <widget class="QWidget" name="BandPassData">
   <property name="geometry">
    <rect>
     <x>0</x>
