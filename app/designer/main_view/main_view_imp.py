@@ -36,6 +36,8 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         if self.filter_data.count() > 2:
             # Cleaning stacked widget
             self.filter_data.removeWidget(self.filter_data.currentWidget())
+
+        # When group-delay is selected, the only approximations that should be available are Bessel and Gauss
         
         filter_index = self.filter_selector.currentIndex()
         self.filter_data.setCurrentIndex(self.filter_data.addWidget(self.filter_data_widgets[filter_index]))
