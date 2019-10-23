@@ -44,3 +44,4 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
     def set_approx(self):
         # Set type of approximation to current filter type
         self.filter_data_widgets[self.filter_selector.currentIndex()].approx_index = self.approx_selector.currentIndex()
+        self.filter_data_widgets[self.filter_selector.currentIndex()].on_change()
