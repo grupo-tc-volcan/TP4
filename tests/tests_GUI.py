@@ -1,6 +1,3 @@
-# python native modules
-import sys
-
 # third-party modules
 import PyQt5.QtWidgets as QtWid
 

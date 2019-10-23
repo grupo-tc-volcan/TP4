@@ -119,6 +119,9 @@
      <property name="decimals">
       <number>3</number>
      </property>
+     <property name="maximum">
+      <double>1000000000000.000000000000000</double>
+     </property>
     </widget>
    </item>
    <item row="13" column="0">
@@ -187,6 +190,9 @@
      <property name="decimals">
       <number>3</number>
      </property>
+     <property name="maximum">
+      <double>300.000000000000000</double>
+     </property>
     </widget>
    </item>
    <item row="6" column="6">
@@ -220,6 +226,9 @@
      <property name="decimals">
       <number>3</number>
      </property>
+     <property name="maximum">
+      <double>1000000000000.000000000000000</double>
+     </property>
     </widget>
    </item>
    <item row="2" column="3">
@@ -238,6 +247,9 @@
      </property>
      <property name="decimals">
       <number>3</number>
+     </property>
+     <property name="maximum">
+      <double>1000000000000.000000000000000</double>
      </property>
     </widget>
    </item>
@@ -265,6 +277,9 @@
      <property name="decimals">
       <number>3</number>
      </property>
+     <property name="maximum">
+      <double>10000000000000.000000000000000</double>
+     </property>
     </widget>
    </item>
    <item row="13" column="3">
@@ -283,6 +298,9 @@
      </property>
      <property name="decimals">
       <number>3</number>
+     </property>
+     <property name="maximum">
+      <double>100.000000000000000</double>
      </property>
     </widget>
    </item>
@@ -303,6 +321,9 @@
      <property name="decimals">
       <number>3</number>
      </property>
+     <property name="maximum">
+      <double>300.000000000000000</double>
+     </property>
     </widget>
    </item>
    <item row="12" column="3">
@@ -320,7 +341,10 @@
       <bool>true</bool>
      </property>
      <property name="decimals">
-      <number>3</number>
+      <number>0</number>
+     </property>
+     <property name="maximum">
+      <double>20.000000000000000</double>
      </property>
     </widget>
    </item>
@@ -348,6 +372,9 @@
      <property name="decimals">
       <number>3</number>
      </property>
+     <property name="maximum">
+      <double>300.000000000000000</double>
+     </property>
     </widget>
    </item>
    <item row="11" column="3">
@@ -367,6 +394,9 @@
      <property name="decimals">
       <number>3</number>
      </property>
+     <property name="maximum">
+      <double>100.000000000000000</double>
+     </property>
     </widget>
    </item>
    <item row="8" column="3">
@@ -385,6 +415,9 @@
      </property>
      <property name="decimals">
       <number>3</number>
+     </property>
+     <property name="maximum">
+      <double>300.000000000000000</double>
      </property>
     </widget>
    </item>
