@@ -62,7 +62,8 @@ class FilterPlotter():
                 'Aa' = ...
             }
         '''
-        pass
+        w, mag, self.phase = ss.bode(self.tf)
+        
 
 
     def plot_norm_attenuation(self, template = {}):

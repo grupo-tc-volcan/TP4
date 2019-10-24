@@ -23,9 +23,11 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
 
         # Signal and slot connections
         self.gain.valueChanged.connect(self.on_change)
-        self.stop_freq.connect(self.on_change)
-        self.stop_att.connect(self.on_change)
-        self.group_delay_freq.connect(self.on_change)
+        self.pass_freq.valueChanged.connect(self.on_change)
+        self.stop_freq.valueChanged.connect(self.on_change)
+        self.pass_att.valueChanged.connect(self.on_change)
+        self.stop_att.valueChanged.connect(self.on_change)
+        self.group_delay_freq.valueChanged.connect(self.on_change)
         self.group_delay.valueChanged.connect(self.on_change)
         self.tol.valueChanged.connect(self.on_change)
         self.order.valueChanged.connect(self.on_change)
@@ -49,9 +51,11 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
 
         self.approximators[self.approx_index].type = 'group-delay'
         self.approximators[self.approx_index].gain = self.gain.value()
+        self.approximators[self.approx_index].fp = self.pass_freq.value()
         self.approximators[self.approx_index].fa = self.stop_freq.value()
+        self.approximators[self.approx_index].Ap = self.pass_att.value()
         self.approximators[self.approx_index].Aa = self.stop_att.value()
-        self.approximators[self.approx_index].ft = self.group_delay_freq()
+        self.approximators[self.approx_index].ft = self.group_delay_freq.value()
         self.approximators[self.approx_index].group_delay = self.group_delay.value()
         self.approximators[self.approx_index].tol = self.tol.value()
         self.approximators[self.approx_index].ord = self.order.value()
