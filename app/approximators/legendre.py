@@ -1,10 +1,14 @@
 # Third-party modules
 import scipy.signal as ss
 
+# Third-party modules
+import scipy.signal as ss
+
 # filters-tool project modules
 from app.approximators import legendre_calculator as l_calc
+from app.approximators.approximator import FilterApproximator
 
-class LegendreApprox():
+class LegendreApprox(FilterApproximator):
 
     def __init__(self):
         # Data to perform approximation
@@ -25,5 +29,3 @@ class LegendreApprox():
         self.denorm = 0
         self.ord = 0
         self.q = 0
-        self.group_delay = 0
-        self.tol = 0

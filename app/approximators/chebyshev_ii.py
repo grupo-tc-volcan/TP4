@@ -1,7 +1,10 @@
 # Third-party modules
 import scipy.signal as ss
 
-class ChebyshevIIApprox():
+# filters-tool project modules
+from app.approximators.approximator import FilterApproximator
+
+class ChebyshevIIApprox(FilterApproximator):
 
     def __init__(self):
         # Data to perform approximation

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>311</width>
+    <width>360</width>
     <height>408</height>
    </rect>
   </property>
@@ -241,28 +241,6 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="2">
-    <widget class="QDoubleSpinBox" name="order">
-     <property name="frame">
-      <bool>true</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::NoButtons</enum>
-     </property>
-     <property name="keyboardTracking">
-      <bool>true</bool>
-     </property>
-     <property name="decimals">
-      <number>0</number>
-     </property>
-     <property name="maximum">
-      <double>20.000000000000000</double>
-     </property>
-    </widget>
-   </item>
    <item row="8" column="2">
     <widget class="QDoubleSpinBox" name="q_max">
      <property name="frame">
@@ -318,6 +296,25 @@
     <widget class="QLabel" name="label_5">
      <property name="text">
       <string>Stopband freq. (fa):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2">
+    <widget class="QSpinBox" name="order">
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="keyboardTracking">
+      <bool>true</bool>
+     </property>
+     <property name="maximum">
+      <number>20</number>
      </property>
     </widget>
    </item>

@@ -87,7 +87,96 @@
           </item>
          </widget>
         </item>
-        <item row="7" column="0">
+        <item row="2" column="0" colspan="2">
+         <widget class="QStackedWidget" name="template_pic">
+          <property name="maximumSize">
+           <size>
+            <width>311</width>
+            <height>230</height>
+           </size>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="lp_pic">
+           <layout class="QGridLayout" name="gridLayout_12">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_66">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/lp_template/LP_template.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="hp_pic">
+           <layout class="QGridLayout" name="gridLayout_13">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_67">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/hp_template/HP_template.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="bp_pic">
+           <layout class="QGridLayout" name="gridLayout_11">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_65">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/bp_template/BP_template.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="bs_pic">
+           <layout class="QGridLayout" name="gridLayout_14">
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_68">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/bs_template/bs_template.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="gd_pic">
+           <layout class="QGridLayout" name="gridLayout_15">
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_69">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/lp_template/LP_template.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
          <widget class="QStackedWidget" name="filter_data">
           <property name="enabled">
            <bool>true</bool>
@@ -111,13 +200,58 @@
            <enum>QFrame::Sunken</enum>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_1"/>
           <widget class="QWidget" name="page_3"/>
          </widget>
         </item>
-        <item row="0" column="1" rowspan="8">
+        <item row="0" column="1">
+         <widget class="QComboBox" name="approx_selector">
+          <property name="maximumSize">
+           <size>
+            <width>311</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>Butterworth</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Chebyshev I</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Chebyshev II</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Legendre</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Bessel</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Gauss</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Cauer</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="0" column="2" rowspan="5">
          <widget class="QTabWidget" name="approx_plot">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -156,7 +290,7 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QTextEdit" name="label_x">
+             <widget class="QTextEdit" name="label_x_1">
               <property name="maximumSize">
                <size>
                 <width>100</width>
@@ -176,7 +310,7 @@
              </widget>
             </item>
             <item row="1" column="3">
-             <widget class="QDoubleSpinBox" name="min_x">
+             <widget class="QDoubleSpinBox" name="min_x_1">
               <property name="buttonSymbols">
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
@@ -199,7 +333,7 @@
              </widget>
             </item>
             <item row="1" column="5">
-             <widget class="QTextEdit" name="label_y">
+             <widget class="QTextEdit" name="label_y_1">
               <property name="maximumSize">
                <size>
                 <width>100</width>
@@ -219,7 +353,7 @@
              </widget>
             </item>
             <item row="1" column="7">
-             <widget class="QDoubleSpinBox" name="min_y">
+             <widget class="QDoubleSpinBox" name="min_y_1">
               <property name="buttonSymbols">
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
@@ -242,7 +376,7 @@
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QComboBox" name="scale_x">
+             <widget class="QComboBox" name="scale_x_1">
               <property name="maximumSize">
                <size>
                 <width>100</width>
@@ -272,7 +406,7 @@
              </widget>
             </item>
             <item row="2" column="3">
-             <widget class="QDoubleSpinBox" name="max_x">
+             <widget class="QDoubleSpinBox" name="max_x_1">
               <property name="buttonSymbols">
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
@@ -295,7 +429,7 @@
              </widget>
             </item>
             <item row="2" column="5">
-             <widget class="QComboBox" name="scale_y">
+             <widget class="QComboBox" name="scale_y_1">
               <property name="maximumSize">
                <size>
                 <width>100</width>
@@ -325,7 +459,7 @@
              </widget>
             </item>
             <item row="2" column="7">
-             <widget class="QDoubleSpinBox" name="max_y">
+             <widget class="QDoubleSpinBox" name="max_y_1">
               <property name="buttonSymbols">
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
@@ -337,10 +471,17 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="3" colspan="2">
-             <widget class="QPushButton" name="auto_scale">
+            <item row="3" column="2" colspan="2">
+             <widget class="QPushButton" name="auto_scale_1">
               <property name="text">
                <string>Auto Scale</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="4" colspan="2">
+             <widget class="QCheckBox" name="plot_template_1">
+              <property name="text">
+               <string>Plot filter's template</string>
               </property>
              </widget>
             </item>
@@ -549,10 +690,17 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="3" colspan="2">
+            <item row="3" column="2" colspan="2">
              <widget class="QPushButton" name="auto_scale_2">
               <property name="text">
                <string>Auto Scale</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="4" colspan="2">
+             <widget class="QCheckBox" name="plot_template_2">
+              <property name="text">
+               <string>Plot filter's template</string>
               </property>
              </widget>
             </item>
@@ -1832,138 +1980,11 @@
           </widget>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QStackedWidget" name="template_pic">
-          <property name="maximumSize">
-           <size>
-            <width>311</width>
-            <height>230</height>
-           </size>
+        <item row="4" column="0" colspan="2">
+         <widget class="QPushButton" name="calculate_button">
+          <property name="text">
+           <string>Calculate Approximation</string>
           </property>
-          <property name="currentIndex">
-           <number>3</number>
-          </property>
-          <widget class="QWidget" name="lp_pic">
-           <layout class="QGridLayout" name="gridLayout_12">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_66">
-              <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/lp_template/LP_template.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="hp_pic">
-           <layout class="QGridLayout" name="gridLayout_13">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_67">
-              <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/hp_template/HP_template.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="bp_pic">
-           <layout class="QGridLayout" name="gridLayout_11">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_65">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/bp_template/BP_template.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="bs_pic">
-           <layout class="QGridLayout" name="gridLayout_14">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_68">
-              <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/bs_template/bs_template.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="gd_pic">
-           <layout class="QGridLayout" name="gridLayout_15">
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_69">
-              <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/lp_template/LP_template.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QComboBox" name="approx_selector">
-          <property name="maximumSize">
-           <size>
-            <width>311</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <item>
-           <property name="text">
-            <string>Butterworth</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Chebyshev I</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Chebyshev II</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Legendre</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Bessel</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Gauss</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Cauer</string>
-           </property>
-          </item>
          </widget>
         </item>
        </layout>

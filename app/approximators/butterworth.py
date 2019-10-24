@@ -1,7 +1,10 @@
 # Third-party modules
 import scipy.signal as ss
 
-class ButterworthApprox():
+# filters-tool project modules
+from app.approximators.approximator import FilterApproximator
+
+class ButterworthApprox(FilterApproximator):
 
     def __init__(self):
         # Data to perform approximation
@@ -22,5 +25,3 @@ class ButterworthApprox():
         self.denorm = 0
         self.ord = 0
         self.q = 0
-        self.group_delay = 0
-        self.tol = 0
