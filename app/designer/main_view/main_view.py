@@ -1249,10 +1249,10 @@ class Ui_MainView(object):
         self.accumulative_plot.setText(_translate("MainView", "Acumulative"))
         self.process_tabs.setTabText(self.process_tabs.indexOf(self.tab_stages), _translate("MainView", "Stages"))
         self.process_tabs.setTabText(self.process_tabs.indexOf(self.tab_cells), _translate("MainView", "Cells"))
-import BP_template_rc
-import BS_template_rc
-import HP_template_rc
-import LP_template_rc
+from app.designer.resources import BP_template
+from app.designer.resources import BS_template
+from app.designer.resources import HP_template
+from app.designer.resources import LP_template
 
 
 if __name__ == "__main__":
