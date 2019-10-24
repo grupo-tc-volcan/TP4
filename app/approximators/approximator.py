@@ -8,7 +8,7 @@ class AttFilterApproximator():
 
 
     def reset_paramethers(self):
-        self.type = ''
+        self.type = 'low-pass'
         self.gain = 0
         self.fpl = 0
         self.fpr = 0
@@ -33,7 +33,9 @@ class GroupDelayFilterApproximator():
     def reset_paramethers(self):
         self.type = 'group-delay'
         self.gain = 0
-        self.fp = 0
+        self.fa = 0
+        self.Aa = 0
+        self.ft = 0
         self.group_delay = 0
         self.tol = 0
         self.ord = 0

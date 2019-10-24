@@ -48,6 +48,8 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
                     variant_enable = QtCore.QVariant(1 | 32)
                     self.approx_selector.setItemData(item_index, variant_enable, QtCore.Qt.UserRole - 1)
         else:
+            # Sets current approximation to Butterworth
+            self.approx_selector.setCurrentIndex(0)
             for item_index in range(self.approx_selector.count()):
                 if item_index != 4 and item_index != 5:
                     # Enable Butter, Cheby, Legendre and Cauer approximations
