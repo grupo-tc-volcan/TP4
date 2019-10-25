@@ -2,6 +2,8 @@
 import PyQt5.QtWidgets as QtWid
 import PyQt5.QtCore as QtCore
 
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
+
 import scipy.signal as ss
 import numpy as np
 
@@ -117,10 +119,12 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.plotter.plot_attenuation()
         if self.plot_template_1.isChecked():
             self.plotter.plot_template(template)
+
         if self.plot_1.count() > 2:
             # Cleaning stacked widget
             self.plot_1.removeWidget(self.filter_data.currentWidget())
         self.plot_1.setCurrentIndex(self.plot_1.addWidget(self.plotter.canvas))
+        self.addToolBar(NavigationToolbar(self.plotter.canvas, self))
 
 
     def plot_norm_attenuation(self):

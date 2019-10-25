@@ -19,10 +19,3 @@ def test_main_view():
     view = MainView()
     view.show()
     app.exec()
-
-def test_plot_attenuation():
-    tf = ss.ZerosPolesGain([2*np.pi * 10, 2*np.pi * 20], [2*np.pi * 30, 2*np.pi * 40], 10)
-    norm_tf = ss.ZerosPolesGain([2*np.pi, 2*np.pi * 2], [2*np.pi * 3, 2*np.pi * 4], 1)
-    my_plotter = FilterPlotter(tf, norm_tf, 'low-pass')
-    my_plotter.plot_attenuation()
-    my_plotter.canvas.draw()
