@@ -124,7 +124,25 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             # Cleaning stacked widget
             self.plot_1.removeWidget(self.filter_data.currentWidget())
         self.plot_1.setCurrentIndex(self.plot_1.addWidget(self.plotter.canvas))
-        self.addToolBar(NavigationToolbar(self.plotter.canvas, self))
+        #self.addToolBar(QtCore.Qt.BottomToolBarArea, NavigationToolbar(self.plotter.canvas, self))
+        toolbar = NavigationToolbar(self.plotter.canvas, self)
+        if self.plot_1.count() > 2:
+            # Cleaning stacked widget
+            self.toolbar_1.removeWidget(self.filter_data.currentWidget())
+        self.toolbar_1.setCurrentIndex(self.toolbar_1.addWidget(toolbar))
+
+
+    def add_toolbar(self, widget):
+        widget.figure.clear()
+        widget.draw()
+
+        widget.setLayout(QtWid.QVBoxLayout())
+        widget.layout().setContentsMargins(0, 710, 50, -0)#(left, top, right, bottom)
+        widget.layout().setSpacing(0)
+        toolbar = NavigationToolbar(widget, self)
+        widget.layout().addWidget(toolbar)
+        widget.figure.clear()
+        widget.draw()
 
 
     def plot_norm_attenuation(self):
@@ -160,15 +178,15 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.filter_selected()
 
         # Disabeling plot controls
-        self.label_x_1.setDisabled(True)
-        self.scale_x_1.setDisabled(True)
-        self.min_x_1.setDisabled(True)
-        self.max_x_1.setDisabled(True)
-        self.label_y_1.setDisabled(True)
-        self.scale_y_1.setDisabled(True)
-        self.min_y_1.setDisabled(True)
-        self.max_y_1.setDisabled(True)
-        self.auto_scale_1.setDisabled(True)
+        #self.label_x_1.setDisabled(True)
+        #self.scale_x_1.setDisabled(True)
+        #self.min_x_1.setDisabled(True)
+        #self.max_x_1.setDisabled(True)
+        #self.label_y_1.setDisabled(True)
+        #self.scale_y_1.setDisabled(True)
+        #self.min_y_1.setDisabled(True)
+        #self.max_y_1.setDisabled(True)
+        #self.auto_scale_1.setDisabled(True)
         self.plot_template_1.setDisabled(True)
         self.label_x_2.setDisabled(True)
         self.scale_x_2.setDisabled(True)
@@ -238,15 +256,15 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
 
     def enable_approx_plotter_controls(self):
-        self.label_x_1.setEnabled(True)
-        self.scale_x_1.setEnabled(True)
-        self.min_x_1.setEnabled(True)
-        self.max_x_1.setEnabled(True)
-        self.label_y_1.setEnabled(True)
-        self.scale_y_1.setEnabled(True)
-        self.min_y_1.setEnabled(True)
-        self.max_y_1.setEnabled(True)
-        self.auto_scale_1.setEnabled(True)
+        #self.label_x_1.setEnabled(True)
+        #self.scale_x_1.setEnabled(True)
+        #self.min_x_1.setEnabled(True)
+        #self.max_x_1.setEnabled(True)
+        #self.label_y_1.setEnabled(True)
+        #self.scale_y_1.setEnabled(True)
+        #self.min_y_1.setEnabled(True)
+        #self.max_y_1.setEnabled(True)
+        #self.auto_scale_1.setEnabled(True)
         self.plot_template_1.setEnabled(True)
         self.label_x_2.setEnabled(True)
         self.scale_x_2.setEnabled(True)

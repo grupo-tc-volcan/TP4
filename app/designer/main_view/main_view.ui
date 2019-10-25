@@ -19,6 +19,9 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::DefaultContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>Filters Tool</string>
   </property>
@@ -251,13 +254,19 @@
           </item>
          </widget>
         </item>
-        <item row="0" column="2" rowspan="5">
+        <item row="0" column="4" rowspan="5">
          <widget class="QTabWidget" name="approx_plot">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::DefaultContextMenu</enum>
+          </property>
+          <property name="acceptDrops">
+           <bool>false</bool>
           </property>
           <property name="tabShape">
            <enum>QTabWidget::Triangular</enum>
@@ -268,224 +277,35 @@
           <property name="documentMode">
            <bool>false</bool>
           </property>
+          <property name="tabBarAutoHide">
+           <bool>false</bool>
+          </property>
           <widget class="QWidget" name="attenuation">
            <attribute name="title">
             <string>Attenuation</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_3">
-            <item row="0" column="0" colspan="8">
+            <item row="1" column="0">
              <widget class="QStackedWidget" name="plot_1">
               <widget class="QWidget" name="page"/>
               <widget class="QWidget" name="page_2"/>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>Label X</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QTextEdit" name="label_x_1">
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Minimum X</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3">
-             <widget class="QDoubleSpinBox" name="min_x_1">
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="suffix">
-               <string/>
-              </property>
-              <property name="decimals">
-               <number>3</number>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="4">
-             <widget class="QLabel" name="label_5">
-              <property name="text">
-               <string>Label Y</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="5">
-             <widget class="QTextEdit" name="label_y_1">
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="6">
-             <widget class="QLabel" name="label_7">
-              <property name="text">
-               <string>Minimum Y</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="7">
-             <widget class="QDoubleSpinBox" name="min_y_1">
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="suffix">
-               <string/>
-              </property>
-              <property name="decimals">
-               <number>3</number>
-              </property>
-             </widget>
-            </item>
             <item row="2" column="0">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Scale X</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QComboBox" name="scale_x_1">
-              <property name="maximumSize">
+             <widget class="QStackedWidget" name="toolbar_1">
+              <property name="minimumSize">
                <size>
-                <width>100</width>
-                <height>16777215</height>
+                <width>0</width>
+                <height>40</height>
                </size>
               </property>
-              <item>
-               <property name="text">
-                <string>Linear</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Logarithmic</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>Maximum X</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="3">
-             <widget class="QDoubleSpinBox" name="max_x_1">
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="suffix">
-               <string/>
-              </property>
-              <property name="decimals">
-               <number>3</number>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="4">
-             <widget class="QLabel" name="label_6">
-              <property name="text">
-               <string>Scale Y</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="5">
-             <widget class="QComboBox" name="scale_y_1">
               <property name="maximumSize">
                <size>
-                <width>100</width>
-                <height>16777215</height>
+                <width>16777215</width>
+                <height>40</height>
                </size>
               </property>
-              <item>
-               <property name="text">
-                <string>Linear</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Logarithmic</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="2" column="6">
-             <widget class="QLabel" name="label_8">
-              <property name="text">
-               <string>Maximum Y</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="7">
-             <widget class="QDoubleSpinBox" name="max_y_1">
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="suffix">
-               <string/>
-              </property>
-              <property name="decimals">
-               <number>3</number>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="2" colspan="2">
-             <widget class="QPushButton" name="auto_scale_1">
-              <property name="text">
-               <string>Auto Scale</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="4" colspan="2">
-             <widget class="QCheckBox" name="plot_template_1">
-              <property name="text">
-               <string>Plot filter's template</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
+              <widget class="QWidget" name="toolbar_1Page1_2" native="true"/>
              </widget>
             </item>
            </layout>
@@ -1996,10 +1816,20 @@
           </widget>
          </widget>
         </item>
-        <item row="4" column="0" colspan="2">
+        <item row="4" column="0">
          <widget class="QPushButton" name="calculate_button">
           <property name="text">
            <string>Calculate Approximation</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QCheckBox" name="plot_template_1">
+          <property name="text">
+           <string>Plot filter's template</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
