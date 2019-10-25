@@ -274,7 +274,7 @@
            </attribute>
            <layout class="QGridLayout" name="gridLayout_3">
             <item row="0" column="0" colspan="8">
-             <widget class="QStackedWidget" name="plot">
+             <widget class="QStackedWidget" name="plot_1">
               <widget class="QWidget" name="page"/>
               <widget class="QWidget" name="page_2"/>
              </widget>
@@ -482,6 +482,9 @@
              <widget class="QCheckBox" name="plot_template_1">
               <property name="text">
                <string>Plot filter's template</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -702,6 +705,9 @@
               <property name="text">
                <string>Plot filter's template</string>
               </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
            </layout>
@@ -711,6 +717,158 @@
             <string>Phase</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_5">
+            <item row="2" column="5">
+             <widget class="QComboBox" name="scale_y_3">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>Linear</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Logarithmic</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string>Scale X</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLabel" name="label_24">
+              <property name="text">
+               <string>Maximum X</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="7">
+             <widget class="QDoubleSpinBox" name="max_y_3">
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="suffix">
+               <string/>
+              </property>
+              <property name="decimals">
+               <number>3</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="4">
+             <widget class="QLabel" name="label_22">
+              <property name="text">
+               <string>Scale Y</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="7">
+             <widget class="QDoubleSpinBox" name="min_y_3">
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="suffix">
+               <string/>
+              </property>
+              <property name="decimals">
+               <number>3</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Minimum X</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QDoubleSpinBox" name="max_x_3">
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="suffix">
+               <string/>
+              </property>
+              <property name="decimals">
+               <number>3</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="scale_x_3">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>Linear</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Logarithmic</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="1" column="5">
+             <widget class="QTextEdit" name="label_y_3">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>26</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="6">
+             <widget class="QLabel" name="label_21">
+              <property name="text">
+               <string>Maximum Y</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QDoubleSpinBox" name="min_x_3">
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="suffix">
+               <string/>
+              </property>
+              <property name="decimals">
+               <number>3</number>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0" colspan="8">
              <widget class="QStackedWidget" name="plot_3">
               <widget class="QWidget" name="page_6"/>
@@ -737,26 +895,13 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="2">
-             <widget class="QLabel" name="label_18">
+            <item row="1" column="6">
+             <widget class="QLabel" name="label_23">
               <property name="text">
-               <string>Minimum X</string>
+               <string>Minimum Y</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3">
-             <widget class="QDoubleSpinBox" name="min_x_3">
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="suffix">
-               <string/>
-              </property>
-              <property name="decimals">
-               <number>3</number>
               </property>
              </widget>
             </item>
@@ -770,149 +915,20 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="5">
-             <widget class="QTextEdit" name="label_y_3">
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>26</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="6">
-             <widget class="QLabel" name="label_23">
-              <property name="text">
-               <string>Minimum Y</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="7">
-             <widget class="QDoubleSpinBox" name="min_y_3">
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="suffix">
-               <string/>
-              </property>
-              <property name="decimals">
-               <number>3</number>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_19">
-              <property name="text">
-               <string>Scale X</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QComboBox" name="scale_x_3">
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <item>
-               <property name="text">
-                <string>Linear</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Logarithmic</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QLabel" name="label_24">
-              <property name="text">
-               <string>Maximum X</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="3">
-             <widget class="QDoubleSpinBox" name="max_x_3">
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="suffix">
-               <string/>
-              </property>
-              <property name="decimals">
-               <number>3</number>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="4">
-             <widget class="QLabel" name="label_22">
-              <property name="text">
-               <string>Scale Y</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="5">
-             <widget class="QComboBox" name="scale_y_3">
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <item>
-               <property name="text">
-                <string>Linear</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Logarithmic</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="2" column="6">
-             <widget class="QLabel" name="label_21">
-              <property name="text">
-               <string>Maximum Y</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="7">
-             <widget class="QDoubleSpinBox" name="max_y_3">
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="suffix">
-               <string/>
-              </property>
-              <property name="decimals">
-               <number>3</number>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="3" colspan="2">
+            <item row="4" column="2" colspan="2">
              <widget class="QPushButton" name="auto_scale_3">
               <property name="text">
                <string>Auto Scale</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="4" colspan="2">
+             <widget class="QCheckBox" name="plot_template_3">
+              <property name="text">
+               <string>Plot filter's template</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
