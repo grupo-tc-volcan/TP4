@@ -242,10 +242,16 @@ class FilterPlotter():
         self.axes.clear()
         self.axes.scatter(x_poles, y_poles, marker='x', c='red')
         self.axes.scatter(x_zeros, y_zeros, marker='o', c='blue')
+        for i_x, i_y in zip(x_poles, y_poles):
+            self.axes.text(i_x, i_y, 'σ={}, ω={}'.format(round(i_x, 3), round(i_y, 3)))
+        for i_x, i_y in zip(x_zeros, y_zeros):
+            self.axes.text(i_x, i_y, 'σ={}, ω={}'.format(round(i_x, 3), round(i_y, 3)))
         self.axes.grid(which='major')
         self.axes.grid(which='minor')
         self.axes.set_xlabel('Real part σ (Hz)')
         self.axes.set_ylabel('Imaginary part jω (Hz)')
+        self.axes.axvline(c='black')
+        self.axes.axhline(c='black')
 
         self.canvas.draw()
 
