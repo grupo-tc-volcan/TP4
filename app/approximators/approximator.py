@@ -4,10 +4,10 @@ import scipy.signal as ss
 class AttFilterApproximator():
     def __init__(self):
         # Data to perform approximation
-        self.reset_paramethers()
+        self.reset_parameters()
 
 
-    def reset_paramethers(self):
+    def reset_parameters(self):
         self.type = 'low-pass'
         self.gain = 0
         self.fpl = 0
@@ -27,10 +27,10 @@ class AttFilterApproximator():
 class GroupDelayFilterApproximator():
     def __init__(self):
         # Data to perform approximation
-        self.reset_paramethers()
+        self.reset_parameters()
 
 
-    def reset_paramethers(self):
+    def reset_parameters(self):
         self.type = 'group-delay'
         self.gain = 0
         self.fa = 0
