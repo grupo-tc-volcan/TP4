@@ -13,16 +13,36 @@ class SecondOrderAuxCalc():
         # Obtaining real and imaginary part of all zeros and poles in the transfer function
         self.poles_real_part = [pole.real for pole in self.tf.poles]
         self.poles_imag_part = [pole.imag for pole in self.tf.poles]
-        
-        # All zeros are only going to have imaginary part for all the approximations
+        self.zeros_real_part = [zero.real for zero in self.tf.zeros]
         self.zeros_imag_part = [zero.imag for zero in self.tf.zeros]
 
         # Obtaining wp and q for poles, and w0 and Q for zeros, the aux is because some will be repeated since there should be conjugated complex roots
         q = Symbol('q')
-        aux_q_poles = [abs(solve(((self.poles_real_part[i]*2*q) * (1 - (1/(2*q)**2))**(1/2)) - self.poles_imag_part[i], q)[0]) for i in range(len(self.poles_real_part))]
-        aux_wp_poles = [abs(2*self.poles_real_part[i]*aux_q_poles[i]) for i in range(len(self.poles_real_part))]
+        aux_q_poles = []
+        aux_wp_poles = []
+        aux_q_zeros = []
+        aux_w0_zeros = []
+        for i in range(len(self.poles_real_part)):
+            if self.poles_real_part[i] == 0:
+                aux_q_poles.append(0)
+                aux_wp_poles.append(abs(self.poles_imag_part[i]))
+            elif self.poles_imag_part[i] == 0:
+                aux_q_poles.append(0.5)
+                aux_wp_poles.append(abs(self.poles_real_part[i]))
+            else:
+                aux_q_poles.append(abs(solve(((self.poles_real_part[i]*2*q) * (1 - (1/(2*q)**2))**(1/2)) - self.poles_imag_part[i], q)[0]))
+                aux_wp_poles.append(abs(2*self.poles_real_part[i]*aux_q_poles[i]))
         
-        aux_w0_zeros = [abs(zero) for zero in self.zeros_imag_part]
+        for i in range(len(self.zeros_real_part)):
+            if self.zeros_real_part[i] == 0:
+                aux_q_zeros.append(0)
+                aux_w0_zeros.append(abs(self.zeros_imag_part[i]))
+            elif self.zeros_imag_part[i] == 0:
+                aux_q_zeros.append(0.5)
+                aux_w0_zeros.append(abs(self.zeros_real_part[i]))
+            else:
+                aux_q_zeros.append(abs(solve(((self.zeros_real_part[i]*2*q) * (1 - (1/(2*q)**2))**(1/2)) - self.zeros_imag_part[i], q)[0]))
+                aux_w0_zeros.append(abs(2*self.zeros_real_part[i]*aux_q_zeros[i]))
 
         # Now repeated Q and wp or w0 will be deleted, and all of them will be loaded in second order cells
         self.pole_blocks = []
