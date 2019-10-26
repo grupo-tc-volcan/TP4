@@ -47,6 +47,7 @@ class AttFilterApproximator():
         """
         self.type = 'low-pass'
         self.gain = 0
+
         self.fpl = 0
         self.fpr = 0
         self.fal = 0
@@ -55,6 +56,7 @@ class AttFilterApproximator():
         self.Apr = 0
         self.Aal = 0
         self.Aar = 0
+
         self.denorm = 0
         self.ord = 0
         self.q = 0
@@ -124,7 +126,7 @@ class AttFilterApproximator():
                     if self.ord > 0:
                         error_code = self.compute_normalised_by_order(self.Apl, self.ord)
                     else:
-                        ap, aa, wan = self._normalised_template()
+                        wan, aa, wpn, ap = self._normalised_template()
                         error_code = self.compute_normalised_by_template(ap, aa, wan)
                     
                     # Denormalisation process, first we need to pass every transfer function
@@ -135,8 +137,9 @@ class AttFilterApproximator():
 
                         # If using the Q maximum value mode of design, check if valid h_denorm
                         if error_code is ApproximationErrorCode.OK:
-                            if self.matches_normalised_selectivity(self.q, self.h_denorm):
-                                break
+                            if self.q > 0:
+                                if self.matches_normalised_selectivity(self.q, self.h_denorm):
+                                    break
                         else:
                             break
 
@@ -161,7 +164,28 @@ class AttFilterApproximator():
 
     def _denormalised_transfer_function(self) -> ApproximationErrorCode:
         """ Denormalises the transfer function returned by the approximation used. """
-        return ApproximationErrorCode.OK # Code here please!
+        # Adding the gain and the relative denormalisation between the transition band
+        wa, aa, wp, ap = self.get_norm_template()
+        w_values, mag_values, phase_values = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
+        stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= -ap]
+        relative_adjust = ((wa - stop_band[0]) / stop_band[0] ) * (self.denorm / 100) + 1
+
+        new_zeros = self.h_norm.zeros * relative_adjust
+        new_poles = self.h_norm.poles * relative_adjust
+        new_gain = self.h_norm.gain * 10 ** (self.gain / 20)
+
+        # Frequency transformation to get the desired filter
+        if self.type == FilterType.LOW_PASS.value:
+            z, p, k = ss.lp2lp_zpk(new_zeros, new_poles, new_gain, 2 * np.pi * self.fpl)
+        elif self.type == FilterType.HIGH_PASS.value:
+            z, p, k = ss.lp2hp_zpk(new_zeros, new_poles, new_gain, 2 * np.pi * self.fpl)
+        elif self.type == FilterType.BAND_PASS.value:
+            z, p, k = ss.lp2bp_zpk(new_zeros, new_poles, new_gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
+        elif self.type == FilterType.BAND_REJECT.value:
+            z, p, k = ss.lp2bs_zpk(new_zeros, new_poles, new_gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
+        self.h_denorm(z, p, k)
+        
+        return ApproximationErrorCode.OK
     
     def _compute_normalised_by_match(self, ap, callback) -> ApproximationErrorCode:
         """ Generates normalised transfer function for each order until the callbacks
@@ -243,7 +267,6 @@ class AttFilterApproximator():
                 return ApproximationErrorCode.INVALID_FREQ
         
         return ApproximationErrorCode.OK
-
 
     def _validate_high_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation
