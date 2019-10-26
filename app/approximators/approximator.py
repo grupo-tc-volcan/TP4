@@ -44,6 +44,9 @@ class AttFilterApproximator():
         self.denorm = 0
         self.ord = 0
         self.q = 0
+
+        self.h_norm = None
+        self.h_denorm = None
     
     def compute(self) -> ApproximationErrorCode:
         """ Computes the transfer function with the filled parameters
@@ -72,6 +75,8 @@ class AttFilterApproximator():
                 # calculates the normalised transfer function
                 if self.ord > 0:
                     error_code = self.compute_normalised_by_order(self.Apl, self.ord)
+                elif self.q > 0:
+                    error_code = self.compute_normalised_by_selectivity(self.Apl, self.q)
                 else:
                     ap, aa, wan = self._normalised_template()
                     error_code = self.compute_normalised_by_template(ap, aa, wan)
@@ -89,13 +94,18 @@ class AttFilterApproximator():
     # Internal Public Methods #
     #-------------------------#
 
-    def compute_normalised_by_order(self, ap, n) -> ApproximationErrorCode:
-        """ Generates normalised transfer function prioritising the fixed order """
-        return NotImplemented
+    def compute_normalised_by_selectivity(self, ap, q) -> ApproximationErrorCode:
+        """ Generates normalised transfer function prioritising the minimum order which not
+        exceeds the given maximum q factor """
+        raise NotImplementedError
 
     def compute_normalised_by_template(self, ap, aa, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
-        return NotImplemented
+        raise NotImplementedError
+
+    def compute_normalised_by_order(self, ap, n) -> ApproximationErrorCode:
+        """ Generates normalised transfer function prioritising the fixed order """
+        raise NotImplementedError
     
     #-----------------#
     # Private Methods #
