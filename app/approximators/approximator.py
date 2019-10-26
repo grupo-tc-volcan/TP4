@@ -23,6 +23,15 @@ class ApproximationErrorCode(Enum):
     INVALID_DENORM = "INVALID_DENORM"               # Invalid range of denormalisation factor
     MAXIMUM_ORDER_REACHED = "MAXIMUM_ORDER_REACHED" # Iterative approximation reached maximum order
 
+
+class FilterType(Enum):
+    """ Approximation filter types """
+    LOW_PASS = "low-pass"
+    HIGH_PASS = "high-pass"
+    BAND_PASS = "band-pass"
+    BAND_REJECT = "band-reject"
+
+
 class AttFilterApproximator():
     def __init__(self):
         # Data to perform approximation
@@ -62,13 +71,13 @@ class AttFilterApproximator():
         if error_code is ApproximationErrorCode.OK:
 
             # Verifying if valid filter type is given
-            if self.type == "low-pass":
+            if self.type == FilterType.LOW_PASS.value:
                 error_code = self._validate_low_pass()
-            elif self.type == "high-pass":
+            elif self.type == FilterType.HIGH_PASS.value:
                 error_code = self._validate_high_pass()
-            elif self.type == "band-pass":
+            elif self.type == FilterType.BAND_PASS.value:
                 error_code = self._validate_band_pass()
-            elif self.type == "band-reject":
+            elif self.type == FilterType.BAND_REJECT.value:
                 error_code = self._validate_band_reject()
             else:
                 error_code = ApproximationErrorCode.INVALID_TYPE
@@ -113,7 +122,7 @@ class AttFilterApproximator():
 
     def compute_normalised_by_template(self, ap, aa, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
-        return self._compute_normalised_by_match(ap, partial(self.matches_normalised_template, ap, aa, wa))
+        return self._compute_normalised_by_match(ap, partial(self.matches_normalised_template, ap, aa, wan))
 
     def compute_normalised_by_order(self, ap, n) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the fixed order """
@@ -147,9 +156,30 @@ class AttFilterApproximator():
     def _normalised_template(self) -> tuple:
         """ Given the filter type and its parameters, it returns
         a tuple containing the normalised parameters of the template.
-        Returns -> (ap, aa, aan)
+        Returns -> (ap, aa, wan)
         """
-        return 0, 0, 0 # Code here please!
+        if self.Apl > 0 and self.Apr > 0:
+            ap = min(self.Apl, self.Apr)
+        elif self.Apl > 0:
+            ap = self.Apl
+        elif self.Apr > 0:
+            ap = self.Apr
+
+        if self.Aal > 0 and self.Aar > 0:
+            aa = max(self.Aal, self.Aar)
+        elif self.Aal > 0:
+            aa = self.Aal
+        elif self.Aar > 0:
+            aa = self.Aar
+
+        if self.type == FilterType.LOW_PASS.value:
+            return ap, aa, self.fal / self.fpl
+        elif self.type == FilterType.HIGH_PASS.value:
+            return ap, aa, self.fpl / self.fal
+        elif self.type == FilterType.BAND_PASS.value:
+            return ap, aa, (self.far - self.fal) / (self.fpr - self.fpl)
+        elif self.type == FilterType.BAND_REJECT.value:
+            return ap, aa, (self.fpr - self.fpl) / (self.far - self.fal)
 
     def _validate_general(self) -> ApproximationErrorCode:
         """ Returns if general parameters are valid """
