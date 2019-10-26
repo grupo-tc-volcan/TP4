@@ -6,10 +6,16 @@ from enum import Enum
 
 
 class ApproximationErrorCode(Enum):
-    """ Approximation error codes returned when trying to compute H(s).
+    """ Approximation error codes returned when trying to compute H(s). 
     """
-    OK = "OK"
-    INVALID_TYPE = "INVALID_TYPE"
+    OK = "OK"                           # No errors detected
+    INVALID_TYPE = "INVALID_TYPE"       # Non-identified filter type in self.type
+    INVALID_GAIN = "INVALID_GAIN"       # Gain is 0
+    INVALID_FREQ = "INVALID_FREQ"       # Frequency is <= 0 or fpr < fpl or fp > fa (Depending the type of filter)
+    INVALID_ATTE = "INVALID_ATTE"       # Attenuation is 0, or negative...
+    INVALID_Q = "INVALID_Q"             # Negative Q factor
+    INVALID_ORDER = "INVALID_ORDER"     # Negative order
+    INVALID_DENORM = "INVALID_DENORM"   # Invalid range of denormalisation factor
 
 
 class AttFilterApproximator():
@@ -44,36 +50,37 @@ class AttFilterApproximator():
         of the approximation. Any error will be returned as an error code.
         """
         # Default error code
-        error_code = ApproximationErrorCode.OK
-
-        # Verifying if valid filter type is given
-        if self.type == "low-pass":
-            error_code = self._validate_low_pass()
-        elif self.type == "high-pass":
-            error_code = self._validate_high_pass()
-        elif self.type == "band-pass":
-            error_code = self._validate_band_pass()
-        elif self.type == "band-reject":
-            error_code = self._validate_band_reject()
-        else:
-            error_code = ApproximationErrorCode.INVALID_TYPE
-
-        # Findind the transfer function for the given parameters
+        error_code = self._validate_general()
         if error_code is ApproximationErrorCode.OK:
-            
-            # When a fixed order is given, it should be prioritised...
-            # calculates the normalised transfer function
-            if self.ord > 0:
-                error_code = self.compute_normalised_by_order(self.Apl, self.ord)
+
+            # Verifying if valid filter type is given
+            if self.type == "low-pass":
+                error_code = self._validate_low_pass()
+            elif self.type == "high-pass":
+                error_code = self._validate_high_pass()
+            elif self.type == "band-pass":
+                error_code = self._validate_band_pass()
+            elif self.type == "band-reject":
+                error_code = self._validate_band_reject()
             else:
-                ap, aa, wan = self._normalised_template()
-                error_code = self.compute_normalised_by_template(ap, aa, wan)
-            
-            # Denormalisation process, first we need to pass every transfer function
-            # to a TrasnferFunction object, using that apply the denormalisation
-            # algorithm of scipy.signal... finally translating ir to a ZeroPolesGain object!
+                error_code = ApproximationErrorCode.INVALID_TYPE
+
+            # Findind the transfer function for the given parameters
             if error_code is ApproximationErrorCode.OK:
-                error_code = self._denormalised_transfer_function()
+                
+                # When a fixed order is given, it should be prioritised...
+                # calculates the normalised transfer function
+                if self.ord > 0:
+                    error_code = self.compute_normalised_by_order(self.Apl, self.ord)
+                else:
+                    ap, aa, wan = self._normalised_template()
+                    error_code = self.compute_normalised_by_template(ap, aa, wan)
+                
+                # Denormalisation process, first we need to pass every transfer function
+                # to a TrasnferFunction object, using that apply the denormalisation
+                # algorithm of scipy.signal... finally translating ir to a ZeroPolesGain object!
+                if error_code is ApproximationErrorCode.OK:
+                    error_code = self._denormalised_transfer_function()
 
         # Returning the error code...
         return error_code
@@ -95,7 +102,7 @@ class AttFilterApproximator():
     #-----------------#
 
     def _denormalised_transfer_function(self) -> ApproximationErrorCode:
-        """ Denormalises the transfer function returned by the approximation used """
+        """ Denormalises the transfer function returned by the approximation used. """
         return ApproximationErrorCode.OK # Code here please!
 
     def _normalised_template(self) -> tuple:
@@ -105,29 +112,99 @@ class AttFilterApproximator():
         """
         return 0, 0, 0 # Code here please!
 
+    def _validate_general(self) -> ApproximationErrorCode:
+        """ Returns if general parameters are valid """
+        if self.gain <= 0:
+            return ApproximationErrorCode.INVALID_GAIN
+        elif self.ord <= 0:
+            return ApproximationErrorCode.INVALID_ORDER
+        elif self.q <= 0:
+            return ApproximationErrorCode.INVALID_Q
+        elif self.denorm < 0 or self.denorm > 100:
+            return ApproximationErrorCode.INVALID_DENORM
+
+        return ApproximationErrorCode.OK
+
     def _validate_low_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation
         are valid or not using a low-pass.
         """
-        return ApproximationErrorCode.OK # Code here please!
+        if self.ord == 0 and self.q == 0:
+            if self.fpl >= self.fal or self.fpl <= 0 or self.fal <= 0:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.Apl <= 0 or self.Aal <= 0:
+                return ApproximationErrorCode.INVALID_ATTE
+        else:
+            if self.Apl <= 0:
+                return ApproximationErrorCode.INVALID_ATTE
+            elif self.fpl <= 0:
+                return ApproximationErrorCode.INVALID_FREQ
+        
+        return ApproximationErrorCode.OK
+
 
     def _validate_high_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation
         are valid or not using a high-pass.
         """
-        return ApproximationErrorCode.OK # Code here please!
+        if self.ord == 0 and self.q == 0:
+            if self.fpl <= self.fal or self.fpl <= 0 or self.fal <= 0:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.Apl <= 0 or self.Aal <= 0:
+                return ApproximationErrorCode.INVALID_ATTE
+        else:
+            if self.Apl <= 0:
+                return ApproximationErrorCode.INVALID_ATTE
+            elif self.fpl <= 0:
+                return ApproximationErrorCode.INVALID_FREQ
+        
+        return ApproximationErrorCode.OK
 
     def _validate_band_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation
         are valid or not using a band-pass.
         """
-        return ApproximationErrorCode.OK # Code here please!
+        if self.ord == 0 or self.q == 0:
+            if self.fpl <= 0 or self.fpr <= 0 or self.fal <= 0 or self.far <= 0:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.fpl >= self.fpr or self.fal >= self.far:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.fpl <= self.fal or self.fpr >= self.far:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.Apl <= 0 or self.Aal <= 0:
+                return ApproximationErrorCode.INVALID_ATTE
+        else:
+            if self.fpl <= 0 or self.fpr <= 0:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.fpl >= self.fpr:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.Apl <= 0:
+                return ApproximationErrorCode.INVALID_ATTE
+        
+        return ApproximationErrorCode.OK
 
     def _validate_band_reject(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation
         are valid or not using a band-reject.
         """
-        return ApproximationErrorCode.OK # Code here please!
+        if self.ord == 0 or self.q == 0:
+            if self.fpl <= 0 or self.fpr <= 0 or self.fal <= 0 or self.far <= 0:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.fpl >= self.fpr or self.fal >= self.far:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.fpl >= self.fal or self.fpr <= self.far:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.Apl <= 0 or self.Aal <= 0:
+                return ApproximationErrorCode.INVALID_ATTE
+        else:
+            if self.fpl <= 0 or self.fpr <= 0:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.fpl >= self.fpr:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.Apl <= 0:
+                return ApproximationErrorCode.INVALID_ATTE
+        
+        return ApproximationErrorCode.OK
 
 
 class GroupDelayFilterApproximator():
