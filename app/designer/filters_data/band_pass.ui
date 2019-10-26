@@ -100,6 +100,9 @@
      <property name="text">
       <string>Fixed:</string>
      </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
    <item row="1" column="3">
@@ -206,6 +209,9 @@
     <widget class="QCheckBox" name="order_fixed">
      <property name="text">
       <string>Fixed:</string>
+     </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
      </property>
     </widget>
    </item>

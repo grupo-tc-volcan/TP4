@@ -41,13 +41,23 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
     def on_change(self):
         if self.order_fixed.isChecked():
             self.order.setEnabled(True)
+            self.stop_freq.setDisabled(True)
+            self.stop_att.setDisabled(True)
+            self.q_fixed.setDisabled(True)
+
+        elif self.q_fixed.isChecked():
+            self.q_max.setEnabled(True)
+            self.stop_freq.setDisabled(True)
+            self.stop_att.setDisabled(True)
+            self.order_fixed.setDisabled(True)
+
         else:
             self.order.setDisabled(True)
-
-        if self.q_fixed.isChecked():
-            self.q_max.setEnabled(True)
-        else:
             self.q_max.setDisabled(True)
+            self.stop_freq.setEnabled(True)
+            self.stop_att.setEnabled(True)
+            self.order_fixed.setEnabled(True)
+            self.q_fixed.setEnabled(True)
 
         self.approximators[self.approx_index].type = 'group-delay'
         self.approximators[self.approx_index].gain = self.gain.value()

@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_PoleBlock(object):
     def setupUi(self, PoleBlock):
         PoleBlock.setObjectName("PoleBlock")
-        PoleBlock.resize(200, 62)
+        PoleBlock.resize(200, 70)
         self.gridLayout = QtWidgets.QGridLayout(PoleBlock)
         self.gridLayout.setObjectName("gridLayout")
         self.frame = QtWidgets.QFrame(PoleBlock)
@@ -51,12 +51,12 @@ class Ui_PoleBlock(object):
     def retranslateUi(self, PoleBlock):
         _translate = QtCore.QCoreApplication.translate
         PoleBlock.setWindowTitle(_translate("PoleBlock", "Form"))
-        self.label_4.setText(_translate("PoleBlock", "<html><head/><body><p align=\"right\">Q:</p></body></html>"))
-        self.label_3.setText(_translate("PoleBlock", "<html><head/><body><p align=\"right\">wp:</p></body></html>"))
-        self.q_val.setText(_translate("PoleBlock", "<html><head/><body><p>5</p></body></html>"))
-        self.wp.setText(_translate("PoleBlock", "<html><head/><body><p>1Khz</p></body></html>"))
-        self.label.setText(_translate("PoleBlock", "n:"))
-        self.label_2.setText(_translate("PoleBlock", "2"))
+        self.label_4.setText(_translate("PoleBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">Q:</span></p></body></html>"))
+        self.label_3.setText(_translate("PoleBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">f</span><span style=\" font-size:10pt; vertical-align:sub;\">p</span><span style=\" font-size:10pt;\">:</span></p></body></html>"))
+        self.q_val.setText(_translate("PoleBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">...</span></p></body></html>"))
+        self.wp.setText(_translate("PoleBlock", "<html><head/><body><p>...</p></body></html>"))
+        self.label.setText(_translate("PoleBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">n:</span></p></body></html>"))
+        self.label_2.setText(_translate("PoleBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">...</span></p></body></html>"))
 
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ZeroBlock(object):
     def setupUi(self, ZeroBlock):
         ZeroBlock.setObjectName("ZeroBlock")
-        ZeroBlock.resize(200, 62)
+        ZeroBlock.resize(200, 70)
         self.gridLayout = QtWidgets.QGridLayout(ZeroBlock)
         self.gridLayout.setObjectName("gridLayout")
         self.frame = QtWidgets.QFrame(ZeroBlock)
@@ -51,12 +51,12 @@ class Ui_ZeroBlock(object):
     def retranslateUi(self, ZeroBlock):
         _translate = QtCore.QCoreApplication.translate
         ZeroBlock.setWindowTitle(_translate("ZeroBlock", "Form"))
-        self.label_3.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\">w0:</p></body></html>"))
-        self.wp.setText(_translate("ZeroBlock", "<html><head/><body><p>1Khz</p></body></html>"))
-        self.label.setText(_translate("ZeroBlock", "n:"))
-        self.label_2.setText(_translate("ZeroBlock", "2"))
-        self.label_4.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\">Q:</p></body></html>"))
-        self.q_val.setText(_translate("ZeroBlock", "<html><head/><body><p>5</p></body></html>"))
+        self.label_3.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">f</span><span style=\" font-size:10pt; vertical-align:sub;\">0</span><span style=\" font-size:10pt;\">:</span></p></body></html>"))
+        self.wp.setText(_translate("ZeroBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">...</span></p></body></html>"))
+        self.label.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">n:</span></p></body></html>"))
+        self.label_2.setText(_translate("ZeroBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">...</span></p></body></html>"))
+        self.label_4.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">Q:</span></p></body></html>"))
+        self.q_val.setText(_translate("ZeroBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">...</span></p></body></html>"))
 
 
 if __name__ == "__main__":

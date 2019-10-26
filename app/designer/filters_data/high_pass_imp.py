@@ -40,13 +40,30 @@ class HighPassData(QtWid.QWidget, Ui_HighPassData):
     def on_change(self):
         if self.order_fixed.isChecked():
             self.order.setEnabled(True)
+            self.stop_freq.setDisabled(True)
+            self.stop_att.setDisabled(True)
+            self.denorm_select.setCurrentIndex(0)
+            self.denorm_perc.setValue(0)
+            self.denorm_select.setDisabled(True)
+            self.denorm_perc.setDisabled(True)
+            self.q_fixed.setDisabled(True)
+
+        elif self.q_fixed.isChecked():
+            self.q_max.setEnabled(True)
+            self.stop_freq.setDisabled(True)
+            self.stop_att.setDisabled(True)
+            self.denorm_select.setDisabled(True)
+            self.denorm_perc.setDisabled(True)
+            self.order_fixed.setDisabled(True)
+
         else:
             self.order.setDisabled(True)
-
-        if self.q_fixed.isChecked():
-            self.q_max.setEnabled(True)
-        else:
             self.q_max.setDisabled(True)
+            self.stop_freq.setEnabled(True)
+            self.stop_att.setEnabled(True)
+            self.denorm_select.setEnabled(True)
+            self.order_fixed.setEnabled(True)
+            self.q_fixed.setEnabled(True)
 
         if self.denorm_select.currentIndex() != 2:
             self.denorm_perc.setDisabled(True)

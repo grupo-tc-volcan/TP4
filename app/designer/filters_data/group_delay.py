@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_GroupDelayData(object):
     def setupUi(self, GroupDelayData):
         GroupDelayData.setObjectName("GroupDelayData")
-        GroupDelayData.resize(333, 408)
+        GroupDelayData.resize(376, 408)
         GroupDelayData.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.gridLayout = QtWidgets.QGridLayout(GroupDelayData)
         self.gridLayout.setObjectName("gridLayout")
@@ -94,6 +94,7 @@ class Ui_GroupDelayData(object):
         self.group_delay.setObjectName("group_delay")
         self.gridLayout.addWidget(self.group_delay, 7, 2, 1, 1)
         self.q_fixed = QtWidgets.QCheckBox(GroupDelayData)
+        self.q_fixed.setAutoExclusive(False)
         self.q_fixed.setObjectName("q_fixed")
         self.gridLayout.addWidget(self.q_fixed, 10, 1, 1, 1)
         self.stop_freq = QtWidgets.QDoubleSpinBox(GroupDelayData)
@@ -115,6 +116,7 @@ class Ui_GroupDelayData(object):
         self.gain.setObjectName("gain")
         self.gridLayout.addWidget(self.gain, 0, 2, 1, 1)
         self.order_fixed = QtWidgets.QCheckBox(GroupDelayData)
+        self.order_fixed.setAutoExclusive(False)
         self.order_fixed.setObjectName("order_fixed")
         self.gridLayout.addWidget(self.order_fixed, 9, 1, 1, 1)
         self.order = QtWidgets.QSpinBox(GroupDelayData)

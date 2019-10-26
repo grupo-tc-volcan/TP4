@@ -9,6 +9,9 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Navigatio
 from matplotlib.figure import Figure
 from matplotlib.lines import Line2D
 
+# filters-tool project modules
+from app.auxiliary_calculators.wp_w0_q import SecondOrderAuxCalc
+
 class FilterPlotter():
     def __init__(self):
         self.tf = 0
@@ -248,7 +251,23 @@ class FilterPlotter():
 
 
     def plot_q(self):
-        pass
+        second_order_calculator = SecondOrderAuxCalc(self.tf)
+        # Calculating plot points
+        x = second_order_calculator.get_second_order_wp_poles()
+        y = second_order_calculator.get_q_poles()
+
+        # Plotting Q factors
+        self.axes.clear()
+        self.axes.plot(x, y, marker='o')
+        for i_x, i_y in zip(x, y):
+            self.axes.text(i_x, i_y, 'fp={}, Q={}'.format(round(i_x, 3), round(i_y, 3)))
+        self.axes.set_xscale('log')
+        self.axes.grid(which='major')
+        self.axes.grid(which='minor')
+        self.axes.set_xlabel('Frequency (Hz)')
+        self.axes.set_ylabel('Q factors')
+
+        self.canvas.draw()
 
 
     def plot_impulse_response(self):

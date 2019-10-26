@@ -305,7 +305,7 @@
                 <height>40</height>
                </size>
               </property>
-              <widget class="QWidget" name="toolbar_1Page1_2" native="true"/>
+              <widget class="QWidget" name="toolbar_1Page1_2"/>
              </widget>
             </item>
            </layout>

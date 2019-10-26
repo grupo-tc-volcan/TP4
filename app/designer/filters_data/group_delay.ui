@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>333</width>
+    <width>376</width>
     <height>408</height>
    </rect>
   </property>
@@ -213,6 +213,9 @@
      <property name="text">
       <string>Fixed:</string>
      </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
    <item row="3" column="2">
@@ -263,6 +266,9 @@
     <widget class="QCheckBox" name="order_fixed">
      <property name="text">
       <string>Fixed:</string>
+     </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
      </property>
     </widget>
    </item>

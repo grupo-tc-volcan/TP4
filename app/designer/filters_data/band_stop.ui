@@ -362,6 +362,9 @@
      <property name="text">
       <string>Fixed:</string>
      </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
    <item row="10" column="0">
@@ -375,6 +378,9 @@
     <widget class="QCheckBox" name="q_fixed">
      <property name="text">
       <string>Fixed:</string>
+     </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
