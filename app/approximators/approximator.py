@@ -183,8 +183,8 @@ class AttFilterApproximator():
             z, p, k = ss.lp2bp_zpk(new_zeros, new_poles, new_gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
         elif self.type == FilterType.BAND_REJECT.value:
             z, p, k = ss.lp2bs_zpk(new_zeros, new_poles, new_gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
-        self.h_denorm(z, p, k)
-        
+        self.h_denorm = ss.lti(z, p, k)
+
         return ApproximationErrorCode.OK
     
     def _compute_normalised_by_match(self, ap, callback) -> ApproximationErrorCode:
