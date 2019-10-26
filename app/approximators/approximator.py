@@ -17,9 +17,9 @@ class AttFilterApproximator():
         # Data to perform approximation
         self.reset_parameters()
 
-    #--------------------
-    # Public Methods 
-    #--------------------
+    #----------------#
+    # Public Methods #
+    #----------------#
 
     def reset_parameters(self):
         """ Resets the parameters of the approximation to
@@ -39,7 +39,7 @@ class AttFilterApproximator():
         self.ord = 0
         self.q = 0
     
-    def compute(self):
+    def compute(self) -> ApproximationErrorCode:
         """ Computes the transfer function with the filled parameters
         of the approximation. Any error will be returned as an error code.
         """
@@ -58,43 +58,82 @@ class AttFilterApproximator():
         else:
             error_code = ApproximationErrorCode.INVALID_TYPE
 
+        # Findind the transfer function for the given parameters
+        if error_code is ApproximationErrorCode.OK:
+            
+            # When a fixed order is given, it should be prioritised...
+            # calculates the normalised transfer function
+            if self.ord > 0:
+                error_code = self.compute_normalised_by_order(self.Apl, self.ord)
+            else:
+                ap, aa, wan = self._normalised_template()
+                error_code = self.compute_normalised_by_template(ap, aa, wan)
+            
+            # Denormalisation process, first we need to pass every transfer function
+            # to a TrasnferFunction object, using that apply the denormalisation
+            # algorithm of scipy.signal... finally translating ir to a ZeroPolesGain object!
+            if error_code is ApproximationErrorCode.OK:
+                error_code = self._denormalised_transfer_function()
+
         # Returning the error code...
         return error_code
     
-    #--------------------
-    # Private Methods
-    #--------------------
+    #-------------------------#
+    # Internal Public Methods #
+    #-------------------------#
+
+    def compute_normalised_by_order(self, ap, n) -> ApproximationErrorCode:
+        """ Generates normalised transfer function prioritising the fixed order """
+        return NotImplemented
+
+    def compute_normalised_by_template(self, ap, aa, wan) -> ApproximationErrorCode:
+        """ Generates normalised transfer function prioritising the normalised template """
+        return NotImplemented
+    
+    #-----------------#
+    # Private Methods #
+    #-----------------#
+
+    def _denormalised_transfer_function(self) -> ApproximationErrorCode:
+        """ Denormalises the transfer function returned by the approximation used """
+        return ApproximationErrorCode.OK # Code here please!
+
+    def _normalised_template(self) -> tuple:
+        """ Given the filter type and its parameters, it returns
+        a tuple containing the normalised parameters of the template.
+        Returns -> (ap, aa, aan)
+        """
+        return 0, 0, 0 # Code here please!
 
     def _validate_low_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation
         are valid or not using a low-pass.
         """
-        return True # Code here please!
+        return ApproximationErrorCode.OK # Code here please!
 
     def _validate_high_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation
         are valid or not using a high-pass.
         """
-        return True # Code here please!
+        return ApproximationErrorCode.OK # Code here please!
 
     def _validate_band_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation
         are valid or not using a band-pass.
         """
-        return True # Code here please!
+        return ApproximationErrorCode.OK # Code here please!
 
     def _validate_band_reject(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation
         are valid or not using a band-reject.
         """
-        return True # Code here please!
+        return ApproximationErrorCode.OK # Code here please!
 
 
 class GroupDelayFilterApproximator():
     def __init__(self):
         # Data to perform approximation
         self.reset_parameters()
-
 
     def reset_parameters(self):
         """ Resets the parameters of the approximation to
