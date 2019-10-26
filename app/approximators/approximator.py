@@ -29,7 +29,7 @@ class FilterType(Enum):
     LOW_PASS = "low-pass"
     HIGH_PASS = "high-pass"
     BAND_PASS = "band-pass"
-    BAND_REJECT = "band-reject"
+    BAND_REJECT = "band-stop"
 
 
 class AttFilterApproximator():
@@ -61,6 +61,13 @@ class AttFilterApproximator():
 
         self.h_norm = None
         self.h_denorm = None
+    
+    def get_norm_template(self) -> tuple:
+        """ Returns a 4-element tuple containing the normalised
+        parameters of the template.
+        Returns -> (wa, aa, wp, ap)
+        """
+        return self._normalised_template()
     
     def get_normalised_zpk(self) -> tuple:
         """ Returns a tuple of three elements containing Zeros, Poles and Gain,
@@ -176,30 +183,36 @@ class AttFilterApproximator():
     def _normalised_template(self) -> tuple:
         """ Given the filter type and its parameters, it returns
         a tuple containing the normalised parameters of the template.
-        Returns -> (ap, aa, wan)
+        Returns -> (wa, aa, wp, ap)
         """
+        # Choosing the maximum attenuation of the pass band
+        # and adapting it to use a Gain
         if self.Apl > 0 and self.Apr > 0:
             ap = min(self.Apl, self.Apr)
         elif self.Apl > 0:
             ap = self.Apl
         elif self.Apr > 0:
             ap = self.Apr
+        ap = ap - self.gain
 
+        # Choosing the minimum attenuation of the stop band
+        # and adapting it to use a Gain
         if self.Aal > 0 and self.Aar > 0:
             aa = max(self.Aal, self.Aar)
         elif self.Aal > 0:
             aa = self.Aal
         elif self.Aar > 0:
             aa = self.Aar
+        aa = aa - self.gain
 
         if self.type == FilterType.LOW_PASS.value:
-            return ap, aa, self.fal / self.fpl
+            return self.fal / self.fpl, aa, 1, ap
         elif self.type == FilterType.HIGH_PASS.value:
-            return ap, aa, self.fpl / self.fal
+            return self.fpl / self.fal, aa, 1, ap
         elif self.type == FilterType.BAND_PASS.value:
-            return ap, aa, (self.far - self.fal) / (self.fpr - self.fpl)
+            return (self.far - self.fal) / (self.fpr - self.fpl), aa, 1, ap
         elif self.type == FilterType.BAND_REJECT.value:
-            return ap, aa, (self.fpr - self.fpl) / (self.far - self.fal)
+            return (self.fpr - self.fpl) / (self.far - self.fal), aa, 1, ap
 
     def _validate_general(self) -> ApproximationErrorCode:
         """ Returns if general parameters are valid """
