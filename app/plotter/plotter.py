@@ -22,8 +22,6 @@ class FilterPlotter():
         # Arrays of data to plot:
         self.f_att = []
         self.attenuation = []
-        self.f_norm_att = []
-        self.norm_attenuation = []
         self.f_phase = []
         self.phase = []
         self.f_gd = []
@@ -62,6 +60,10 @@ class FilterPlotter():
         self.axes.set_xscale('log')
         self.axes.grid(which='major')
         self.axes.grid(which='minor')
+        self.axes.set_xlabel('Frequency (Hz)')
+        self.axes.set_ylabel('Attenuation (dB)')
+
+        self.canvas.draw()
 
 
     def plot_template(self, template = {}):
@@ -98,13 +100,13 @@ class FilterPlotter():
             height = max(self.attenuation) - template['Ap']
             x_start = min(self.f_att)
             y_start = template['Ap']
-            pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='/', color='r', alpha=0.2)
+            pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = max(self.f_att) - template['fa']
             height = template['Aa']
             x_start = template['fa']
             y_start = 0
-            stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='/', color='r', alpha=0.2)
+            stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             self.axes.add_patch(pass_band_rect)
             self.axes.add_patch(stop_band_rect)
@@ -114,13 +116,13 @@ class FilterPlotter():
             height = max(self.attenuation) - template['Ap']
             x_start = template['fp']
             y_start = template['Ap']
-            pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='/', color='r', alpha=0.2)
+            pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = template['fa'] - min(self.f_att) 
             height = template['Aa']
             x_start = min(self.f_att)
             y_start = 0
-            stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='/', color='r', alpha=0.2)
+            stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             self.axes.add_patch(pass_band_rect)
             self.axes.add_patch(stop_band_rect)
@@ -130,19 +132,19 @@ class FilterPlotter():
             height = max(self.attenuation) - template['Ap']
             x_start = template['fpl']
             y_start = template['Ap']
-            pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='/', color='r', alpha=0.2)
+            pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = template['fal'] - min(self.f_att) 
             height = template['Aal']
             x_start = min(self.f_att)
             y_start = 0
-            stop_band_l_rect = patches.Rectangle((x_start, y_start), width, height, hatch='/', color='r', alpha=0.2)
+            stop_band_l_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = max(self.f_att) - template['far']
             height = template['Aar']
             x_start = template['far']
             y_start = 0
-            stop_band_r_rect = patches.Rectangle((x_start, y_start), width, height, hatch='/', color='r', alpha=0.2)
+            stop_band_r_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             self.axes.add_patch(pass_band_rect)
             self.axes.add_patch(stop_band_l_rect)
@@ -153,32 +155,60 @@ class FilterPlotter():
             height = max(self.attenuation) - template['Apl']
             x_start = min(self.f_att)
             y_start = template['Apl']
-            pass_band_l_rect = patches.Rectangle((x_start, y_start), width, height, hatch='/', color='r', alpha=0.2)
+            pass_band_l_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = max(self.f_att) - template['fpr']
             height = max(self.attenuation) - template['Apr']
             x_start = template['fpr']
             y_start = template['Apr']
-            pass_band_r_rect = patches.Rectangle((x_start, y_start), width, height, hatch='/', color='r', alpha=0.2)
+            pass_band_r_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = template['far'] - template['fal']
             height = template['Aa']
             x_start = template['fal']
             y_start = 0
-            stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='/', color='r', alpha=0.2)
+            stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             self.axes.add_patch(pass_band_l_rect)
             self.axes.add_patch(pass_band_r_rect)
             self.axes.add_patch(stop_band_rect)
-            self.canvas.draw()
+
+        self.canvas.draw()
 
 
     def plot_phase(self):
-        pass
+        # Calculating plot points
+        w, mag, self.phase = ss.bode(self.tf)
+        self.f_phase = [2*np.pi * ang_freq for ang_freq in w]
+
+        # Plotting phase
+        self.axes.clear()
+        self.axes.plot(self.f_phase, self.phase)
+        self.axes.set_xscale('log')
+        self.axes.grid(which='major')
+        self.axes.grid(which='minor')
+        self.axes.set_xlabel('Frequency (Hz)')
+        self.axes.set_ylabel('Phase (°)')
+
+        self.canvas.draw()
 
 
     def plot_group_delay(self):
-        pass
+        # Calculating plot points
+        tf_as_num_and_den = self.tf.to_tf()
+        w, self.group_delay = ss.group_delay((tf_as_num_and_den.num, tf_as_num_and_den.den))
+        self.f_gd = [2*np.pi * ang_freq for ang_freq in w]
+
+        # Plotting group delay
+        self.axes.clear()
+        self.axes.plot(self.f_gd, self.group_delay)
+        self.axes.set_xscale('log')
+        self.axes.grid(which='major')
+        self.axes.grid(which='minor')
+        self.axes.set_xlabel('Frequency (Hz)')
+        self.axes.set_ylabel('Group Delay (s)')
+
+        self.canvas.draw()
 
 
     def plot_gd_template(self, template = {}):
@@ -190,11 +220,31 @@ class FilterPlotter():
                 'tol' = ...
             }
         '''
-        pass
+        width = template['ft'] - min(self.f_gd)
+        height = template['group_delay'] * (100 - template['tol']) / 100
+        x_start = min(self.f_gd)
+        y_start = 0
+        group_delay_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
+
+        self.axes.add_patch(group_delay_rect)
+        self.canvas.draw()
 
 
     def plot_poles_and_zeros(self):
-        pass
+        x_poles = [pole.real for pole in self.tf.poles]
+        y_poles = [pole.imag for pole in self.tf.poles]
+        x_zeros = [zero.real for zero in self.tf.zeros]
+        y_zeros = [zero.imag for zero in self.tf.zeros]
+
+        self.axes.clear()
+        self.axes.scatter(x_poles, y_poles, marker='x', c='red')
+        self.axes.scatter(x_zeros, y_zeros, marker='o', c='blue')
+        self.axes.grid(which='major')
+        self.axes.grid(which='minor')
+        self.axes.set_xlabel('Real part σ (Hz)')
+        self.axes.set_ylabel('Imaginary part jω (Hz)')
+
+        self.canvas.draw()
 
 
     def plot_q(self):
@@ -202,8 +252,30 @@ class FilterPlotter():
 
 
     def plot_impulse_response(self):
-        pass
+        # Calculating plot points
+        self.t_imp_res, self.impulse_response = ss.impulse(self.tf)
+
+        # Plotting impulse response
+        self.axes.clear()
+        self.axes.plot(self.t_imp_res, self.impulse_response)
+        self.axes.grid(which='major')
+        self.axes.grid(which='minor')
+        self.axes.set_xlabel('Time (s)')
+        self.axes.set_ylabel('Impulse Response (V)')
+
+        self.canvas.draw()
 
 
     def plot_step_response(self):
-        pass
+        # Calculating plot points
+        self.t_step_res, self.step_response = ss.step(self.tf)
+
+        # Plotting impulse response
+        self.axes.clear()
+        self.axes.plot(self.t_step_res, self.step_response)
+        self.axes.grid(which='major')
+        self.axes.grid(which='minor')
+        self.axes.set_xlabel('Time (s)')
+        self.axes.set_ylabel('Step Response (V)')
+
+        self.canvas.draw()

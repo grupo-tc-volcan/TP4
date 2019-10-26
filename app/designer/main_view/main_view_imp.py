@@ -29,12 +29,13 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.filter_data_widgets = [LowPassData(), HighPassData(), BandPassData(), BandStopData(), GroupDelayData()]
 
         # Loading plotter
-        self.plotter = FilterPlotter()
+        self.plotters = [FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter()]
 
         # Signal and slot connections
         self.filter_selector.currentIndexChanged.connect(self.filter_selected)
         self.approx_selector.currentIndexChanged.connect(self.set_approx)
         self.calculate_button.released.connect(self.calculate_approx)
+        self.plot_template_1.stateChanged.connect(self.plot_template_toggle)
 
         # Set up things for the first time
         self.on_start_up()
@@ -89,13 +90,22 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         #TODO try except block
 
         if is_data_valid:
-            self.enable_approx_plotter_controls()
-            # If filter is group-delay, plotting the template for the group delay is enabled
-            if self.filter_selector.currentIndex() == 4:
-                self.plot_template_3.setEnabled(True)
+            self.enable_when_calculating()
 
             self.plot_attenuation()
-            #TODO plot all the rest of the graphs
+            self.plot_norm_attenuation()
+            self.plot_phase()
+            self.plot_group_delay()
+            self.plot_poles_and_zeros()
+            self.plot_q()
+            self.plot_impulse_response()
+            self.plot_step_response()
+
+
+    def plot_template_toggle(self):
+        self.plot_attenuation()
+        self.plot_norm_attenuation()
+        self.plot_phase()
 
 
     def plot_attenuation(self):
@@ -104,11 +114,11 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         approx_index = self.approx_selector.currentIndex()
         #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_poles_zeros_gain()
         tf = ss.ZerosPolesGain([2*np.pi, 2*np.pi * 2], [2*np.pi * 3, 2*np.pi * 4], 1) #TODO change this
-        self.plotter.set_transfer_function(tf)
+        self.plotters[0].set_transfer_function(tf)
 
-        self.plotter.set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
+        self.plotters[0].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
 
-        # Plotting and adding plot to GUI
+        # Setting filter template to plotter
         #TODO change for actual template
         template = {
             'fp': 10,
@@ -116,218 +126,227 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             'Ap': 2,
             'Aa': 8
         }
-        self.plotter.plot_attenuation()
-        if self.plot_template_1.isChecked():
-            self.plotter.plot_template(template)
 
+        # Plotting attenuation and template
+        self.plotters[0].plot_attenuation()
+        if self.plot_template_1.isChecked():
+            self.plotters[0].plot_template(template)
+
+        # Adding plot and navigation toolbar to tab
         if self.plot_1.count() > 2:
             # Cleaning stacked widget
             self.plot_1.removeWidget(self.filter_data.currentWidget())
-        self.plot_1.setCurrentIndex(self.plot_1.addWidget(self.plotter.canvas))
-        #self.addToolBar(QtCore.Qt.BottomToolBarArea, NavigationToolbar(self.plotter.canvas, self))
-        toolbar = NavigationToolbar(self.plotter.canvas, self)
-        if self.plot_1.count() > 2:
+        self.plot_1.setCurrentIndex(self.plot_1.addWidget(self.plotters[0].canvas))
+        toolbar = NavigationToolbar(self.plotters[0].canvas, self)
+        if self.toolbar_1.count() > 2:
             # Cleaning stacked widget
             self.toolbar_1.removeWidget(self.filter_data.currentWidget())
         self.toolbar_1.setCurrentIndex(self.toolbar_1.addWidget(toolbar))
 
 
-    def add_toolbar(self, widget):
-        widget.figure.clear()
-        widget.draw()
-
-        widget.setLayout(QtWid.QVBoxLayout())
-        widget.layout().setContentsMargins(0, 710, 50, -0)#(left, top, right, bottom)
-        widget.layout().setSpacing(0)
-        toolbar = NavigationToolbar(widget, self)
-        widget.layout().addWidget(toolbar)
-        widget.figure.clear()
-        widget.draw()
-
-
     def plot_norm_attenuation(self):
-        pass
+        # Loading transfer_function into plotter and setting filter type
+        filter_index = self.filter_selector.currentIndex()
+        approx_index = self.approx_selector.currentIndex()
+        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
+        tf = ss.ZerosPolesGain([2*np.pi, 2*np.pi * 2], [2*np.pi * 3, 2*np.pi * 4], 1) #TODO change this
+        self.plotters[1].set_transfer_function(tf)
+
+        self.plotters[1].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
+
+        # Setting filter template to plotter
+        #TODO change for actual template
+        template = {
+            'fp': 10,
+            'fa': 100,
+            'Ap': 2,
+            'Aa': 8
+        }
+
+        # Plotting normalised attenuation and template
+        self.plotters[1].plot_attenuation()
+        if self.plot_template_1.isChecked():
+            self.plotters[1].plot_template(template)
+
+        # Adding plot and navigation toolbar to tab
+        if self.plot_2.count() > 2:
+            # Cleaning stacked widget
+            self.plot_2.removeWidget(self.filter_data.currentWidget())
+        self.plot_2.setCurrentIndex(self.plot_2.addWidget(self.plotters[1].canvas))
+        toolbar = NavigationToolbar(self.plotters[1].canvas, self)
+        if self.toolbar_2.count() > 2:
+            # Cleaning stacked widget
+            self.toolbar_2.removeWidget(self.filter_data.currentWidget())
+        self.toolbar_2.setCurrentIndex(self.toolbar_2.addWidget(toolbar))
 
 
     def plot_phase(self):
-        pass
+        # Loading transfer_function into plotter and setting filter type
+        filter_index = self.filter_selector.currentIndex()
+        approx_index = self.approx_selector.currentIndex()
+        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
+        tf = ss.ZerosPolesGain([2*np.pi, 2*np.pi * 2], [2*np.pi * 3, 2*np.pi * 4], 1) #TODO change this
+        self.plotters[2].set_transfer_function(tf)
+
+        self.plotters[2].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
+
+        # Plotting phase
+        self.plotters[2].plot_phase()
+
+        # Adding plot and navigation toolbar to tab
+        if self.plot_3.count() > 2:
+            # Cleaning stacked widget
+            self.plot_3.removeWidget(self.filter_data.currentWidget())
+        self.plot_3.setCurrentIndex(self.plot_3.addWidget(self.plotters[2].canvas))
+        toolbar = NavigationToolbar(self.plotters[2].canvas, self)
+        if self.toolbar_3.count() > 2:
+            # Cleaning stacked widget
+            self.toolbar_3.removeWidget(self.filter_data.currentWidget())
+        self.toolbar_3.setCurrentIndex(self.toolbar_3.addWidget(toolbar))
 
 
     def plot_group_delay(self):
-        pass
+        # Loading transfer_function into plotter and setting filter type
+        filter_index = self.filter_selector.currentIndex()
+        approx_index = self.approx_selector.currentIndex()
+        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
+        tf = ss.ZerosPolesGain([2*np.pi, 2*np.pi * 2], [2*np.pi * 3, 2*np.pi * 4], 1) #TODO change this
+        self.plotters[3].set_transfer_function(tf)
+
+        self.plotters[3].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
+
+        # Setting filter template to plotter
+        if filter_index == 4:
+            #TODO change for actual template
+            gd_template = {
+                'ft': 3,
+                'group_delay': 0.15,
+                'tol': 10
+            }
+
+        # Plotting group delay and template
+        self.plotters[3].plot_group_delay()
+        if self.plot_template_1.isChecked() and filter_index == 4:
+            self.plotters[3].plot_gd_template(gd_template)
+
+        # Adding plot and navigation toolbar to tab
+        if self.plot_4.count() > 2:
+            # Cleaning stacked widget
+            self.plot_4.removeWidget(self.filter_data.currentWidget())
+        self.plot_4.setCurrentIndex(self.plot_4.addWidget(self.plotters[3].canvas))
+        toolbar = NavigationToolbar(self.plotters[3].canvas, self)
+        if self.toolbar_4.count() > 2:
+            # Cleaning stacked widget
+            self.toolbar_4.removeWidget(self.filter_data.currentWidget())
+        self.toolbar_4.setCurrentIndex(self.toolbar_4.addWidget(toolbar))
 
 
     def plot_poles_and_zeros(self):
-        pass
+        # Loading transfer_function into plotter and setting filter type
+        filter_index = self.filter_selector.currentIndex()
+        approx_index = self.approx_selector.currentIndex()
+        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
+        tf = ss.ZerosPolesGain([2*np.pi, 2*np.pi * 2], [2*np.pi * 3, 2*np.pi * 4], 1) #TODO change this
+        self.plotters[4].set_transfer_function(tf)
+
+        self.plotters[4].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
+
+        # Plotting poles and zeros
+        self.plotters[4].plot_poles_and_zeros()
+
+        # Adding plot and navigation toolbar to tab
+        if self.plot_5.count() > 2:
+            # Cleaning stacked widget
+            self.plot_5.removeWidget(self.filter_data.currentWidget())
+        self.plot_5.setCurrentIndex(self.plot_5.addWidget(self.plotters[4].canvas))
+        toolbar = NavigationToolbar(self.plotters[4].canvas, self)
+        if self.toolbar_5.count() > 2:
+            # Cleaning stacked widget
+            self.toolbar_5.removeWidget(self.filter_data.currentWidget())
+        self.toolbar_5.setCurrentIndex(self.toolbar_5.addWidget(toolbar))
 
 
     def plot_q(self):
-        pass
+        # Loading transfer_function into plotter and setting filter type
+        filter_index = self.filter_selector.currentIndex()
+        approx_index = self.approx_selector.currentIndex()
+        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
+        tf = ss.ZerosPolesGain([2*np.pi, 2*np.pi * 2], [2*np.pi * 3, 2*np.pi * 4], 1) #TODO change this
+        self.plotters[5].set_transfer_function(tf)
+
+        self.plotters[5].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
+
+        # Plotting Q factor
+        self.plotters[5].plot_q()
+
+        # Adding plot and navigation toolbar to tab
+        if self.plot_6.count() > 2:
+            # Cleaning stacked widget
+            self.plot_6.removeWidget(self.filter_data.currentWidget())
+        self.plot_6.setCurrentIndex(self.plot_6.addWidget(self.plotters[5].canvas))
+        toolbar = NavigationToolbar(self.plotters[5].canvas, self)
+        if self.toolbar_6.count() > 2:
+            # Cleaning stacked widget
+            self.toolbar_6.removeWidget(self.filter_data.currentWidget())
+        self.toolbar_6.setCurrentIndex(self.toolbar_6.addWidget(toolbar))
 
 
     def plot_impulse_response(self):
-        pass
+        # Loading transfer_function into plotter and setting filter type
+        filter_index = self.filter_selector.currentIndex()
+        approx_index = self.approx_selector.currentIndex()
+        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
+        tf = ss.ZerosPolesGain([2*np.pi, 2*np.pi * 2], [2*np.pi * 3, 2*np.pi * 4], 1) #TODO change this
+        self.plotters[6].set_transfer_function(tf)
+
+        self.plotters[6].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
+
+        # Plotting impulse response
+        self.plotters[6].plot_impulse_response()
+
+        # Adding plot and navigation toolbar to tab
+        if self.plot_7.count() > 2:
+            # Cleaning stacked widget
+            self.plot_7.removeWidget(self.filter_data.currentWidget())
+        self.plot_7.setCurrentIndex(self.plot_7.addWidget(self.plotters[6].canvas))
+        toolbar = NavigationToolbar(self.plotters[6].canvas, self)
+        if self.toolbar_7.count() > 2:
+            # Cleaning stacked widget
+            self.toolbar_7.removeWidget(self.filter_data.currentWidget())
+        self.toolbar_7.setCurrentIndex(self.toolbar_7.addWidget(toolbar))
 
 
     def plot_step_response(self):
-        pass
+        # Loading transfer_function into plotter and setting filter type
+        filter_index = self.filter_selector.currentIndex()
+        approx_index = self.approx_selector.currentIndex()
+        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
+        tf = ss.ZerosPolesGain([2*np.pi, 2*np.pi * 2], [2*np.pi * 3, 2*np.pi * 4], 1) #TODO change this
+        self.plotters[7].set_transfer_function(tf)
+
+        self.plotters[7].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
+
+        # Plotting step response
+        self.plotters[7].plot_step_response()
+
+        # Adding plot and navigation toolbar to tab
+        if self.plot_8.count() > 2:
+            # Cleaning stacked widget
+            self.plot_8.removeWidget(self.filter_data.currentWidget())
+        self.plot_8.setCurrentIndex(self.plot_8.addWidget(self.plotters[7].canvas))
+        toolbar = NavigationToolbar(self.plotters[7].canvas, self)
+        if self.toolbar_8.count() > 2:
+            # Cleaning stacked widget
+            self.toolbar_8.removeWidget(self.filter_data.currentWidget())
+        self.toolbar_8.setCurrentIndex(self.toolbar_8.addWidget(toolbar))
 
 
     def on_start_up(self):
         # Default filter is Low-Pass
         self.filter_selected()
 
-        # Disabeling plot controls
-        #self.label_x_1.setDisabled(True)
-        #self.scale_x_1.setDisabled(True)
-        #self.min_x_1.setDisabled(True)
-        #self.max_x_1.setDisabled(True)
-        #self.label_y_1.setDisabled(True)
-        #self.scale_y_1.setDisabled(True)
-        #self.min_y_1.setDisabled(True)
-        #self.max_y_1.setDisabled(True)
-        #self.auto_scale_1.setDisabled(True)
         self.plot_template_1.setDisabled(True)
-        self.label_x_2.setDisabled(True)
-        self.scale_x_2.setDisabled(True)
-        self.min_x_2.setDisabled(True)
-        self.max_x_2.setDisabled(True)
-        self.label_y_2.setDisabled(True)
-        self.scale_y_2.setDisabled(True)
-        self.min_y_2.setDisabled(True)
-        self.max_y_2.setDisabled(True)
-        self.auto_scale_2.setDisabled(True)
-        self.plot_template_2.setDisabled(True)
-        self.label_x_3.setDisabled(True)
-        self.scale_x_3.setDisabled(True)
-        self.min_x_3.setDisabled(True)
-        self.max_x_3.setDisabled(True)
-        self.label_y_3.setDisabled(True)
-        self.scale_y_3.setDisabled(True)
-        self.min_y_3.setDisabled(True)
-        self.max_y_3.setDisabled(True)
-        self.auto_scale_3.setDisabled(True)
-        self.plot_template_3.setDisabled(True)
-        self.label_x_4.setDisabled(True)
-        self.scale_x_4.setDisabled(True)
-        self.min_x_4.setDisabled(True)
-        self.max_x_4.setDisabled(True)
-        self.label_y_4.setDisabled(True)
-        self.scale_y_4.setDisabled(True)
-        self.min_y_4.setDisabled(True)
-        self.max_y_4.setDisabled(True)
-        self.auto_scale_4.setDisabled(True)
-        self.label_x_5.setDisabled(True)
-        self.scale_x_5.setDisabled(True)
-        self.min_x_5.setDisabled(True)
-        self.max_x_5.setDisabled(True)
-        self.label_y_5.setDisabled(True)
-        self.scale_y_5.setDisabled(True)
-        self.min_y_5.setDisabled(True)
-        self.max_y_5.setDisabled(True)
-        self.auto_scale_5.setDisabled(True)
-        self.label_x_6.setDisabled(True)
-        self.scale_x_6.setDisabled(True)
-        self.min_x_6.setDisabled(True)
-        self.max_x_6.setDisabled(True)
-        self.label_y_6.setDisabled(True)
-        self.scale_y_6.setDisabled(True)
-        self.min_y_6.setDisabled(True)
-        self.max_y_6.setDisabled(True)
-        self.auto_scale_6.setDisabled(True)
-        self.label_x_7.setDisabled(True)
-        self.scale_x_7.setDisabled(True)
-        self.min_x_7.setDisabled(True)
-        self.max_x_7.setDisabled(True)
-        self.label_y_7.setDisabled(True)
-        self.scale_y_7.setDisabled(True)
-        self.min_y_7.setDisabled(True)
-        self.max_y_7.setDisabled(True)
-        self.auto_scale_7.setDisabled(True)
-        self.label_x_8.setDisabled(True)
-        self.scale_x_8.setDisabled(True)
-        self.min_x_8.setDisabled(True)
-        self.max_x_8.setDisabled(True)
-        self.label_y_8.setDisabled(True)
-        self.scale_y_8.setDisabled(True)
-        self.min_y_8.setDisabled(True)
-        self.max_y_8.setDisabled(True)
-        self.auto_scale_8.setDisabled(True)
 
 
-    def enable_approx_plotter_controls(self):
-        #self.label_x_1.setEnabled(True)
-        #self.scale_x_1.setEnabled(True)
-        #self.min_x_1.setEnabled(True)
-        #self.max_x_1.setEnabled(True)
-        #self.label_y_1.setEnabled(True)
-        #self.scale_y_1.setEnabled(True)
-        #self.min_y_1.setEnabled(True)
-        #self.max_y_1.setEnabled(True)
-        #self.auto_scale_1.setEnabled(True)
+    def enable_when_calculating(self):
         self.plot_template_1.setEnabled(True)
-        self.label_x_2.setEnabled(True)
-        self.scale_x_2.setEnabled(True)
-        self.min_x_2.setEnabled(True)
-        self.max_x_2.setEnabled(True)
-        self.label_y_2.setEnabled(True)
-        self.scale_y_2.setEnabled(True)
-        self.min_y_2.setEnabled(True)
-        self.max_y_2.setEnabled(True)
-        self.auto_scale_2.setEnabled(True)
-        self.plot_template_2.setEnabled(True)
-        self.label_x_3.setEnabled(True)
-        self.scale_x_3.setEnabled(True)
-        self.min_x_3.setEnabled(True)
-        self.max_x_3.setEnabled(True)
-        self.label_y_3.setEnabled(True)
-        self.scale_y_3.setEnabled(True)
-        self.min_y_3.setEnabled(True)
-        self.max_y_3.setEnabled(True)
-        self.auto_scale_3.setEnabled(True)
-        self.label_x_4.setEnabled(True)
-        self.scale_x_4.setEnabled(True)
-        self.min_x_4.setEnabled(True)
-        self.max_x_4.setEnabled(True)
-        self.label_y_4.setEnabled(True)
-        self.scale_y_4.setEnabled(True)
-        self.min_y_4.setEnabled(True)
-        self.max_y_4.setEnabled(True)
-        self.auto_scale_4.setEnabled(True)
-        self.label_x_5.setEnabled(True)
-        self.scale_x_5.setEnabled(True)
-        self.min_x_5.setEnabled(True)
-        self.max_x_5.setEnabled(True)
-        self.label_y_5.setEnabled(True)
-        self.scale_y_5.setEnabled(True)
-        self.min_y_5.setEnabled(True)
-        self.max_y_5.setEnabled(True)
-        self.auto_scale_5.setEnabled(True)
-        self.label_x_6.setEnabled(True)
-        self.scale_x_6.setEnabled(True)
-        self.min_x_6.setEnabled(True)
-        self.max_x_6.setEnabled(True)
-        self.label_y_6.setEnabled(True)
-        self.scale_y_6.setEnabled(True)
-        self.min_y_6.setEnabled(True)
-        self.max_y_6.setEnabled(True)
-        self.auto_scale_6.setEnabled(True)
-        self.label_x_7.setEnabled(True)
-        self.scale_x_7.setEnabled(True)
-        self.min_x_7.setEnabled(True)
-        self.max_x_7.setEnabled(True)
-        self.label_y_7.setEnabled(True)
-        self.scale_y_7.setEnabled(True)
-        self.min_y_7.setEnabled(True)
-        self.max_y_7.setEnabled(True)
-        self.auto_scale_7.setEnabled(True)
-        self.label_x_8.setEnabled(True)
-        self.scale_x_8.setEnabled(True)
-        self.min_x_8.setEnabled(True)
-        self.max_x_8.setEnabled(True)
-        self.label_y_8.setEnabled(True)
-        self.scale_y_8.setEnabled(True)
-        self.min_y_8.setEnabled(True)
-        self.max_y_8.setEnabled(True)
-        self.auto_scale_8.setEnabled(True)
-
