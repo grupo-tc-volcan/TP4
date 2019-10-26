@@ -62,6 +62,26 @@ class AttFilterApproximator():
         self.h_norm = None
         self.h_denorm = None
     
+    def get_normalised_zpk(self) -> tuple:
+        """ Returns a tuple of three elements containing Zeros, Poles and Gain,
+        of the normalised transfer function.
+        Return -> (zeros, poles, gain) or None if not computed!
+        """
+        if self.h_norm is None:
+            return None
+        else:
+            return (self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain)
+    
+    def get_zpk(self) -> tuple:
+        """ Returns a tuple of three elements containing Zeros, Poles and Gain,
+        of the denormalised transfer function.
+        Return -> (zeros, poles, gain) or None if not computed!
+        """
+        if self.h_denorm is None:
+            return None
+        else:
+            return (self.h_denorm.zeros, self.h_denorm.poles, self.h_denorm.gain)
+    
     def compute(self) -> ApproximationErrorCode:
         """ Computes the transfer function with the filled parameters
         of the approximation. Any error will be returned as an error code.
