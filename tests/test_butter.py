@@ -24,15 +24,21 @@ def test_butter_by_template():
 def test_compute(approximator):
     error = approximator.compute()
     if error is ApproximationErrorCode.OK:
-        plot_transfer_function(approximator.h_denorm)
+        plot_transfer_function(
+            [
+                approximator.h_norm,
+                approximator.h_denorm
+            ]
+        )
     else:
         print("[ERROR] -> {}".format(error))
 
 
-def plot_transfer_function(h):
+def plot_transfer_function(hs):
     pyplot.figure()
-    w, m, p = signal.bode(h, n=100000)
-    pyplot.semilogx(w, m)
+    for index, h in enumerate(hs):
+        w, m, p = signal.bode(h, n=100000)
+        pyplot.semilogx(w, m, label="H_{}".format(index))
     pyplot.show()
 
     input("Press to exit...")

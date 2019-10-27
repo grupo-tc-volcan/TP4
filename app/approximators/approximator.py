@@ -128,6 +128,7 @@ class AttFilterApproximator():
                     else:
                         wan, aa, wpn, ap = self._normalised_template()
                         error_code = self.compute_normalised_by_template(ap, aa, wan)
+                    self._adjust_normalised_gain()
                     
                     # Denormalisation process, first we need to pass every transfer function
                     # to a TrasnferFunction object, using that apply the denormalisation
@@ -191,7 +192,18 @@ class AttFilterApproximator():
         self.h_denorm = self.h_denorm.to_zpk()
 
         return ApproximationErrorCode.OK
-    
+
+    def _adjust_normalised_gain(self):
+        """ Adjusts the gain of the normalised transfer function to the unity.
+        """
+        if self.h_norm is not None:
+            current_gain = self.h_norm.gain
+            for zero in self.h_norm.zeros:
+                current_gain *= abs(zero)
+            for pole in self.h_norm.poles:
+                current_gain /= abs(pole)
+            self.h_norm.gain /= current_gain
+
     def _compute_normalised_by_match(self, ap, callback) -> ApproximationErrorCode:
         """ Generates normalised transfer function for each order until the callbacks
         verifies it matches the requierements. 
