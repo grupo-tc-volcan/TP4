@@ -43,7 +43,61 @@ def test_by_fixed_order():
     plot_results(results)
 
 
-def test_by_template():
+def test_by_max_q():
+    butter = ButterworthApprox()
+
+    print("Testing by fixed order...")
+
+    butter.type = "low-pass"
+    butter.gain = 0
+    butter.fpl = 1000
+    butter.Apl = 2
+
+    results = []
+    for max_q in np.linspace(0.1, 0.6, 20):
+        butter.q = max_q
+
+        print("Using MaxQ={} and Order={}".format(max_q, butter.ord))
+        if butter.compute() is ApproximationErrorCode.OK:
+            for pole in butter.get_zpk()[1]:
+                print("fo: {} Q: {}".format(
+                    butter.calculate_frequency(pole),
+                    butter.calculate_selectivity(pole)
+                ))
+            print("\n")
+            results.append(("Butterworth MaxQ={}".format(max_q), butter.h_denorm))
+        else:
+            input("[ERROR] => {}".format(butter.error_code))
+
+    plot_results(results)
+
+
+def test_by_template_denorm():
+    butter = ButterworthApprox()
+
+    print("Testing by fixed order...")
+
+    butter.type = "low-pass"
+    butter.gain = 0
+
+    butter.fpl = 1000
+    butter.Apl = 2
+    butter.fal = 10000
+    butter.Aal = 20
+
+    results = []
+    for denorm in range(0, 101, 10):
+        butter.denorm = denorm if denorm != 0 else 1
+
+        if butter.compute() is ApproximationErrorCode.OK:
+            results.append(("Butterworth Denorm={}".format(denorm), butter.h_denorm))
+        else:
+            input("[ERROR] => {}".format(butter.error_code))
+
+    plot_results(results)
+
+
+def test_by_template_low_pass():
     butter = ButterworthApprox()
 
     print("Testing by fixed order...")
@@ -55,7 +109,6 @@ def test_by_template():
     butter.Apl = 2
     butter.fal = 2000
     butter.Aal = 20
-    butter.denorm = 100
 
     results = []
     if butter.compute() is ApproximationErrorCode.OK:
@@ -74,4 +127,4 @@ def test_by_template():
 
 
 if __name__ == "__main__":
-    test_by_template()
+    test_by_max_q()

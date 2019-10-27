@@ -7,7 +7,7 @@ from enum import Enum
 from functools import partial
 
 # Constant Values
-MAXIMUM_ORDER = 20
+MAXIMUM_ORDER = 50
 
 
 class ApproximationErrorCode(Enum):
@@ -129,13 +129,14 @@ class AttFilterApproximator():
                     else:
                         wan, aa, wpn, ap = self._normalised_template()
                         error_code = self.compute_normalised_by_template(ap, aa, wan)
-                    self._adjust_normalised_gain()
+                    self.adjust_function_gain(self.h_norm, 1)
                     
                     # Denormalisation process, first we need to pass every transfer function
                     # to a TrasnferFunction object, using that apply the denormalisation
                     # algorithm of scipy.signal... finally translating ir to a ZeroPolesGain object!
                     if error_code is ApproximationErrorCode.OK:
                         error_code = self._denormalised_transfer_function()
+                        self.adjust_function_gain(self.h_denorm, 10 ** (self.gain / 20))
 
                         # If using the Q maximum value mode of design, check if valid h_denorm
                         if error_code is ApproximationErrorCode.OK:
@@ -144,6 +145,8 @@ class AttFilterApproximator():
                                     break
                         else:
                             break
+                else:
+                    error_code = ApproximationErrorCode.MAXIMUM_ORDER_REACHED
 
         # Returning the error code...
         self.error_code = error_code
@@ -172,14 +175,14 @@ class AttFilterApproximator():
 
         if aa is not None:
             w_values, mag_values, phase_values = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
-            stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= -ap]
-            relative_adjust = ((wa - stop_band[0]) / stop_band[0] ) * (self.denorm / 100) + 1
+            stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= -aa]
+            relative_adjust = ((wa - stop_band[0]) / stop_band[0]) * (self.denorm / 100) + 1
         else:
             relative_adjust = 1
 
         new_zeros = self.h_norm.zeros * relative_adjust
         new_poles = self.h_norm.poles * relative_adjust
-        new_gain = self.h_norm.gain * 10 ** (self.gain / 20)
+        new_gain = self.h_norm.gain
 
         # Frequency transformation to get the desired filter
         if self.type == FilterType.LOW_PASS.value:
@@ -194,17 +197,6 @@ class AttFilterApproximator():
         self.h_denorm = self.h_denorm.to_zpk()
 
         return ApproximationErrorCode.OK
-
-    def _adjust_normalised_gain(self):
-        """ Adjusts the gain of the normalised transfer function to the unity.
-        """
-        if self.h_norm is not None:
-            current_gain = self.h_norm.gain
-            for zero in self.h_norm.zeros:
-                current_gain *= abs(zero)
-            for pole in self.h_norm.poles:
-                current_gain /= abs(pole)
-            self.h_norm.gain /= current_gain
 
     def _compute_normalised_by_match(self, ap, callback) -> ApproximationErrorCode:
         """ Generates normalised transfer function for each order until the callbacks
@@ -361,6 +353,32 @@ class AttFilterApproximator():
     #----------------#
 
     @staticmethod
+    def calculate_xi(root):
+        k = (root.imag / root.real) ** 2
+        return np.sqrt(1 / (1 + k))
+
+    @staticmethod
+    def calculate_frequency(root):
+        xi = AttFilterApproximator.calculate_xi(root)
+        return root.real / (xi * 2 * np.pi)
+
+    @staticmethod
+    def calculate_selectivity(root):
+        xi = AttFilterApproximator.calculate_xi(root)
+        return 1 / (2 * xi)
+
+    @staticmethod
+    def adjust_function_gain(transfer_function, gain):
+        if transfer_function is not None:
+            current_gain = transfer_function.gain
+            for zero in transfer_function.zeros:
+                current_gain *= abs(zero)
+            for pole in transfer_function.poles:
+                current_gain /= abs(pole)
+
+            transfer_function.gain /= current_gain * gain
+
+    @staticmethod
     def matches_normalised_template(ap, aa, wa, zpk) -> bool:
         """ Returns whether the ZeroPolesGain object verifies the normalised
         template given by the aa, ap, wa values. """
@@ -378,17 +396,12 @@ class AttFilterApproximator():
             return False
 
         for pole in zpk.poles:
-            if type(pole) is complex:
-                k = ( pole.imag / pole.real ) ** 2
-                xi = np.sqrt( 1 / (1 + k) )
-                q = 1 / (2 * xi)
-                
-                if q > max_q:
-                    return False
-            else:
-                continue
+            q = AttFilterApproximator.calculate_selectivity(pole)
+            if q > max_q:
+                return False
         else:
             return True
+
 
 class GroupDelayFilterApproximator():
     def __init__(self):
