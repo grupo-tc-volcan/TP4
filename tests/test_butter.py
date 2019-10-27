@@ -43,5 +43,35 @@ def test_by_fixed_order():
     plot_results(results)
 
 
+def test_by_template():
+    butter = ButterworthApprox()
+
+    print("Testing by fixed order...")
+
+    butter.type = "low-pass"
+    butter.gain = 0
+
+    butter.fpl = 1000
+    butter.Apl = 2
+    butter.fal = 2000
+    butter.Aal = 20
+    butter.denorm = 100
+
+    results = []
+    if butter.compute() is ApproximationErrorCode.OK:
+        results.append(
+            ("Butterworth fp={} fa={} Ap={} Aa={}".format(
+                butter.fpl,
+                butter.fal,
+                butter.Apl,
+                butter.Aal
+            ),
+             butter.h_denorm)
+        )
+    else:
+        input("[ERROR] => {}".format(butter.error_code))
+    plot_results(results)
+
+
 if __name__ == "__main__":
-    pass
+    test_by_template()

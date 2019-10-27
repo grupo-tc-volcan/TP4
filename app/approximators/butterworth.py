@@ -45,7 +45,9 @@ class ButterworthApprox(AttFilterApproximator):
 
     @staticmethod
     def compute_order(ap, aa, wan):
-        return np.log10( np.sqrt(10 ** (aa / 10) - 1) / np.sqrt(10 ** (ap / 10) - 1) ) / np.log10(wan)
+        order = np.log10(np.sqrt(10 ** (aa / 10) - 1) / np.sqrt(10 ** (ap / 10) - 1)) / np.log10(wan)
+        rounded_order = round(order)
+        return rounded_order if rounded_order >= order else rounded_order + 1
 
     @staticmethod
     def compute_epsilon(ap):
