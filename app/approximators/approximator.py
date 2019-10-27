@@ -79,7 +79,7 @@ class AttFilterApproximator():
         if self.h_norm is None:
             return None
         else:
-            return (self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain)
+            return self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain
     
     def get_zpk(self) -> tuple:
         """ Returns a tuple of three elements containing Zeros, Poles and Gain,
@@ -89,7 +89,7 @@ class AttFilterApproximator():
         if self.h_denorm is None:
             return None
         else:
-            return (self.h_denorm.zeros, self.h_denorm.poles, self.h_denorm.gain)
+            return self.h_denorm.zeros, self.h_denorm.poles, self.h_denorm.gain
     
     def compute(self) -> ApproximationErrorCode:
         """ Computes the transfer function with the filled parameters
@@ -166,9 +166,13 @@ class AttFilterApproximator():
         """ Denormalises the transfer function returned by the approximation used. """
         # Adding the gain and the relative denormalisation between the transition band
         wa, aa, wp, ap = self.get_norm_template()
-        w_values, mag_values, phase_values = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
-        stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= -ap]
-        relative_adjust = ((wa - stop_band[0]) / stop_band[0] ) * (self.denorm / 100) + 1
+
+        if aa is not None:
+            w_values, mag_values, phase_values = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
+            stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= -ap]
+            relative_adjust = ((wa - stop_band[0]) / stop_band[0] ) * (self.denorm / 100) + 1
+        else:
+            relative_adjust = 1
 
         new_zeros = self.h_norm.zeros * relative_adjust
         new_poles = self.h_norm.poles * relative_adjust
@@ -184,6 +188,7 @@ class AttFilterApproximator():
         elif self.type == FilterType.BAND_REJECT.value:
             z, p, k = ss.lp2bs_zpk(new_zeros, new_poles, new_gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
         self.h_denorm = ss.lti(z, p, k)
+        self.h_denorm = self.h_denorm.to_zpk()
 
         return ApproximationErrorCode.OK
     
@@ -217,7 +222,10 @@ class AttFilterApproximator():
             ap = self.Apl
         elif self.Apr > 0:
             ap = self.Apr
-        ap = ap - self.gain
+        else:
+            ap = None
+        if ap is not None:
+            ap = ap - self.gain
 
         # Choosing the minimum attenuation of the stop band
         # and adapting it to use a Gain
@@ -227,7 +235,10 @@ class AttFilterApproximator():
             aa = self.Aal
         elif self.Aar > 0:
             aa = self.Aar
-        aa = aa - self.gain
+        else:
+            aa = None
+        if aa is not None:
+            aa = aa - self.gain
 
         if self.type == FilterType.LOW_PASS.value:
             return self.fal / self.fpl, aa, 1, ap
@@ -240,11 +251,11 @@ class AttFilterApproximator():
 
     def _validate_general(self) -> ApproximationErrorCode:
         """ Returns if general parameters are valid """
-        if self.gain <= 0:
+        if self.gain < 0:
             return ApproximationErrorCode.INVALID_GAIN
-        elif self.ord <= 0:
+        elif self.ord < 0:
             return ApproximationErrorCode.INVALID_ORDER
-        elif self.q <= 0:
+        elif self.q < 0:
             return ApproximationErrorCode.INVALID_Q
         elif self.denorm < 0 or self.denorm > 100:
             return ApproximationErrorCode.INVALID_DENORM
