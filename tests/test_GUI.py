@@ -18,4 +18,4 @@ def test_main_view():
     app = QtWid.QApplication([])
     view = MainView()
     view.show()
-    app.exec()
+    app.exec()  

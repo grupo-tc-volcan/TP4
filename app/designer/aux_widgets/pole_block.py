@@ -34,15 +34,15 @@ class Ui_PoleBlock(object):
         self.q_val = QtWidgets.QLabel(self.frame)
         self.q_val.setObjectName("q_val")
         self.gridLayout_2.addWidget(self.q_val, 0, 5, 1, 1)
-        self.wp = QtWidgets.QLabel(self.frame)
-        self.wp.setObjectName("wp")
-        self.gridLayout_2.addWidget(self.wp, 0, 1, 1, 1)
+        self.fp = QtWidgets.QLabel(self.frame)
+        self.fp.setObjectName("fp")
+        self.gridLayout_2.addWidget(self.fp, 0, 1, 1, 1)
         self.label = QtWidgets.QLabel(self.frame)
         self.label.setObjectName("label")
         self.gridLayout_2.addWidget(self.label, 0, 2, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.frame)
-        self.label_2.setObjectName("label_2")
-        self.gridLayout_2.addWidget(self.label_2, 0, 3, 1, 1)
+        self.order = QtWidgets.QLabel(self.frame)
+        self.order.setObjectName("order")
+        self.gridLayout_2.addWidget(self.order, 0, 3, 1, 1)
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
 
         self.retranslateUi(PoleBlock)
@@ -54,9 +54,9 @@ class Ui_PoleBlock(object):
         self.label_4.setText(_translate("PoleBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">Q:</span></p></body></html>"))
         self.label_3.setText(_translate("PoleBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">f</span><span style=\" font-size:10pt; vertical-align:sub;\">p</span><span style=\" font-size:10pt;\">:</span></p></body></html>"))
         self.q_val.setText(_translate("PoleBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">...</span></p></body></html>"))
-        self.wp.setText(_translate("PoleBlock", "<html><head/><body><p>...</p></body></html>"))
+        self.fp.setText(_translate("PoleBlock", "<html><head/><body><p>...</p></body></html>"))
         self.label.setText(_translate("PoleBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">n:</span></p></body></html>"))
-        self.label_2.setText(_translate("PoleBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">...</span></p></body></html>"))
+        self.order.setText(_translate("PoleBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">...</span></p></body></html>"))
 
 
 if __name__ == "__main__":

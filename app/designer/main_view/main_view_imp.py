@@ -14,8 +14,14 @@ from app.designer.filters_data.high_pass_imp import HighPassData
 from app.designer.filters_data.band_pass_imp import BandPassData
 from app.designer.filters_data.band_stop_imp import BandStopData
 from app.designer.filters_data.group_delay_imp import GroupDelayData
+from app.designer.aux_widgets.pole_block_imp import PoleBlock
+from app.designer.aux_widgets.zero_block_imp import ZeroBlock
+from app.designer.aux_widgets.cell_block_imp import CellBlock
+from app.designer.aux_widgets.cells_settings_imp import CellsSettings
 
 from app.plotter.plotter import FilterPlotter
+
+from app.auxiliary_calculators.wp_w0_q import SecondOrderAuxCalc
 
 FILTER_INDEX_TO_NAME = ['low-pass', 'high-pass', 'band-pass', 'band-stop', 'group-delay']
 
@@ -90,8 +96,10 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         #TODO try except block
 
         if is_data_valid:
+            # Enabling all widgets that make sense once the approximation is calculated
             self.enable_when_calculating()
 
+            # Plotting
             self.plot_attenuation()
             self.plot_norm_attenuation()
             self.plot_phase()
@@ -100,6 +108,24 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             self.plot_q()
             self.plot_impulse_response()
             self.plot_step_response()
+
+            # Adding all poles and zeros to lists in stages tab
+            #TODO filter_index = self.filter_selector.currentIndex()
+            #TODO approx_index = self.approx_selector.currentIndex()
+            #TODO second_order_calc = SecondOrderAuxCalc(self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk())
+            #TODO for pole in second_order_calc.pole_blocks:
+            #TODO     new_pole_widget = PoleBlock()
+            #TODO     new_pole_widget.fp.setText('{}'.format(pole['fp']))
+            #TODO     new_pole_widget.order.setText('{}'.format(pole['n']))
+            #TODO     if pole['n'] == 2:
+            #TODO         new_pole_widget.q_val.setText('{}'.format(round(pole['q'], 3)))
+            #TODO     else:
+            #TODO         new_pole_widget.q_val.setText('-')
+            #TODO for zero in second_order_calc.zero_blocks:
+            #TODO     new_zero_widget = ZeroBlock()
+            #TODO     new_zero_widget.fp.setText('{}'.format(zero['fp']))
+            #TODO     new_zero_widget.order.setText('{}'.format(zero['n']))
+
 
 
     def plot_template_toggle(self):
@@ -120,34 +146,34 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         # Setting filter template to plotter
         #TODO change for actual template
-        # TODO # Checking what kind of filter it is and building template accordingly
-        # TODO if self.filter_selector.currentIndex() == 0 or self.filter_selector.currentIndex() == 1 or self.filter_selector.currentIndex() == 4:
-        # TODO     template = {
-        # TODO         'fp': self.filter_data_widgets[filter_index].pass_freq.value(),
-        # TODO         'fa': self.filter_data_widgets[filter_index].stop_freq.value(),
-        # TODO         'Ap': self.filter_data_widgets[filter_index].pass_att.value(),
-        # TODO         'Aa': self.filter_data_widgets[filter_index].stop_att.value()
-        # TODO     }
-        # TODO elif self.filter_selector.currentIndex() == 2:
-        # TODO     template = {
-        # TODO         'fpl': self.filter_data_widgets[filter_index].pass_freq_l.value(),
-        # TODO         'fpr': self.filter_data_widgets[filter_index].pass_freq_r.value(),
-        # TODO         'fal': self.filter_data_widgets[filter_index].stop_freq_l.value(),
-        # TODO         'far': self.filter_data_widgets[filter_index].stop_freq_r.value(),
-        # TODO         'Ap': self.filter_data_widgets[filter_index].pass_att.value(),
-        # TODO         'Aal': self.filter_data_widgets[filter_index].stop_att_l.value(),
-        # TODO         'Aar': self.filter_data_widgets[filter_index].stop_att_r.value()
-        # TODO     }
-        # TODO elif self.filter_selector.currentIndex() == 3:
-        # TODO     template = {
-        # TODO         'fpl': self.filter_data_widgets[filter_index].pass_freq_l.value(),
-        # TODO         'fpr': self.filter_data_widgets[filter_index].pass_freq_r.value(),
-        # TODO         'fal': self.filter_data_widgets[filter_index].stop_freq_l.value(),
-        # TODO         'far': self.filter_data_widgets[filter_index].stop_freq_r.value(),
-        # TODO         'Apl': self.filter_data_widgets[filter_index].pass_att_l.value(),
-        # TODO         'Apr': self.filter_data_widgets[filter_index].pass_att_r.value(),
-        # TODO         'Aa': self.filter_data_widgets[filter_index].stop_att.value()
-        # TODO     }
+        #TODO # Checking what kind of filter it is and building template accordingly
+        #TODO if self.filter_selector.currentIndex() == 0 or self.filter_selector.currentIndex() == 1 or self.filter_selector.currentIndex() == 4:
+        #TODO     template = {
+        #TODO         'fp': self.filter_data_widgets[filter_index].pass_freq.value(),
+        #TODO         'fa': self.filter_data_widgets[filter_index].stop_freq.value(),
+        #TODO         'Ap': self.filter_data_widgets[filter_index].pass_att.value(),
+        #TODO         'Aa': self.filter_data_widgets[filter_index].stop_att.value()
+        #TODO     }
+        #TODO elif self.filter_selector.currentIndex() == 2:
+        #TODO     template = {
+        #TODO         'fpl': self.filter_data_widgets[filter_index].pass_freq_l.value(),
+        #TODO         'fpr': self.filter_data_widgets[filter_index].pass_freq_r.value(),
+        #TODO         'fal': self.filter_data_widgets[filter_index].stop_freq_l.value(),
+        #TODO         'far': self.filter_data_widgets[filter_index].stop_freq_r.value(),
+        #TODO         'Ap': self.filter_data_widgets[filter_index].pass_att.value(),
+        #TODO         'Aal': self.filter_data_widgets[filter_index].stop_att_l.value(),
+        #TODO         'Aar': self.filter_data_widgets[filter_index].stop_att_r.value()
+        #TODO     }
+        #TODO elif self.filter_selector.currentIndex() == 3:
+        #TODO     template = {
+        #TODO         'fpl': self.filter_data_widgets[filter_index].pass_freq_l.value(),
+        #TODO         'fpr': self.filter_data_widgets[filter_index].pass_freq_r.value(),
+        #TODO         'fal': self.filter_data_widgets[filter_index].stop_freq_l.value(),
+        #TODO         'far': self.filter_data_widgets[filter_index].stop_freq_r.value(),
+        #TODO         'Apl': self.filter_data_widgets[filter_index].pass_att_l.value(),
+        #TODO         'Apr': self.filter_data_widgets[filter_index].pass_att_r.value(),
+        #TODO         'Aa': self.filter_data_widgets[filter_index].stop_att.value()
+        #TODO     }
 
         template = {
             'fp': 10,
@@ -385,6 +411,24 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         self.plot_template_1.setDisabled(True)
 
+        self.poles_list.setDisabled(True)
+        self.zeros_list.setDisabled(True)
+        self.stages_list.setDisabled(True)
+        self.input_selector.setDisabled(True)
+        self.automatic_cascade.setDisabled(True)
+        self.accumulative_plot.setDisabled(True)
+        self.v_min.setDisabled(True)
+        self.v_max.setDisabled(True)
+
 
     def enable_when_calculating(self):
         self.plot_template_1.setEnabled(True)
+
+        self.poles_list.setEnabled(True)
+        self.zeros_list.setEnabled(True)
+        self.stages_list.setEnabled(True)
+        self.input_selector.setEnabled(True)
+        self.automatic_cascade.setEnabled(True)
+        self.accumulative_plot.setEnabled(True)
+        self.v_min.setEnabled(True)
+        self.v_max.setEnabled(True)

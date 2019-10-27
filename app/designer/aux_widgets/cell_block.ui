@@ -50,14 +50,14 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="6" column="2" colspan="2">
-       <widget class="QLabel" name="order_2">
+       <widget class="QLabel" name="dinamic_range">
         <property name="text">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
       <item row="5" column="3">
-       <widget class="QDoubleSpinBox" name="max_x_stages_3">
+       <widget class="QDoubleSpinBox" name="v_max">
         <property name="maximumSize">
          <size>
           <width>93</width>
@@ -83,7 +83,7 @@
        </widget>
       </item>
       <item row="2" column="3">
-       <widget class="QLabel" name="wp_2">
+       <widget class="QLabel" name="f0">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -96,7 +96,7 @@
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QDoubleSpinBox" name="min_x_stages_3">
+       <widget class="QDoubleSpinBox" name="v_min">
         <property name="maximumSize">
          <size>
           <width>93</width>
@@ -122,7 +122,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLabel" name="wp">
+       <widget class="QLabel" name="fp">
         <property name="text">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
