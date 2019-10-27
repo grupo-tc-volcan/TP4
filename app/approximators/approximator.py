@@ -72,7 +72,7 @@ class AttFilterApproximator():
         """
         return self._normalised_template()
     
-    def get_normalised_zpk(self) -> tuple:
+    def get_normalised_zpk(self):
         """ Returns a tuple of three elements containing Zeros, Poles and Gain,
         of the normalised transfer function.
         Return -> (zeros, poles, gain) or None if not computed!
@@ -80,9 +80,9 @@ class AttFilterApproximator():
         if self.h_norm is None:
             return None
         else:
-            return self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain
+            return self.h_norm
     
-    def get_zpk(self) -> tuple:
+    def get_zpk(self):
         """ Returns a tuple of three elements containing Zeros, Poles and Gain,
         of the denormalised transfer function.
         Return -> (zeros, poles, gain) or None if not computed!
@@ -90,7 +90,7 @@ class AttFilterApproximator():
         if self.h_denorm is None:
             return None
         else:
-            return self.h_denorm.zeros, self.h_denorm.poles, self.h_denorm.gain
+            return self.h_denorm
     
     def compute(self) -> ApproximationErrorCode:
         """ Computes the transfer function with the filled parameters
@@ -195,7 +195,7 @@ class AttFilterApproximator():
         elif self.type == FilterType.BAND_PASS.value:
             z, p, k = ss.lp2bp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
         elif self.type == FilterType.BAND_REJECT.value:
-            z, p, k = ss.lp2bs_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fal * self.far), 2 * np.pi * (self.far - self.fal))
+            z, p, k = ss.lp2bs_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fal * self.far), 2 * np.pi * (self.fpr - self.fpl))
         self.h_denorm = ss.lti(z, p, k)
         self.h_denorm = self.h_denorm.to_zpk()
 
@@ -233,8 +233,6 @@ class AttFilterApproximator():
             ap = self.Apr
         else:
             ap = None
-        if ap is not None:
-            ap = ap - self.gain
 
         # Choosing the minimum attenuation of the stop band
         # and adapting it to use a Gain
@@ -247,7 +245,7 @@ class AttFilterApproximator():
         else:
             aa = None
         if aa is not None:
-            aa = aa - self.gain
+            aa = aa + self.gain
 
         if self.type == FilterType.LOW_PASS.value:
             return self.fal / self.fpl, aa, 1, ap
@@ -379,7 +377,7 @@ class AttFilterApproximator():
             for pole in transfer_function.poles:
                 current_gain /= abs(pole)
 
-            transfer_function.gain /= current_gain * gain
+            transfer_function.gain = (transfer_function.gain / current_gain) * gain
 
     @staticmethod
     def matches_normalised_template(ap, aa, wa, zpk) -> bool:

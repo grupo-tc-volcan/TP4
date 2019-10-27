@@ -54,7 +54,7 @@ class FilterPlotter():
     def plot_attenuation(self):
         # Calculating plot points
         w, mag, self.phase = ss.bode(self.tf)
-        self.f_att = [2*np.pi * ang_freq for ang_freq in w]
+        self.f_att = [ang_freq/(2*np.pi) for ang_freq in w]
         self.attenuation = [-magnitude for magnitude in mag]
 
         # Plotting attenuation
@@ -101,33 +101,33 @@ class FilterPlotter():
                 'Aa' : ...
             }
         '''
-        if self.type == 'low-pass' or self.type =='group-delay':
+        if self.type == 'low-pass' or self.type == 'group-delay':
             width = template['fp'] - min(self.f_att)
-            height = max(self.attenuation) - template['Ap'] + template['G']
+            height = (max(self.attenuation) - template['Ap'] + template['G']) * 1.3
             x_start = min(self.f_att)
-            y_start = template['Ap']
+            y_start = template['Ap'] - template['G']
             pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
-            width = max(self.f_att) - template['fa']
+            width = (max(self.f_att) - template['fa']) * 1.3
             height = template['Aa'] + template['G']
             x_start = template['fa']
-            y_start = 0
+            y_start = - template['G']
             stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             self.axes.add_patch(pass_band_rect)
             self.axes.add_patch(stop_band_rect)
 
         elif self.type == 'high-pass':
-            width = max(self.f_att) - template['fp']
-            height = max(self.attenuation) - template['Ap'] + template['G']
+            width = (max(self.f_att) - template['fp']) * 1.3
+            height = (max(self.attenuation) - template['Ap'] + template['G']) * 1.3
             x_start = template['fp']
-            y_start = template['Ap']
+            y_start = template['Ap'] - template['G']
             pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = template['fa'] - min(self.f_att) 
             height = template['Aa'] + template['G']
             x_start = min(self.f_att)
-            y_start = 0
+            y_start = - template['G']
             stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             self.axes.add_patch(pass_band_rect)
@@ -135,21 +135,21 @@ class FilterPlotter():
 
         elif self.type == 'band-pass':
             width = template['fpr'] - template['fpl']
-            height = max(self.attenuation) - template['Ap']
+            height = max(self.attenuation) - template['Ap'] + template['G']
             x_start = template['fpl']
-            y_start = template['Ap']
+            y_start = template['Ap'] - template['G']
             pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = template['fal'] - min(self.f_att) 
             height = template['Aal'] + template['G']
             x_start = min(self.f_att)
-            y_start = 0
+            y_start = - template['G']
             stop_band_l_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
-            width = max(self.f_att) - template['far']
+            width = (max(self.f_att) - template['far']) * 1.3
             height = template['Aar'] + template['G']
             x_start = template['far']
-            y_start = 0
+            y_start = - template['G']
             stop_band_r_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             self.axes.add_patch(pass_band_rect)
@@ -158,21 +158,21 @@ class FilterPlotter():
 
         elif self.type == 'band-stop':
             width = template['fpl'] - min(self.f_att)
-            height = max(self.attenuation) - template['Apl'] + template['G']
+            height = (max(self.attenuation) - template['Apl'] + template['G']) * 1.3
             x_start = min(self.f_att)
-            y_start = template['Apl']
+            y_start = template['Apl'] - template['G']
             pass_band_l_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
-            width = max(self.f_att) - template['fpr']
-            height = max(self.attenuation) - template['Apr'] + template['G']
+            width = (max(self.f_att) - template['fpr']) * 1.3
+            height = (max(self.attenuation) - template['Apr'] + template['G']) * 1.3
             x_start = template['fpr']
-            y_start = template['Apr']
+            y_start = template['Apr'] - template['G']
             pass_band_r_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = template['far'] - template['fal']
             height = template['Aa'] + template['G']
             x_start = template['fal']
-            y_start = 0
+            y_start = - template['G']
             stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             self.axes.add_patch(pass_band_l_rect)
@@ -185,7 +185,7 @@ class FilterPlotter():
     def plot_phase(self):
         # Calculating plot points
         w, mag, self.phase = ss.bode(self.tf)
-        self.f_phase = [2*np.pi * ang_freq for ang_freq in w]
+        self.f_phase = [ang_freq/(2*np.pi) for ang_freq in w]
 
         # Plotting phase
         self.axes.clear()
@@ -203,7 +203,7 @@ class FilterPlotter():
         # Calculating plot points
         tf_as_num_and_den = self.tf.to_tf()
         w, self.group_delay = ss.group_delay((tf_as_num_and_den.num, tf_as_num_and_den.den))
-        self.f_gd = [2*np.pi * ang_freq for ang_freq in w]
+        self.f_gd = [ang_freq/(2*np.pi) for ang_freq in w]
 
         # Plotting group delay
         self.axes.clear()
@@ -221,9 +221,9 @@ class FilterPlotter():
         '''
         When a plot of the template is needed, the template argument should be a dictionary with the following information:
             group_delay_template = {
-                'ft' = ...,
-                'group_delay' = ...,
-                'tol' = ...
+                'ft' : ...,
+                'group_delay' : ...,
+                'tol' : ...
             }
         '''
         width = template['ft'] - min(self.f_gd)

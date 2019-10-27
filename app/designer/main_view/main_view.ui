@@ -42,7 +42,7 @@
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -706,22 +706,52 @@
          </widget>
         </item>
         <item row="1" column="0" rowspan="4" colspan="4">
-         <widget class="QListView" name="poles_list">
+         <widget class="QListWidget" name="poles_list">
           <property name="maximumSize">
            <size>
             <width>200</width>
             <height>16777215</height>
            </size>
           </property>
+          <property name="dragEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="dragDropOverwriteMode">
+           <bool>true</bool>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragDrop</enum>
+          </property>
+          <property name="defaultDropAction">
+           <enum>Qt::MoveAction</enum>
+          </property>
+          <property name="resizeMode">
+           <enum>QListView::Adjust</enum>
+          </property>
          </widget>
         </item>
         <item row="1" column="4" rowspan="4" colspan="2">
-         <widget class="QListView" name="zeros_list">
+         <widget class="QListWidget" name="zeros_list">
           <property name="maximumSize">
            <size>
             <width>200</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="dragEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="dragDropOverwriteMode">
+           <bool>true</bool>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragDrop</enum>
+          </property>
+          <property name="defaultDropAction">
+           <enum>Qt::MoveAction</enum>
+          </property>
+          <property name="resizeMode">
+           <enum>QListView::Adjust</enum>
           </property>
          </widget>
         </item>
