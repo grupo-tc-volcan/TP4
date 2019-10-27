@@ -135,19 +135,23 @@ if __name__ == "__main__":
         fpl=4000,
         fpr=6000,
         apl=2,
+        apr=2,
         fal=1000,
         far=10000,
-        aal=10
+        aal=10,
+        aar=10
     )
 
     test_by_template(
         "band-stop",
-        fal=4000,
-        far=6000,
+        fal=2500,
+        far=4000,
         apl=2,
+        apr=2,
         fpl=1000,
         fpr=10000,
-        aal=10
+        aal=10,
+        aar=10
     )
 
     test_by_template(
