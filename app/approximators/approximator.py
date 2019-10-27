@@ -119,7 +119,7 @@ class AttFilterApproximator():
                 # and verifies if matches...
                 begin_order = 1 if self.q > 0 else self.ord
                 end_order = MAXIMUM_ORDER if self.q > 0 else self.ord
-                for order in range(begin_order, end_order + 1):
+                for order in range(end_order, begin_order - 1, -1):
                     self.ord = order
 
                     # When a fixed order is given, it should be prioritised...
@@ -136,7 +136,6 @@ class AttFilterApproximator():
                     # algorithm of scipy.signal... finally translating ir to a ZeroPolesGain object!
                     if error_code is ApproximationErrorCode.OK:
                         error_code = self._denormalised_transfer_function()
-                        self.adjust_function_gain(self.h_denorm, 10 ** (self.gain / 20))
 
                         # If using the Q maximum value mode of design, check if valid h_denorm
                         if error_code is ApproximationErrorCode.OK:
@@ -146,7 +145,8 @@ class AttFilterApproximator():
                         else:
                             break
                 else:
-                    error_code = ApproximationErrorCode.MAXIMUM_ORDER_REACHED
+                    if self.q > 0:
+                        error_code = ApproximationErrorCode.MAXIMUM_ORDER_REACHED
 
         # Returning the error code...
         self.error_code = error_code
@@ -184,15 +184,18 @@ class AttFilterApproximator():
         new_poles = self.h_norm.poles * relative_adjust
         new_gain = self.h_norm.gain
 
+        self.h_norm = ss.lti(new_zeros, new_poles, new_gain)
+        self.adjust_function_gain(self.h_norm, 10 ** (self.gain / 20))
+
         # Frequency transformation to get the desired filter
         if self.type == FilterType.LOW_PASS.value:
-            z, p, k = ss.lp2lp_zpk(new_zeros, new_poles, new_gain, 2 * np.pi * self.fpl)
+            z, p, k = ss.lp2lp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fpl)
         elif self.type == FilterType.HIGH_PASS.value:
-            z, p, k = ss.lp2hp_zpk(new_zeros, new_poles, new_gain, 2 * np.pi * self.fpl)
+            z, p, k = ss.lp2hp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fpl)
         elif self.type == FilterType.BAND_PASS.value:
-            z, p, k = ss.lp2bp_zpk(new_zeros, new_poles, new_gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
+            z, p, k = ss.lp2bp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
         elif self.type == FilterType.BAND_REJECT.value:
-            z, p, k = ss.lp2bs_zpk(new_zeros, new_poles, new_gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
+            z, p, k = ss.lp2bs_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fal * self.far), 2 * np.pi * (self.far - self.fal))
         self.h_denorm = ss.lti(z, p, k)
         self.h_denorm = self.h_denorm.to_zpk()
 

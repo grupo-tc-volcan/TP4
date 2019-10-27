@@ -18,13 +18,9 @@ def plot_results(results):
     pyplot.legend()
     pyplot.show()
 
-    input("Press to exit...")
-
 
 def test_by_fixed_order():
     butter = ButterworthApprox()
-
-    print("Testing by fixed order...")
 
     butter.type = "low-pass"
     butter.gain = 0
@@ -45,8 +41,6 @@ def test_by_fixed_order():
 
 def test_by_max_q():
     butter = ButterworthApprox()
-
-    print("Testing by fixed order...")
 
     butter.type = "low-pass"
     butter.gain = 0
@@ -75,8 +69,6 @@ def test_by_max_q():
 def test_by_template_denorm():
     butter = ButterworthApprox()
 
-    print("Testing by fixed order...")
-
     butter.type = "low-pass"
     butter.gain = 0
 
@@ -97,18 +89,28 @@ def test_by_template_denorm():
     plot_results(results)
 
 
-def test_by_template_low_pass():
+def test_by_template(
+        filter_type,
+        fpl=0, fpr=0,
+        apl=0, apr=0,
+        fal=0, far=0,
+        aal=0, aar=0
+):
     butter = ButterworthApprox()
 
-    print("Testing by fixed order...")
-
-    butter.type = "low-pass"
+    butter.type = filter_type
     butter.gain = 0
 
-    butter.fpl = 1000
-    butter.Apl = 2
-    butter.fal = 2000
-    butter.Aal = 20
+    butter.fpl = fpl
+    butter.fpr = fpr
+    butter.fal = fal
+    butter.far = far
+
+    butter.Apl = apl
+    butter.Apr = apr
+
+    butter.Aal = aal
+    butter.Aar = aar
 
     results = []
     if butter.compute() is ApproximationErrorCode.OK:
@@ -127,4 +129,45 @@ def test_by_template_low_pass():
 
 
 if __name__ == "__main__":
+
+    test_by_template(
+        "band-pass",
+        fpl=4000,
+        fpr=6000,
+        apl=2,
+        fal=1000,
+        far=10000,
+        aal=10
+    )
+
+    test_by_template(
+        "band-stop",
+        fal=4000,
+        far=6000,
+        apl=2,
+        fpl=1000,
+        fpr=10000,
+        aal=10
+    )
+
+    test_by_template(
+        "high-pass",
+        fpl=3000,
+        apl=2,
+        fal=1000,
+        aal=10
+    )
+
+    test_by_template(
+        "low-pass",
+        fpl=1000,
+        apl=2,
+        fal=3000,
+        aal=10
+    )
+
+    test_by_template_denorm()
+
+    test_by_fixed_order()
+
     test_by_max_q()
