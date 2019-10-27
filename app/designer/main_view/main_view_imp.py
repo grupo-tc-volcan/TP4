@@ -19,6 +19,8 @@ from app.designer.aux_widgets.zero_block_imp import ZeroBlock
 from app.designer.aux_widgets.cell_block_imp import CellBlock
 from app.designer.aux_widgets.cells_settings_imp import CellsSettings
 
+from app.approximators.approximator import ApproximationErrorCode
+
 from app.plotter.plotter import FilterPlotter
 
 from app.auxiliary_calculators.wp_w0_q import SecondOrderAuxCalc
@@ -93,38 +95,40 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
     def calculate_approx(self):
         is_data_valid = True
         
-        #TODO try except block
+        # Loading transfer_function into plotter and setting filter type
+        filter_index = self.filter_selector.currentIndex()
+        approx_index = self.approx_selector.currentIndex()
+        if self.filter_data_widgets[filter_index].approximators[approx_index].compute() == 'OK':
+            if is_data_valid:
+                # Enabling all widgets that make sense once the approximation is calculated
+                self.enable_when_calculating()
 
-        if is_data_valid:
-            # Enabling all widgets that make sense once the approximation is calculated
-            self.enable_when_calculating()
+                # Plotting
+                self.plot_attenuation()
+                self.plot_norm_attenuation()
+                self.plot_phase()
+                self.plot_group_delay()
+                self.plot_poles_and_zeros()
+                self.plot_q()
+                self.plot_impulse_response()
+                self.plot_step_response()
 
-            # Plotting
-            self.plot_attenuation()
-            self.plot_norm_attenuation()
-            self.plot_phase()
-            self.plot_group_delay()
-            self.plot_poles_and_zeros()
-            self.plot_q()
-            self.plot_impulse_response()
-            self.plot_step_response()
-
-            # Adding all poles and zeros to lists in stages tab
-            #TODO filter_index = self.filter_selector.currentIndex()
-            #TODO approx_index = self.approx_selector.currentIndex()
-            #TODO second_order_calc = SecondOrderAuxCalc(self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk())
-            #TODO for pole in second_order_calc.pole_blocks:
-            #TODO     new_pole_widget = PoleBlock()
-            #TODO     new_pole_widget.fp.setText('{}'.format(pole['fp']))
-            #TODO     new_pole_widget.order.setText('{}'.format(pole['n']))
-            #TODO     if pole['n'] == 2:
-            #TODO         new_pole_widget.q_val.setText('{}'.format(round(pole['q'], 3)))
-            #TODO     else:
-            #TODO         new_pole_widget.q_val.setText('-')
-            #TODO for zero in second_order_calc.zero_blocks:
-            #TODO     new_zero_widget = ZeroBlock()
-            #TODO     new_zero_widget.fp.setText('{}'.format(zero['fp']))
-            #TODO     new_zero_widget.order.setText('{}'.format(zero['n']))
+                # Adding all poles and zeros to lists in stages tab
+                #TODO filter_index = self.filter_selector.currentIndex()
+                #TODO approx_index = self.approx_selector.currentIndex()
+                #TODO second_order_calc = SecondOrderAuxCalc(self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk())
+                #TODO for pole in second_order_calc.pole_blocks:
+                #TODO     new_pole_widget = PoleBlock()
+                #TODO     new_pole_widget.fp.setText('{}'.format(pole['fp']))
+                #TODO     new_pole_widget.order.setText('{}'.format(pole['n']))
+                #TODO     if pole['n'] == 2:
+                #TODO         new_pole_widget.q_val.setText('{}'.format(round(pole['q'], 3)))
+                #TODO     else:
+                #TODO         new_pole_widget.q_val.setText('-')
+                #TODO for zero in second_order_calc.zero_blocks:
+                #TODO     new_zero_widget = ZeroBlock()
+                #TODO     new_zero_widget.fp.setText('{}'.format(zero['fp']))
+                #TODO     new_zero_widget.order.setText('{}'.format(zero['n']))
 
 
 
@@ -138,49 +142,42 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
-        tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODO change this
+        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
         self.plotters[0].set_transfer_function(tf)
 
         self.plotters[0].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
 
-        # Setting filter template to plotter
-        #TODO change for actual template
-        #TODO # Checking what kind of filter it is and building template accordingly
-        #TODO if self.filter_selector.currentIndex() == 0 or self.filter_selector.currentIndex() == 1 or self.filter_selector.currentIndex() == 4:
-        #TODO     template = {
-        #TODO         'fp': self.filter_data_widgets[filter_index].pass_freq.value(),
-        #TODO         'fa': self.filter_data_widgets[filter_index].stop_freq.value(),
-        #TODO         'Ap': self.filter_data_widgets[filter_index].pass_att.value(),
-        #TODO         'Aa': self.filter_data_widgets[filter_index].stop_att.value()
-        #TODO     }
-        #TODO elif self.filter_selector.currentIndex() == 2:
-        #TODO     template = {
-        #TODO         'fpl': self.filter_data_widgets[filter_index].pass_freq_l.value(),
-        #TODO         'fpr': self.filter_data_widgets[filter_index].pass_freq_r.value(),
-        #TODO         'fal': self.filter_data_widgets[filter_index].stop_freq_l.value(),
-        #TODO         'far': self.filter_data_widgets[filter_index].stop_freq_r.value(),
-        #TODO         'Ap': self.filter_data_widgets[filter_index].pass_att.value(),
-        #TODO         'Aal': self.filter_data_widgets[filter_index].stop_att_l.value(),
-        #TODO         'Aar': self.filter_data_widgets[filter_index].stop_att_r.value()
-        #TODO     }
-        #TODO elif self.filter_selector.currentIndex() == 3:
-        #TODO     template = {
-        #TODO         'fpl': self.filter_data_widgets[filter_index].pass_freq_l.value(),
-        #TODO         'fpr': self.filter_data_widgets[filter_index].pass_freq_r.value(),
-        #TODO         'fal': self.filter_data_widgets[filter_index].stop_freq_l.value(),
-        #TODO         'far': self.filter_data_widgets[filter_index].stop_freq_r.value(),
-        #TODO         'Apl': self.filter_data_widgets[filter_index].pass_att_l.value(),
-        #TODO         'Apr': self.filter_data_widgets[filter_index].pass_att_r.value(),
-        #TODO         'Aa': self.filter_data_widgets[filter_index].stop_att.value()
-        #TODO     }
-
-        template = {
-            'fp': 10,
-            'fa': 100,
-            'Ap': 2,
-            'Aa': 8
-        }
+        # Checking what kind of filter it is and building template accordingly
+        if self.filter_selector.currentIndex() == 0 or self.filter_selector.currentIndex() == 1 or self.filter_selector.currentIndex() == 4:
+            template = {
+                'G' : self.filter_data_widgets[filter_index].gain.value(),
+                'fp': self.filter_data_widgets[filter_index].pass_freq.value(),
+                'fa': self.filter_data_widgets[filter_index].stop_freq.value(),
+                'Ap': self.filter_data_widgets[filter_index].pass_att.value(),
+                'Aa': self.filter_data_widgets[filter_index].stop_att.value()
+            }
+        elif self.filter_selector.currentIndex() == 2:
+            template = {
+                'G' : self.filter_data_widgets[filter_index].gain.value(),
+                'fpl': self.filter_data_widgets[filter_index].pass_freq_l.value(),
+                'fpr': self.filter_data_widgets[filter_index].pass_freq_r.value(),
+                'fal': self.filter_data_widgets[filter_index].stop_freq_l.value(),
+                'far': self.filter_data_widgets[filter_index].stop_freq_r.value(),
+                'Ap': self.filter_data_widgets[filter_index].pass_att.value(),
+                'Aal': self.filter_data_widgets[filter_index].stop_att_l.value(),
+                'Aar': self.filter_data_widgets[filter_index].stop_att_r.value()
+            }
+        elif self.filter_selector.currentIndex() == 3:
+            template = {
+                'G' : self.filter_data_widgets[filter_index].gain.value(),
+                'fpl': self.filter_data_widgets[filter_index].pass_freq_l.value(),
+                'fpr': self.filter_data_widgets[filter_index].pass_freq_r.value(),
+                'fal': self.filter_data_widgets[filter_index].stop_freq_l.value(),
+                'far': self.filter_data_widgets[filter_index].stop_freq_r.value(),
+                'Apl': self.filter_data_widgets[filter_index].pass_att_l.value(),
+                'Apr': self.filter_data_widgets[filter_index].pass_att_r.value(),
+                'Aa': self.filter_data_widgets[filter_index].stop_att.value()
+            }
 
         # Plotting attenuation and template
         self.plotters[0].plot_attenuation()
@@ -203,28 +200,19 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_zpk()
-        tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODO change this
+        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_zpk()
         self.plotters[1].set_transfer_function(tf)
 
         self.plotters[1].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
 
         # Setting filter template to plotter
-        #TODO change for actual template
-        #TODO # Normalised filters are all low-pass
-        #TODO wp, wa, Ap, Aa = self.filter_data_widgets[filter_index].approximators[approx_index].get_norm_template()
-        #TODO template = {
-        #TODO     'fp': wp/(2*np.pi),
-        #TODO     'fa': wa/(2*np.pi),
-        #TODO     'Ap': Ap,
-        #TODO     'Aa': Aa
-        #TODO }
-        
+        # Normalised filters are all low-pass
+        wp, wa, Ap, Aa = self.filter_data_widgets[filter_index].approximators[approx_index].get_norm_template()
         template = {
-            'fp': 10,
-            'fa': 100,
-            'Ap': 2,
-            'Aa': 8
+            'fp': wp/(2*np.pi),
+            'fa': wa/(2*np.pi),
+            'Ap': Ap,
+            'Aa': Aa
         }
 
         # Plotting normalised attenuation and template
@@ -248,8 +236,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
-        tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODO change this
+        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
         self.plotters[2].set_transfer_function(tf)
 
         self.plotters[2].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -273,19 +260,17 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
-        tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODO change this
+        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
         self.plotters[3].set_transfer_function(tf)
 
         self.plotters[3].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
 
         # Setting filter template to plotter
         if filter_index == 4:
-            #TODO change for actual template
             gd_template = {
-                'ft': 3,
-                'group_delay': 0.15,
-                'tol': 10
+                'ft': self.filter_data_widgets[filter_index].group_delay_freq.value(),
+                'group_delay': self.filter_data_widgets[filter_index].group_delay.value(),
+                'tol': self.filter_data_widgets[filter_index].tol.value()
             }
 
         # Plotting group delay and template
@@ -309,8 +294,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
-        tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODO change this
+        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
         self.plotters[4].set_transfer_function(tf)
 
         self.plotters[4].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -334,8 +318,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
-        tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODO change this
+        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
         self.plotters[5].set_transfer_function(tf)
 
         self.plotters[5].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -359,8 +342,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
-        tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODO change this
+        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
         self.plotters[6].set_transfer_function(tf)
 
         self.plotters[6].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -384,8 +366,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        #TODO load transfer function using self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_poles_zeros_gain()
-        tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODO change this
+        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
         self.plotters[7].set_transfer_function(tf)
 
         self.plotters[7].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])

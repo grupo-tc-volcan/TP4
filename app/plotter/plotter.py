@@ -74,39 +74,42 @@ class FilterPlotter():
         This should only be called after plotting attenuation
         When a plot of the template is needed, the template argument should be a dictionary with the following information:
             low_pass_or_high_pass_or_group_delay_template = {
-                'fp' = ...,
-                'fa' = ...,
-                'Ap' = ...,
-                'Aa' = ...
+                'G' : ...,
+                'fp' : ...,
+                'fa' : ...,
+                'Ap' : ...,
+                'Aa' : ...
             }
             band_pass_template = {
-                'fpl' = ...,
-                'fpr' = ...,
-                'fal' = ...,
-                'far' = ...,
-                'Ap' = ...,
-                'Aal' = ...,
-                'Aar' = ...
+                'G' : ...,
+                'fpl' : ...,
+                'fpr' : ...,
+                'fal' : ...,
+                'far' : ...,
+                'Ap' : ...,
+                'Aal' : ...,
+                'Aar' : ...
             }
             band_stop_template = {
-                'fpl' = ...,
-                'fpr' = ...,
-                'fal' = ...,
-                'far' = ...,
-                'Apl' = ...,
-                'Apr' = ...,
-                'Aa' = ...
+                'G' : ...,
+                'fpl' : ...,
+                'fpr' : ...,
+                'fal' : ...,
+                'far' : ...,
+                'Apl' : ...,
+                'Apr' : ...,
+                'Aa' : ...
             }
         '''
         if self.type == 'low-pass' or self.type =='group-delay':
             width = template['fp'] - min(self.f_att)
-            height = max(self.attenuation) - template['Ap']
+            height = max(self.attenuation) - template['Ap'] + template['G']
             x_start = min(self.f_att)
             y_start = template['Ap']
             pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = max(self.f_att) - template['fa']
-            height = template['Aa']
+            height = template['Aa'] + template['G']
             x_start = template['fa']
             y_start = 0
             stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
@@ -116,13 +119,13 @@ class FilterPlotter():
 
         elif self.type == 'high-pass':
             width = max(self.f_att) - template['fp']
-            height = max(self.attenuation) - template['Ap']
+            height = max(self.attenuation) - template['Ap'] + template['G']
             x_start = template['fp']
             y_start = template['Ap']
             pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = template['fa'] - min(self.f_att) 
-            height = template['Aa']
+            height = template['Aa'] + template['G']
             x_start = min(self.f_att)
             y_start = 0
             stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
@@ -138,13 +141,13 @@ class FilterPlotter():
             pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = template['fal'] - min(self.f_att) 
-            height = template['Aal']
+            height = template['Aal'] + template['G']
             x_start = min(self.f_att)
             y_start = 0
             stop_band_l_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = max(self.f_att) - template['far']
-            height = template['Aar']
+            height = template['Aar'] + template['G']
             x_start = template['far']
             y_start = 0
             stop_band_r_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
@@ -155,19 +158,19 @@ class FilterPlotter():
 
         elif self.type == 'band-stop':
             width = template['fpl'] - min(self.f_att)
-            height = max(self.attenuation) - template['Apl']
+            height = max(self.attenuation) - template['Apl'] + template['G']
             x_start = min(self.f_att)
             y_start = template['Apl']
             pass_band_l_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = max(self.f_att) - template['fpr']
-            height = max(self.attenuation) - template['Apr']
+            height = max(self.attenuation) - template['Apr'] + template['G']
             x_start = template['fpr']
             y_start = template['Apr']
             pass_band_r_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             width = template['far'] - template['fal']
-            height = template['Aa']
+            height = template['Aa'] + template['G']
             x_start = template['fal']
             y_start = 0
             stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
