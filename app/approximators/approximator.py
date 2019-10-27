@@ -63,6 +63,7 @@ class AttFilterApproximator():
 
         self.h_norm = None
         self.h_denorm = None
+        self.error_code = None
     
     def get_norm_template(self) -> tuple:
         """ Returns a 4-element tuple containing the normalised
@@ -145,6 +146,7 @@ class AttFilterApproximator():
                             break
 
         # Returning the error code...
+        self.error_code = error_code
         return error_code
     
     #-------------------------#

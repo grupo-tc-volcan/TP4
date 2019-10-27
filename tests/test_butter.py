@@ -7,43 +7,41 @@ from matplotlib import pyplot
 from scipy import signal
 
 # Python native modules
+import numpy as np
 
 
-def test_butter_by_template():
-    butter = ButterworthApprox()
-
-    butter.type = "low-pass"
-    butter.gain = 0
-    butter.fpl = 1000
-    butter.Apl = 2
-    butter.ord = 3
-    
-    test_compute(butter)
-
-
-def test_compute(approximator):
-    error = approximator.compute()
-    if error is ApproximationErrorCode.OK:
-        plot_transfer_function(
-            [
-                approximator.h_norm,
-                approximator.h_denorm
-            ]
-        )
-    else:
-        print("[ERROR] -> {}".format(error))
-
-
-def plot_transfer_function(hs):
+def plot_results(results):
     pyplot.figure()
-    for index, h in enumerate(hs):
+    for name, h in results:
         w, m, p = signal.bode(h, n=100000)
-        pyplot.semilogx(w, m, label="H_{}".format(index))
+        pyplot.semilogx(w / (2 * np.pi), m, label="{}".format(name))
+    pyplot.legend()
     pyplot.show()
 
     input("Press to exit...")
 
 
-if __name__ == "__main__":
+def test_by_fixed_order():
+    butter = ButterworthApprox()
 
-    test_butter_by_template()
+    print("Testing by fixed order...")
+
+    butter.type = "low-pass"
+    butter.gain = 0
+    butter.fpl = 1000
+    butter.Apl = 2
+
+    results = []
+    for order in range(1, 20):
+        butter.ord = order
+
+        if butter.compute() is ApproximationErrorCode.OK:
+            results.append(("Butterworth n={}".format(order), butter.h_denorm))
+        else:
+            input("[ERROR] => {}".format(butter.error_code))
+
+    plot_results(results)
+
+
+if __name__ == "__main__":
+    pass
