@@ -45,6 +45,9 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.calculate_button.released.connect(self.calculate_approx)
         self.plot_template_1.stateChanged.connect(self.plot_template_toggle)
 
+        # Loading drop actions
+        
+
         # Set up things for the first time
         self.on_start_up()
 
@@ -116,7 +119,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             approx_index = self.approx_selector.currentIndex()
             tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
             second_order_calc = SecondOrderAuxCalc(tf)
-            self.poles_list.()
+            self.poles_list.clear()
             for i in range(len(second_order_calc.pole_blocks)):
                 new_pole_widget = PoleBlock()
                 new_pole_widget.fp.setText('{:.3E}'.format(second_order_calc.pole_blocks[i]['fp']))
