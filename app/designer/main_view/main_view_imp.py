@@ -126,6 +126,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
                 else:
                     new_pole_widget.q_val.setText('-')
 
+                # Setting callback for drag event
                 new_pole_widget.pass_data_action = self.pass_data_from_poles
                 new_item = QtWid.QListWidgetItem()
                 new_item.setSizeHint(new_pole_widget.sizeHint())
@@ -142,6 +143,9 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
                 new_item.setSizeHint(new_zero_widget.sizeHint())
                 self.zeros_list.insertItem(i, new_item)
                 self.zeros_list.setItemWidget(new_item, new_zero_widget)
+
+            # Clearing stages_list
+            self.stages_list.clear()
 
 
     def plot_template_toggle(self):
@@ -399,8 +403,17 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.toolbar_8.setCurrentIndex(self.toolbar_8.addWidget(toolbar))
 
 
-    def pass_data_from_poles(self, data):
+    def pass_data_from_poles(self, data, pole_dragged):
         self.stages_list.new_stage_data = data
+
+        # Setting callback for drop event
+        self.stages_list.drop_action = self.delete_pole_from_list
+
+    
+    def delete_pole_from_list(self):
+        index_item = self.poles_list.currentRow()
+        
+        self.poles_list.takeItem(index_item)
 
 
     def on_start_up(self):
