@@ -115,15 +115,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             filter_index = self.filter_selector.currentIndex()
             approx_index = self.approx_selector.currentIndex()
             tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
-            # tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) change this
             second_order_calc = SecondOrderAuxCalc(tf)
-            self.poles_list.clear()
+            self.poles_list.()
             for i in range(len(second_order_calc.pole_blocks)):
                 new_pole_widget = PoleBlock()
-                new_pole_widget.fp.setText('{}'.format(round(second_order_calc.pole_blocks[i]['fp'], 3)))
+                new_pole_widget.fp.setText('{:.3E}'.format(second_order_calc.pole_blocks[i]['fp']))
                 new_pole_widget.order.setText('{}'.format(second_order_calc.pole_blocks[i]['n']))
                 if second_order_calc.pole_blocks[i]['n'] == 2:
-                    new_pole_widget.q_val.setText('{}'.format(round(second_order_calc.pole_blocks[i]['q'], 3)))
+                    new_pole_widget.q_val.setText('{:.3E}'.format(second_order_calc.pole_blocks[i]['q']))
                 else:
                     new_pole_widget.q_val.setText('-')
                 new_item = QtWid.QListWidgetItem()
@@ -134,7 +133,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             self.zeros_list.clear()
             for i in range(len(second_order_calc.zero_blocks)):
                 new_zero_widget = ZeroBlock()
-                new_zero_widget.f0.setText('{}'.format(round(second_order_calc.zero_blocks[i]['f0'], 3)))
+                new_zero_widget.f0.setText('{:.3E}'.format(second_order_calc.zero_blocks[i]['f0']))
                 new_zero_widget.order.setText('{}'.format(second_order_calc.zero_blocks[i]['n']))
                 new_item = QtWid.QListWidgetItem()
                 new_item.setSizeHint(new_zero_widget.sizeHint())
@@ -154,7 +153,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
         tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
-        # tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODOchange this
         self.plotters[0].set_transfer_function(tf)
 
         self.plotters[0].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -213,10 +211,9 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
         tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_zpk()
-        # tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODOchange this
         self.plotters[1].set_transfer_function(tf)
 
-        self.plotters[1].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
+        self.plotters[1].set_filter_type('low-pass')
 
         # Setting filter template to plotter
         # Normalised filters are all low-pass
@@ -228,13 +225,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             'Ap': Ap,
             'Aa': Aa
         }
-        #template = {
-        #    'G': 0,
-        #    'fp': 10,
-        #    'fa': 100,
-        #    'Ap': 2,
-        #    'Aa': 8
-        #}
 
         # Plotting normalised attenuation and template
         self.plotters[1].plot_attenuation()
@@ -258,7 +248,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
         tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
-        # tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODOchange this
         self.plotters[2].set_transfer_function(tf)
 
         self.plotters[2].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -283,7 +272,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
         tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
-        # tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODOchange this
         self.plotters[3].set_transfer_function(tf)
 
         self.plotters[3].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -318,7 +306,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
         tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
-        # tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODOchange this
         self.plotters[4].set_transfer_function(tf)
 
         self.plotters[4].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -343,7 +330,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
         tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
-        tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODOchange this
         self.plotters[5].set_transfer_function(tf)
 
         self.plotters[5].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -368,7 +354,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
         tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
-        # tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODOchange this
         self.plotters[6].set_transfer_function(tf)
 
         self.plotters[6].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -393,7 +378,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
         tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
-        # tf = ss.ZerosPolesGain([2*np.pi*1j, 2*np.pi * (-1j)], [2*np.pi * (-3+1j), 2*np.pi * (-3-1j), 2*np.pi * (-1+2j), 2*np.pi * (-1-2j)], 1) #TODOchange this
         self.plotters[7].set_transfer_function(tf)
 
         self.plotters[7].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])

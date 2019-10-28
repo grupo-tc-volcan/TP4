@@ -9,3 +9,5 @@ class PoleBlock(QtWid.QWidget, Ui_PoleBlock):
     def __init__(self, *args, **kwargs):
         super(PoleBlock, self).__init__(*args, **kwargs)
         self.setupUi(self)
+
+        

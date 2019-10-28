@@ -13,10 +13,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ZeroBlock(object):
     def setupUi(self, ZeroBlock):
         ZeroBlock.setObjectName("ZeroBlock")
-        ZeroBlock.resize(200, 70)
+        ZeroBlock.resize(230, 70)
+        ZeroBlock.setMaximumSize(QtCore.QSize(270, 16777215))
         self.gridLayout = QtWidgets.QGridLayout(ZeroBlock)
         self.gridLayout.setObjectName("gridLayout")
         self.frame = QtWidgets.QFrame(ZeroBlock)
+        self.frame.setMaximumSize(QtCore.QSize(270, 16777215))
         self.frame.setAutoFillBackground(False)
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Sunken)
@@ -37,12 +39,6 @@ class Ui_ZeroBlock(object):
         self.order = QtWidgets.QLabel(self.frame)
         self.order.setObjectName("order")
         self.gridLayout_2.addWidget(self.order, 0, 3, 1, 1)
-        self.label_4 = QtWidgets.QLabel(self.frame)
-        self.label_4.setObjectName("label_4")
-        self.gridLayout_2.addWidget(self.label_4, 0, 4, 1, 1)
-        self.q_val = QtWidgets.QLabel(self.frame)
-        self.q_val.setObjectName("q_val")
-        self.gridLayout_2.addWidget(self.q_val, 0, 5, 1, 1)
         self.gridLayout.addWidget(self.frame, 1, 0, 1, 1)
 
         self.retranslateUi(ZeroBlock)
@@ -51,12 +47,10 @@ class Ui_ZeroBlock(object):
     def retranslateUi(self, ZeroBlock):
         _translate = QtCore.QCoreApplication.translate
         ZeroBlock.setWindowTitle(_translate("ZeroBlock", "Form"))
-        self.label_3.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">f</span><span style=\" font-size:10pt; vertical-align:sub;\">0</span><span style=\" font-size:10pt;\">:</span></p></body></html>"))
+        self.label_3.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt; font-weight:600;\">f</span><span style=\" font-size:10pt; font-weight:600; vertical-align:sub;\">0</span><span style=\" font-size:10pt; font-weight:600;\">:</span></p></body></html>"))
         self.f0.setText(_translate("ZeroBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">...</span></p></body></html>"))
-        self.label.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">n:</span></p></body></html>"))
+        self.label.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt; font-weight:600;\">n:</span></p></body></html>"))
         self.order.setText(_translate("ZeroBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">...</span></p></body></html>"))
-        self.label_4.setText(_translate("ZeroBlock", "<html><head/><body><p align=\"right\"><span style=\" font-size:10pt;\">Q:</span></p></body></html>"))
-        self.q_val.setText(_translate("ZeroBlock", "<html><head/><body><p><span style=\" font-size:10pt;\">...</span></p></body></html>"))
 
 
 if __name__ == "__main__":

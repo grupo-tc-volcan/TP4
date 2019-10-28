@@ -1,8 +1,7 @@
 # Third-party modules
 import scipy.signal as ss
 
-from sympy.solvers import solve
-from sympy import Symbol
+import numpy as np
 
 import math
 
@@ -17,48 +16,52 @@ class SecondOrderAuxCalc():
         self.zeros_imag_part = [zero.imag for zero in self.tf.zeros]
 
         # Obtaining wp and q for poles, and w0 and Q for zeros, the aux is because some will be repeated since there should be conjugated complex roots
-        q = Symbol('q')
         aux_q_poles = []
         aux_wp_poles = []
         aux_q_zeros = []
         aux_w0_zeros = []
         for i in range(len(self.poles_real_part)):
             if self.poles_real_part[i] == 0:
-                aux_q_poles.append(0)
+                aux_q_poles.append(0)   # This is just to put a comparable value, actual Q is inf
                 aux_wp_poles.append(abs(self.poles_imag_part[i]))
             elif self.poles_imag_part[i] == 0:
                 aux_q_poles.append(0.5)
                 aux_wp_poles.append(abs(self.poles_real_part[i]))
             else:
-                aux_q_poles.append(abs(solve(((self.poles_real_part[i]*2*q) * (1 - (1/(2*q)**2))**(1/2)) - self.poles_imag_part[i], q)[0]))
-                aux_wp_poles.append(abs(2*self.poles_real_part[i]*aux_q_poles[i]))
+                self.calculate_xi(self.tf.poles[i])
+                aux_q_poles.append(self.calculate_selectivity(self.tf.poles[i]))
+                aux_wp_poles.append(self.calculate_frequency(self.tf.poles[i]))
         
         for i in range(len(self.zeros_real_part)):
             if self.zeros_real_part[i] == 0:
-                aux_q_zeros.append(0)
+                aux_q_zeros.append(0)   # This is just to put a comparable value, actual Q is inf
                 aux_w0_zeros.append(abs(self.zeros_imag_part[i]))
             elif self.zeros_imag_part[i] == 0:
                 aux_q_zeros.append(0.5)
                 aux_w0_zeros.append(abs(self.zeros_real_part[i]))
             else:
-                aux_q_zeros.append(abs(solve(((self.zeros_real_part[i]*2*q) * (1 - (1/(2*q)**2))**(1/2)) - self.zeros_imag_part[i], q)[0]))
-                aux_w0_zeros.append(abs(2*self.zeros_real_part[i]*aux_q_zeros[i]))
+                self.calculate_xi(self.tf.zeros[i])
+                aux_q_poles.append(self.calculate_selectivity(self.tf.zeros[i]))
+                aux_wp_poles.append(self.calculate_frequency(self.tf.zeros[i]))
 
         # Now repeated Q and wp or w0 will be deleted, and all of them will be loaded in second order cells
         self.pole_blocks = []
         for i in range(len(aux_wp_poles)):
-            list_without_i = list(aux_wp_poles)
-            list_without_i.remove(aux_wp_poles[i])
-            if all([(not math.isclose(aux_wp_poles[i], other_wp)) for other_wp in list_without_i]):
+            list_wp_without_i = list(aux_wp_poles)
+            list_wp_without_i.remove(aux_wp_poles[i])
+            list_q_without_i = list(aux_q_poles)
+            list_q_without_i.remove(aux_q_poles[i])
+            if all([(not math.isclose(aux_wp_poles[i], other_wp)) for other_wp in list_wp_without_i]) or all([(not math.isclose(aux_q_poles[i], other_wp)) for other_wp in list_q_without_i]):
                 # If there are no matches, it means this Q belongs to a first order pole
                 new_first_order_block = {
                     'fp' : aux_wp_poles[i] / (2*math.pi),
+                    'q' : 0.5,
                     'n' : 1
                 }
                 self.pole_blocks.append(new_first_order_block)
             else:
                 # If there is a match, it means this Q belongs to a second order pole
-                if all([(not math.isclose(aux_wp_poles[i]/(2*math.pi), self.pole_blocks[j]['fp'])) for j in range(len(self.pole_blocks))]):
+                if all([(not math.isclose(aux_wp_poles[i]/(2*math.pi), self.pole_blocks[j]['fp'])) for j in range(len(self.pole_blocks))]) or all([(not math.isclose(aux_q_poles[i], self.pole_blocks[j]['q'])) for j in range(len(self.pole_blocks))]):
                     # If this Q has not been added already
                     new_second_order_block = {
                         'fp' : aux_wp_poles[i] / (2*math.pi),
@@ -69,21 +72,25 @@ class SecondOrderAuxCalc():
 
         self.zero_blocks = []
         for i in range(len(aux_w0_zeros)):
-            list_without_i = list(aux_w0_zeros)
-            list_without_i.remove(aux_w0_zeros[i])
-            if all([(not math.isclose(aux_w0_zeros[i], other_wp)) for other_wp in list_without_i]):
+            list_w0_without_i = list(aux_w0_zeros)
+            list_w0_without_i.remove(aux_w0_zeros[i])
+            list_q_without_i = list(aux_q_zeros)
+            list_q_without_i.remove(aux_q_zeros[i])
+            if all([(not math.isclose(aux_w0_zeros[i], other_wp)) for other_wp in list_w0_without_i]) or all([(not math.isclose(aux_q_zeros[i], other_wp)) for other_wp in list_q_without_i]):
                 # If there are no matches, it means this Q belongs to a first order zero
                 new_first_order_block = {
                     'f0' : aux_w0_zeros[i] / (2*math.pi),
+                    'q' : 0.5,
                     'n' : 1
                 }
                 self.zero_blocks.append(new_first_order_block)
             else:
                 # If there is a match, it means this Q belongs to a second order zero
-                if all([(not math.isclose(aux_w0_zeros[i]/(2*math.pi), self.zero_blocks[j]['f0'])) for j in range(len(self.zero_blocks))]):
+                if all([(not math.isclose(aux_w0_zeros[i]/(2*math.pi), self.zero_blocks[j]['f0'])) for j in range(len(self.zero_blocks))]) or all([(not math.isclose(aux_q_zeros[i], self.zero_blocks[j]['q'])) for j in range(len(self.zero_blocks))]):
                     # If this Q has not been added already
                     new_second_order_block = {
                         'f0' : aux_w0_zeros[i] / (2*math.pi),
+                        'q' : aux_q_zeros[i],
                         'n' : 2
                     }
                     self.zero_blocks.append(new_second_order_block)
@@ -149,3 +156,21 @@ class SecondOrderAuxCalc():
                 ret.append(zero_block['q'])
 
         return ret
+        
+
+    @staticmethod
+    def calculate_xi(root):
+        k = (root.imag / root.real) ** 2
+        return np.sqrt(1 / (1 + k))
+
+
+    @staticmethod
+    def calculate_frequency(root):
+        xi = SecondOrderAuxCalc.calculate_xi(root)
+        return root.real / (xi * 2 * np.pi)
+
+
+    @staticmethod
+    def calculate_selectivity(root):
+        xi = SecondOrderAuxCalc.calculate_xi(root)
+        return 1 / (2 * xi)
