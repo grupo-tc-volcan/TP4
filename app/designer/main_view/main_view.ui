@@ -757,7 +757,7 @@
            <enum>QAbstractItemView::DragDrop</enum>
           </property>
           <property name="defaultDropAction">
-           <enum>Qt::CopyAction</enum>
+           <enum>Qt::IgnoreAction</enum>
           </property>
           <property name="flow">
            <enum>QListView::LeftToRight</enum>

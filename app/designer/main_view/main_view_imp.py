@@ -45,9 +45,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.calculate_button.released.connect(self.calculate_approx)
         self.plot_template_1.stateChanged.connect(self.plot_template_toggle)
 
-        # Loading drop actions
-        
-
         # Set up things for the first time
         self.on_start_up()
 
@@ -128,8 +125,11 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
                     new_pole_widget.q_val.setText('{:.3E}'.format(second_order_calc.pole_blocks[i]['q']))
                 else:
                     new_pole_widget.q_val.setText('-')
+
+                new_pole_widget.pass_data_action = self.pass_data_from_poles
                 new_item = QtWid.QListWidgetItem()
                 new_item.setSizeHint(new_pole_widget.sizeHint())
+                
                 self.poles_list.insertItem(i, new_item)
                 self.poles_list.setItemWidget(new_item, new_pole_widget)
 
@@ -142,7 +142,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
                 new_item.setSizeHint(new_zero_widget.sizeHint())
                 self.zeros_list.insertItem(i, new_item)
                 self.zeros_list.setItemWidget(new_item, new_zero_widget)
-
 
 
     def plot_template_toggle(self):
@@ -398,6 +397,10 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             # Cleaning stacked widget
             self.toolbar_8.removeWidget(self.filter_data.currentWidget())
         self.toolbar_8.setCurrentIndex(self.toolbar_8.addWidget(toolbar))
+
+
+    def pass_data_from_poles(self, data):
+        self.stages_list.new_stage_data = data
 
 
     def on_start_up(self):
