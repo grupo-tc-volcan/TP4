@@ -12,7 +12,7 @@ class StagesList(QtWid.QListWidget):
     def __init__(self, *args, **kwargs):
         super(StagesList, self).__init__(*args, **kwargs)
         self.acceptDrops()
-        self.new_stage_data = {}
+        self.dropped_data = {}
 
         # Callback to execute when dropping events
         self.drop_action = self.ignore_drop_action
@@ -23,25 +23,34 @@ class StagesList(QtWid.QListWidget):
 
 
     def dropEvent(self, ev):
-        super(StagesList, self).dropEvent(ev)
+        if self.dropped_data['type'] == 'pole':
+            super(StagesList, self).dropEvent(ev)
 
-        # Getting drop position
-        item_index = self.row(self.itemAt(ev.pos().x(), ev.pos().y()))
+            # Getting drop position
+            x = ev.pos().x()
+            y = ev.pos().y()
+            item_index = self.row(self.itemAt(x, y))
 
-        # Deleting element added by super
-        self.takeItem(item_index)
+            # Deleting element added by super
+            self.takeItem(item_index)
 
-        # Creating cell block
-        new_cell_widget = CellBlock()
-        new_cell_widget.fp.setText(self.new_stage_data['fp'])
-        new_cell_widget.order.setText(self.new_stage_data['n'])
-        new_cell_widget.q_val.setText(self.new_stage_data['q'])
+            # Creating cell block
+            new_cell_widget = CellBlock()
+            new_cell_widget.fp.setText('{:.3E}'.format(self.dropped_data['fp']))
+            new_cell_widget.np.setText('{}'.format(self.dropped_data['n']))
+            if self.dropped_data['n'] == 2:
+                new_cell_widget.q_val.setText('{:.3E}'.format(self.dropped_data['q']))
+            else:
+                new_cell_widget.q_val.setText('-')
 
-        new_item = QtWid.QListWidgetItem()
-        new_item.setSizeHint(new_cell_widget.sizeHint())
+            new_item = QtWid.QListWidgetItem()
+            new_item.setSizeHint(new_cell_widget.sizeHint())
 
-        self.insertItem(item_index, new_item)
-        self.setItemWidget(new_item, new_cell_widget)
+            self.insertItem(item_index, new_item)
+            self.setItemWidget(new_item, new_cell_widget)
+
+            # Setting pole as used
+            self.dropped_data['used'] = True
 
         # Executing callback
         self.drop_action()

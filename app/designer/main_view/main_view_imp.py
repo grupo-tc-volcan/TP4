@@ -39,6 +39,9 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Loading plotter
         self.plotters = [FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter()]
 
+        # Creating auxiliary calculators
+        self.second_order_calc = SecondOrderAuxCalc()
+
         # Signal and slot connections
         self.filter_selector.currentIndexChanged.connect(self.filter_selected)
         self.approx_selector.currentIndexChanged.connect(self.set_approx)
@@ -47,6 +50,9 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         # Set up things for the first time
         self.on_start_up()
+
+
+############# METHODS CALLED BY SIGNALS #############
 
 
     def filter_selected(self):
@@ -115,37 +121,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             filter_index = self.filter_selector.currentIndex()
             approx_index = self.approx_selector.currentIndex()
             tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
-            second_order_calc = SecondOrderAuxCalc(tf)
-            self.poles_list.clear()
-            for i in range(len(second_order_calc.pole_blocks)):
-                new_pole_widget = PoleBlock()
-                new_pole_widget.fp.setText('{:.3E}'.format(second_order_calc.pole_blocks[i]['fp']))
-                new_pole_widget.order.setText('{}'.format(second_order_calc.pole_blocks[i]['n']))
-                if second_order_calc.pole_blocks[i]['n'] == 2:
-                    new_pole_widget.q_val.setText('{:.3E}'.format(second_order_calc.pole_blocks[i]['q']))
-                else:
-                    new_pole_widget.q_val.setText('-')
-
-                # Setting callback for drag event
-                new_pole_widget.pass_data_action = self.pass_data_from_poles
-                new_item = QtWid.QListWidgetItem()
-                new_item.setSizeHint(new_pole_widget.sizeHint())
-                
-                self.poles_list.insertItem(i, new_item)
-                self.poles_list.setItemWidget(new_item, new_pole_widget)
-
-            self.zeros_list.clear()
-            for i in range(len(second_order_calc.zero_blocks)):
-                new_zero_widget = ZeroBlock()
-                new_zero_widget.f0.setText('{:.3E}'.format(second_order_calc.zero_blocks[i]['f0']))
-                new_zero_widget.order.setText('{}'.format(second_order_calc.zero_blocks[i]['n']))
-                new_item = QtWid.QListWidgetItem()
-                new_item.setSizeHint(new_zero_widget.sizeHint())
-                self.zeros_list.insertItem(i, new_item)
-                self.zeros_list.setItemWidget(new_item, new_zero_widget)
+            self.second_order_calc = SecondOrderAuxCalc(tf)
+            self.fill_poles_and_zeros_lists()
 
             # Clearing stages_list
             self.stages_list.clear()
+
+
+############# METHODS FOR PLOTTING #############
 
 
     def plot_template_toggle(self):
@@ -403,17 +386,73 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.toolbar_8.setCurrentIndex(self.toolbar_8.addWidget(toolbar))
 
 
-    def pass_data_from_poles(self, data, pole_dragged):
-        self.stages_list.new_stage_data = data
+############# CALLBACKS FOR DRAG AND DROP #############
+
+
+    def fill_poles_and_zeros_lists(self):
+        self.poles_list.clear()
+        for i in range(len(self.second_order_calc.pole_blocks)):
+            # Checking if it is used or not
+            if not self.second_order_calc.pole_blocks[i]['used']:
+                new_pole_widget = PoleBlock(self.second_order_calc.pole_blocks[i])
+                new_pole_widget.fp.setText('{:.3E}'.format(self.second_order_calc.pole_blocks[i]['fp']))
+                new_pole_widget.order.setText('{}'.format(self.second_order_calc.pole_blocks[i]['n']))
+                if self.second_order_calc.pole_blocks[i]['n'] == 2:
+                    new_pole_widget.q_val.setText('{:.3E}'.format(self.second_order_calc.pole_blocks[i]['q']))
+                else:
+                    new_pole_widget.q_val.setText('-')
+
+                # Setting callback for drag event
+                new_pole_widget.pass_data_action = self.pass_data_from_poles
+                new_item = QtWid.QListWidgetItem()
+                new_item.setSizeHint(new_pole_widget.sizeHint())
+                
+                self.poles_list.insertItem(i, new_item)
+                self.poles_list.setItemWidget(new_item, new_pole_widget)
+
+            # Enabling zeros_list if at least one pole is used
+            if all([(not block['used']) for block in self.second_order_calc.pole_blocks]):
+                # If all blocks are NOT used
+                self.zeros_list.setDisabled(True)
+            else:
+                self.zeros_list.setEnabled(True)
+
+        self.zeros_list.clear()
+        for i in range(len(self.second_order_calc.zero_blocks)):
+            # Checking if it is used or not
+            if not self.second_order_calc.zero_blocks[i]['used']:
+                new_zero_widget = ZeroBlock(self.second_order_calc.zero_blocks[i])
+                new_zero_widget.f0.setText('{:.3E}'.format(self.second_order_calc.zero_blocks[i]['f0']))
+                new_zero_widget.order.setText('{}'.format(self.second_order_calc.zero_blocks[i]['n']))
+
+                # Setting callback for drag event
+                new_zero_widget.pass_data_action = self.pass_data_from_zeros
+                new_item = QtWid.QListWidgetItem()
+                new_item.setSizeHint(new_zero_widget.sizeHint())
+                
+                self.zeros_list.insertItem(i, new_item)
+                self.zeros_list.setItemWidget(new_item, new_zero_widget)
+
+
+    def pass_data_from_poles(self, data):
+        for block in self.second_order_calc.pole_blocks:
+            if block == data:
+                self.stages_list.dropped_data = block
 
         # Setting callback for drop event
-        self.stages_list.drop_action = self.delete_pole_from_list
+        self.stages_list.drop_action = self.fill_poles_and_zeros_lists
 
-    
-    def delete_pole_from_list(self):
-        index_item = self.poles_list.currentRow()
-        
-        self.poles_list.takeItem(index_item)
+
+    def pass_data_from_zeros(self, data):
+        for block in self.second_order_calc.zero_blocks:
+            if block == data:
+                self.stages_list.dropped_data = block
+
+        # Setting callback for drop event
+        self.stages_list.drop_action = self.fill_poles_and_zeros_lists
+
+
+############# AUXILIARY METHODS #############
 
 
     def on_start_up(self):
@@ -436,7 +475,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.plot_template_1.setEnabled(True)
 
         self.poles_list.setEnabled(True)
-        self.zeros_list.setEnabled(True)
+        self.zeros_list.setDisabled(True)
         self.stages_list.setEnabled(True)
         self.input_selector.setEnabled(True)
         self.automatic_cascade.setEnabled(True)

@@ -443,7 +443,7 @@ class Ui_MainView(object):
         self.stages_list.setDragEnabled(True)
         self.stages_list.setDragDropOverwriteMode(True)
         self.stages_list.setDragDropMode(QtWidgets.QAbstractItemView.DragDrop)
-        self.stages_list.setDefaultDropAction(QtCore.Qt.IgnoreAction)
+        self.stages_list.setDefaultDropAction(QtCore.Qt.MoveAction)
         self.stages_list.setFlow(QtWidgets.QListView.LeftToRight)
         self.stages_list.setObjectName("stages_list")
         self.gridLayout_16.addWidget(self.stages_list, 5, 0, 1, 14)

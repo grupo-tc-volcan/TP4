@@ -56,7 +56,9 @@ class SecondOrderAuxCalc():
                 new_first_order_block = {
                     'fp' : aux_wp_poles[i] / (2*math.pi),
                     'q' : 0.5,
-                    'n' : 1
+                    'n' : 1,
+                    'used': False,
+                    'type': 'pole'
                 }
                 self.pole_blocks.append(new_first_order_block)
             else:
@@ -66,7 +68,9 @@ class SecondOrderAuxCalc():
                     new_second_order_block = {
                         'fp' : aux_wp_poles[i] / (2*math.pi),
                         'q' : aux_q_poles[i],
-                        'n' : 2
+                        'n' : 2,
+                        'used': False,
+                        'type': 'pole'
                     }
                     self.pole_blocks.append(new_second_order_block)
 
@@ -81,7 +85,9 @@ class SecondOrderAuxCalc():
                 new_first_order_block = {
                     'f0' : aux_w0_zeros[i] / (2*math.pi),
                     'q' : 0.5,
-                    'n' : 1
+                    'n' : 1,
+                    'used': False,
+                    'type': 'zero'
                 }
                 self.zero_blocks.append(new_first_order_block)
             else:
@@ -91,7 +97,9 @@ class SecondOrderAuxCalc():
                     new_second_order_block = {
                         'f0' : aux_w0_zeros[i] / (2*math.pi),
                         'q' : aux_q_zeros[i],
-                        'n' : 2
+                        'n' : 2,
+                        'used': False,
+                        'type': 'zero'
                     }
                     self.zero_blocks.append(new_second_order_block)
     
