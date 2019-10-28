@@ -9,7 +9,6 @@
 # filters-tool project modules
 from app.designer.aux_widgets.stages import StagesList
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -444,7 +443,7 @@ class Ui_MainView(object):
         self.stages_list.setDragEnabled(True)
         self.stages_list.setDragDropOverwriteMode(True)
         self.stages_list.setDragDropMode(QtWidgets.QAbstractItemView.DragDrop)
-        self.stages_list.setDefaultDropAction(QtCore.Qt.MoveAction)
+        self.stages_list.setDefaultDropAction(QtCore.Qt.IgnoreAction)
         self.stages_list.setFlow(QtWidgets.QListView.LeftToRight)
         self.stages_list.setObjectName("stages_list")
         self.gridLayout_16.addWidget(self.stages_list, 5, 0, 1, 14)
@@ -484,7 +483,7 @@ class Ui_MainView(object):
         MainView.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainView)
-        self.process_tabs.setCurrentIndex(1)
+        self.process_tabs.setCurrentIndex(0)
         self.template_pic.setCurrentIndex(0)
         self.filter_data.setCurrentIndex(0)
         self.approx_plot.setCurrentIndex(0)

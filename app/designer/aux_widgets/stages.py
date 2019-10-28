@@ -29,6 +29,7 @@ class StagesList(QtWid.QListWidget):
         #TODO new_item.setSizeHint(new_cell_widget.sizeHint())
         #TODO self.poles_list.insertItem(0, new_item)
         #TODO self.poles_list.setItemWidget(new_item, new_cell_widget)
+        self.takeItem(self.count() - 1)
 
         new_cell_widget = CellBlock()
         new_cell_widget.fp.setText(self.new_stage_data['fp'])
@@ -39,6 +40,6 @@ class StagesList(QtWid.QListWidget):
         new_item.setSizeHint(new_cell_widget.sizeHint())
 
         item_index = self.count()
-        self.insertItem(math.floor(self.count()/2), new_item)
+        self.insertItem(item_index, new_item)
         self.setItemWidget(new_item, new_cell_widget)
 
