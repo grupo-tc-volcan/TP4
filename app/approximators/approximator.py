@@ -104,13 +104,13 @@ class AttFilterApproximator:
 
             # Verifying if valid filter type is given
             if self.type == FilterType.LOW_PASS.value:
-                error_code = self._validate_low_pass()
+                error_code = self.validate_low_pass()
             elif self.type == FilterType.HIGH_PASS.value:
-                error_code = self._validate_high_pass()
+                error_code = self.validate_high_pass()
             elif self.type == FilterType.BAND_PASS.value:
-                error_code = self._validate_band_pass()
+                error_code = self.validate_band_pass()
             elif self.type == FilterType.BAND_REJECT.value:
-                error_code = self._validate_band_reject()
+                error_code = self.validate_band_stop()
             else:
                 error_code = ApproximationErrorCode.INVALID_TYPE
 
@@ -191,6 +191,47 @@ class AttFilterApproximator:
     def compute_normalised_by_order(self, ap, n, aa) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the fixed order """
         raise NotImplementedError
+
+    def validate_low_pass(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation are valid or not using a low-pass. """
+        if self.ord == 0 and self.q == 0:
+            return self._validate_low_pass_by_template()
+        else:
+            return self._validate_low_pass_by_fixed()
+
+    def validate_high_pass(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation are valid or not using a high pass. """
+        if self.ord == 0 and self.q == 0:
+            return self._validate_high_pass_by_template()
+        else:
+            return self._validate_high_pass_by_fixed()
+
+    def validate_band_pass(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation are valid or not using a band pass. """
+        if self.ord == 0 and self.q == 0:
+            return self._validate_band_pass_by_template()
+        else:
+            return self._validate_band_pass_by_fixed()
+
+    def validate_band_stop(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation are valid or not using a band stop. """
+        if self.ord == 0 and self.q == 0:
+            return self._validate_band_stop_by_template()
+        else:
+            return self._validate_band_stop_by_fixed()
+
+    def denormalisation_factor(self, wa, aa, wp, ap):
+        """ Returns the denormalisation factor to be used when
+        adjusting the zeros and poles of the transfer function between the transition
+        band. """
+        if self.q == 0 and self.ord == 0:
+            w_values, mag_values, _ = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
+            stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= (-aa)]
+            relative_adjust = ((wa - stop_band[0]) / stop_band[0]) * (self.denorm / 100) + 1
+        else:
+            relative_adjust = 1
+
+        return relative_adjust
     
     # ----------------- #
     # Private Methods   #
@@ -200,14 +241,8 @@ class AttFilterApproximator:
         """ Denormalises the transfer function returned by the approximation used. """
         # Adding the gain and the relative denormalisation between the transition band
         self.adjust_function_gain(1)
-        wa, aa, wp, _ = self.get_norm_template()
-
-        if self.q == 0 and self.ord == 0:
-            w_values, mag_values, _ = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
-            stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= (-aa)]
-            relative_adjust = ((wa - stop_band[0]) / stop_band[0]) * (self.denorm / 100) + 1
-        else:
-            relative_adjust = 1
+        wa, aa, wp, ap = self.get_norm_template()
+        relative_adjust = self.denormalisation_factor(wa, aa, wp, ap)
 
         new_zeros = self.h_norm.zeros * relative_adjust
         new_poles = self.h_norm.poles * relative_adjust
@@ -301,93 +336,97 @@ class AttFilterApproximator:
 
         return ApproximationErrorCode.OK
 
-    def _validate_low_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a low-pass.
-        """
-        if self.ord == 0 and self.q == 0:
-            if self.fpl >= self.fal or self.fpl <= 0 or self.fal <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0 or self.Aal <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
-            elif self.Apl >= self.Aal:
-                return ApproximationErrorCode.INVALID_ATTE
+    def _validate_low_pass_by_template(self) -> ApproximationErrorCode:
+        """ Specializes the validation by template of a low pass design """
+        if self.fpl >= self.fal or self.fpl <= 0 or self.fal <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0 or self.Aal <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.Apl >= self.Aal:
+            return ApproximationErrorCode.INVALID_ATTE
         else:
-            if self.Apl <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
-            elif self.fpl <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-        
-        return ApproximationErrorCode.OK
+            return ApproximationErrorCode.OK
 
-    def _validate_high_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a high-pass.
-        """
-        if self.ord == 0 and self.q == 0:
-            if self.fpl <= self.fal or self.fpl <= 0 or self.fal <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0 or self.Aal <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
-            elif self.Apl >= self.Aal:
-                return ApproximationErrorCode.INVALID_ATTE
+    def _validate_low_pass_by_fixed(self) -> ApproximationErrorCode:
+        """ Specializes the validation by fixed values of a low pass design """
+        if self.Apl <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.fpl <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
         else:
-            if self.Apl <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
-            elif self.fpl <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-        
-        return ApproximationErrorCode.OK
+            return ApproximationErrorCode.OK
 
-    def _validate_band_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a band-pass.
-        """
-        if self.ord == 0 or self.q == 0:
-            if self.fpl <= 0 or self.fpr <= 0 or self.fal <= 0 or self.far <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl >= self.fpr or self.fal >= self.far:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl <= self.fal or self.fpr >= self.far:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0 or self.Aal <= 0 or self.Apr < 0 or self.Aar < 0:
-                return ApproximationErrorCode.INVALID_ATTE
-            elif self.Apl >= self.Aal or self.Apr > self.Aar:
-                return ApproximationErrorCode.INVALID_ATTE
+    def _validate_high_pass_by_template(self) -> ApproximationErrorCode:
+        """ Specializes the validation by template of a high pass design """
+        if self.fpl <= self.fal or self.fpl <= 0 or self.fal <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0 or self.Aal <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.Apl >= self.Aal:
+            return ApproximationErrorCode.INVALID_ATTE
         else:
-            if self.fpl <= 0 or self.fpr <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl >= self.fpr:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
-        
-        return ApproximationErrorCode.OK
+            return ApproximationErrorCode.OK
 
-    def _validate_band_reject(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a band-reject.
-        """
-        if self.ord == 0 or self.q == 0:
-            if self.fpl <= 0 or self.fpr <= 0 or self.fal <= 0 or self.far <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl >= self.fpr or self.fal >= self.far:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl >= self.fal or self.fpr <= self.far:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0 or self.Aal <= 0 or self.Apr < 0 or self.Aar < 0:
-                return ApproximationErrorCode.INVALID_ATTE
-            elif self.Apl >= self.Aal or self.Apr > self.Aar:
-                return ApproximationErrorCode.INVALID_ATTE
+    def _validate_high_pass_by_fixed(self) -> ApproximationErrorCode:
+        """Specializes the validation by fixed values of a high pass design """
+        if self.Apl <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.fpl <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
         else:
-            if self.fpl <= 0 or self.fpr <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl >= self.fpr:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
-        
-        return ApproximationErrorCode.OK
+            return ApproximationErrorCode.OK
+
+    def _validate_band_pass_by_template(self) -> ApproximationErrorCode:
+        """ Specializes the validation by template of a band pass design """
+        if self.fpl <= 0 or self.fpr <= 0 or self.fal <= 0 or self.far <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl >= self.fpr or self.fal >= self.far:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl <= self.fal or self.fpr >= self.far:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0 or self.Aal <= 0 or self.Apr < 0 or self.Aar < 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.Apl >= self.Aal or self.Apr > self.Aar:
+            return ApproximationErrorCode.INVALID_ATTE
+        else:
+            return ApproximationErrorCode.OK
+
+    def _validate_band_pass_by_fixed(self) -> ApproximationErrorCode:
+        """ Specializes the validation by fixed values of a band pass design """
+        if self.fpl <= 0 or self.fpr <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl >= self.fpr:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        else:
+            return ApproximationErrorCode.OK
+
+    def _validate_band_stop_by_template(self) -> ApproximationErrorCode:
+        """ Specializes the validation by template of a band stop design """
+        if self.fpl <= 0 or self.fpr <= 0 or self.fal <= 0 or self.far <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl >= self.fpr or self.fal >= self.far:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl >= self.fal or self.fpr <= self.far:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0 or self.Aal <= 0 or self.Apr < 0 or self.Aar < 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.Apl >= self.Aal or self.Apr > self.Aar:
+            return ApproximationErrorCode.INVALID_ATTE
+        else:
+            return ApproximationErrorCode.OK
+
+    def _validate_band_stop_by_fixed(self) -> ApproximationErrorCode:
+        """ Specializes the validation by fixed values of a band stop design """
+        if self.fpl <= 0 or self.fpr <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl >= self.fpr:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        else:
+            return ApproximationErrorCode.OK
     
     # ---------------- #
     #  Static Methods  #

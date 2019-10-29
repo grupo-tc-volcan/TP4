@@ -27,7 +27,8 @@ class ChebyshevIIApprox(AttFilterApproximator):
     def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
         order = self.compute_order(ap, aa, wpn)
-        return self.compute_normalised_by_order(ap, order, aa)
+        error_code = self.compute_normalised_by_order(ap, order, aa)
+        return error_code
 
     def compute_normalised_by_order(self, ap, n, aa) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the fixed order """
@@ -35,6 +36,44 @@ class ChebyshevIIApprox(AttFilterApproximator):
         zeros, poles, gain = ss.cheb2ap(n, aa)
         self.h_norm = ss.ZerosPolesGain(zeros, poles, gain)
         return ApproximationErrorCode.OK
+
+    def denormalisation_factor(self, wa, aa, wp, ap):
+        """ Returns the denormalisation factor to be used when
+        adjusting the zeros and poles of the transfer function between the transition
+        band. """
+        if self.q == 0 and self.ord == 0:
+            w_values, mag_values, _ = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
+            pass_band = [w for w, mag in zip(w_values, mag_values) if mag >= (-ap)]
+            relative_adjust = ((wp - pass_band[-1]) / pass_band[-1]) * ((100 - self.denorm) / 100) + 1
+        else:
+            relative_adjust = 1
+
+        return relative_adjust
+
+    def _validate_low_pass(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation
+        are valid or not using a low-pass.
+        """
+        error_code = super(ChebyshevIIApprox, self)._validate_low_pass()
+        if error_code is ApproximationErrorCode.OK:
+            if self.ord > 0 or self.q > 0:
+
+        return error_code
+
+    def _validate_high_pass(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation
+        are valid or not using a high-pass.
+        """
+
+    def _validate_band_pass(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation
+        are valid or not using a band-pass.
+        """
+
+    def _validate_band_reject(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation
+        are valid or not using a band-reject.
+        """
 
     # ----------------- #
     #  Private Methods  #
