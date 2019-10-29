@@ -73,27 +73,13 @@ class StagesList(QtWid.QListWidget):
                 list_item = self.itemAt(x, y)
                 item_widget = self.itemWidget(list_item)
 
-                item_widget.cell_data['zero'] = self.dropped_data
-                
-                cell_widget = self.itemWidget(list_item)
-                cell_widget.f0.setText('{:.3E}'.format(self.dropped_data['f0']))
-                cell_widget.n0.setText('{}'.format(self.dropped_data['n']))
-
-                # Setting zero as used
-                self.dropped_data['used'] = True
+                self.validate_and_add_zero(item_widget, self.dropped_data)
 
             # Executing callback
             self.drop_action()
         
         else:
             super(StagesList, self).dropEvent(ev)
-            # Getting drop position
-            x = ev.pos().x()
-            y = ev.pos().y()
-            item_index = self.row(self.itemAt(x, y))
-        
-            # Deleting element added by super
-            #self.takeItem(item_index)
 
     
     def clean_empty_items(self):
@@ -101,6 +87,34 @@ class StagesList(QtWid.QListWidget):
             item_content = self.itemWidget(self.item(i))
             if not item_content:
                 self.takeItem(i)
+
+
+    def validate_and_add_zero(self, cell_widget : QtWid.QWidget, zero_data):
+        if zero_data['n'] == 2:
+            # Only second order poles can have second order zeros
+            if cell_widget.cell_data['pole']['n'] == 2 and cell_widget.cell_data['zero'] is None:
+                # Checking that the cell in which the zero was dropped has a second order pole doesn't have any zeros
+                cell_widget.cell_data['zero'] = self.dropped_data
+
+                cell_widget.f0.setText('{:.3E}'.format(self.dropped_data['f0']))
+                cell_widget.n0.setText('{}'.format(self.dropped_data['n']))
+
+                # Setting zero as used
+                self.dropped_data['used'] = True
+
+        elif zero_data['n'] == 1:
+            if cell_widget.cell_data['pole']['n'] == 2:
+                pass
+            elif cell_widget.cell_data['pole']['n'] == 1 and cell_widget.cell_data['zero'] is None:
+                # Checking that the cell in which the zero was dropped doesn't have any zeros
+                cell_widget.cell_data['zero'] = self.dropped_data
+
+                cell_widget.f0.setText('{:.3E}'.format(self.dropped_data['f0']))
+                cell_widget.n0.setText('{}'.format(self.dropped_data['n']))
+
+                # Setting zero as used
+                self.dropped_data['used'] = True
+
 
 
 

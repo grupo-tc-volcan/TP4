@@ -39,9 +39,13 @@ class LowPassData(QtWid.QWidget, Ui_LowPassData):
 
     def on_change(self):
         if self.order_fixed.isChecked():
+            if self.approx_index != 6:
+                # Cauer filter needs the stopband attenuation data
+                self.stop_att.setDisabled(True)
+            else:
+                self.stop_att.setEnabled(True)
             self.order.setEnabled(True)
             self.stop_freq.setDisabled(True)
-            self.stop_att.setDisabled(True)
             self.denorm_select.setCurrentIndex(0)
             self.denorm_perc.setValue(0)
             self.denorm_select.setDisabled(True)
@@ -49,9 +53,15 @@ class LowPassData(QtWid.QWidget, Ui_LowPassData):
             self.q_fixed.setDisabled(True)
 
         elif self.q_fixed.isChecked():
+            if self.approx_index != 6:
+                # Cauer filter needs the stopband attenuation data
+                self.stop_att.setDisabled(True)
+            else:
+                self.stop_att.setEnabled(True)
             self.q_max.setEnabled(True)
             self.stop_freq.setDisabled(True)
-            self.stop_att.setDisabled(True)
+            self.denorm_select.setCurrentIndex(0)
+            self.denorm_perc.setValue(0)
             self.denorm_select.setDisabled(True)
             self.denorm_perc.setDisabled(True)
             self.order_fixed.setDisabled(True)

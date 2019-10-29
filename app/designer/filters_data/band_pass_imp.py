@@ -42,25 +42,37 @@ class BandPassData(QtWid.QWidget, Ui_BandPassData):
 
     def on_change(self):
         if self.order_fixed.isChecked():
+            if self.approx_index != 6:
+                # Cauer filter needs the stopband attenuation data
+                self.stop_att_l.setDisabled(True)
+                self.stop_att_r.setDisabled(True)
+            else:
+                self.stop_att_l.setEnabled(True)
+                self.stop_att_r.setEnabled(True)
             self.order.setEnabled(True)
-            self.stop_freq_l.setDisabled(True)
-            self.stop_freq_r.setDisabled(True)
-            self.stop_att_l.setDisabled(True)
-            self.stop_att_r.setDisabled(True)
             self.denorm_select.setCurrentIndex(0)
             self.denorm_perc.setValue(0)
             self.denorm_select.setDisabled(True)
             self.denorm_perc.setDisabled(True)
+            self.stop_freq_l.setDisabled(True)
+            self.stop_freq_r.setDisabled(True)
             self.q_fixed.setDisabled(True)
 
         elif self.q_fixed.isChecked():
-            self.q_max.setEnabled(True)
-            self.stop_freq_l.setDisabled(True)
-            self.stop_freq_r.setDisabled(True)
-            self.stop_att_l.setDisabled(True)
-            self.stop_att_r.setDisabled(True)
+            if self.approx_index != 6:
+                # Cauer filter needs the stopband attenuation data
+                self.stop_att_l.setDisabled(True)
+                self.stop_att_r.setDisabled(True)
+            else:
+                self.stop_att_l.setEnabled(True)
+                self.stop_att_r.setEnabled(True)
+            self.order.setEnabled(True)
+            self.denorm_select.setCurrentIndex(0)
+            self.denorm_perc.setValue(0)
             self.denorm_select.setDisabled(True)
             self.denorm_perc.setDisabled(True)
+            self.stop_freq_l.setDisabled(True)
+            self.stop_freq_r.setDisabled(True)
             self.order_fixed.setDisabled(True)
 
         else:
