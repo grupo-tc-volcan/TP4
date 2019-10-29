@@ -305,6 +305,8 @@ class AttFilterApproximator():
                 return ApproximationErrorCode.INVALID_FREQ
             elif self.Apl <= 0 or self.Aal <= 0:
                 return ApproximationErrorCode.INVALID_ATTE
+            elif self.Apl >= self.Aal:
+                return ApproximationErrorCode.INVALID_ATTE
         else:
             if self.Apl <= 0:
                 return ApproximationErrorCode.INVALID_ATTE

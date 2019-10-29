@@ -112,11 +112,70 @@ def test_low_pass_template():
 
 
 def test_high_pass_template():
-    pass
+
+    def try_high_pass(gain, denorm, fp, ap, fa, aa):
+        app = AttFilterApproximator()
+        app.type = "high-pass"
+        app.gain = gain
+        app.denorm = denorm
+        app.fpl = fp
+        app.fal = fa
+        app.Apl = ap
+        app.Aal = aa
+        return app.compute()
+
+    assert try_high_pass(gain=0, denorm=0, fp=1000, ap=3, fa=100, aa=20) is ApproximationErrorCode.UNDEFINED_APPROXIMATION
+    assert try_high_pass(gain=-5, denorm=0, fp=100, ap=3, fa=1000, aa=20) is ApproximationErrorCode.INVALID_GAIN
+    assert try_high_pass(gain=0, denorm=600, fp=100, ap=3, fa=1000, aa=20) is ApproximationErrorCode.INVALID_DENORM
+
+    assert try_high_pass(gain=0, denorm=0, fp=-1000, ap=3, fa=100, aa=20) is ApproximationErrorCode.INVALID_FREQ
+    assert try_high_pass(gain=0, denorm=0, fp=1000, ap=3, fa=-100, aa=20) is ApproximationErrorCode.INVALID_FREQ
+    assert try_high_pass(gain=0, denorm=0, fp=-1000, ap=3, fa=-100, aa=20) is ApproximationErrorCode.INVALID_FREQ
+    assert try_high_pass(gain=0, denorm=0, fp=1000, ap=3, fa=1100, aa=20) is ApproximationErrorCode.INVALID_FREQ
+
+    assert try_high_pass(gain=0, denorm=0, fp=1000, ap=-3, fa=100, aa=20) is ApproximationErrorCode.INVALID_ATTE
+    assert try_high_pass(gain=0, denorm=0, fp=1000, ap=3, fa=100, aa=-20) is ApproximationErrorCode.INVALID_ATTE
+    assert try_high_pass(gain=0, denorm=0, fp=1000, ap=-3, fa=100, aa=-20) is ApproximationErrorCode.INVALID_ATTE
+    assert try_high_pass(gain=0, denorm=0, fp=1000, ap=30, fa=100, aa=20) is ApproximationErrorCode.INVALID_ATTE
+    assert try_high_pass(gain=0, denorm=0, fp=1000, ap=0, fa=100, aa=20) is ApproximationErrorCode.INVALID_ATTE
+    assert try_high_pass(gain=0, denorm=0, fp=1000, ap=10, fa=100, aa=0) is ApproximationErrorCode.INVALID_ATTE
 
 
 def test_band_pass_template():
-    pass
+
+    def try_band_pass(gain, denorm, fpl, fpr, apl, apr, fal, far, aal, aar):
+        app = AttFilterApproximator()
+        app.type = "band-pass"
+        app.gain = gain
+        app.denorm = denorm
+        app.fpl = fpl
+        app.fpr = fpr
+        app.fal = fal
+        app.far = far
+        app.Apl = apl
+        app.Apr = apr
+        app.Aal = aal
+        app.Aar = aar
+        return app.compute()
+
+    assert try_band_pass(gain=0, denorm=0, fpl=3000, fpr=5000, apl=3, apr=3, fal=1000, far=7000, aal=30, aar=30) is ApproximationErrorCode.UNDEFINED_APPROXIMATION
+    assert try_band_pass(gain=-5, denorm=0, fpl=3000, fpr=5000, apl=3, apr=3, fal=1000, far=7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_GAIN
+    assert try_band_pass(gain=0, denorm=110, fpl=3000, fpr=5000, apl=3, apr=3, fal=1000, far=7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_DENORM
+
+    assert try_band_pass(gain=0, denorm=0, fpl=-3000, fpr=5000, apl=3, apr=3, fal=1000, far=7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
+    assert try_band_pass(gain=0, denorm=0, fpl=3000, fpr=-5000, apl=3, apr=3, fal=1000, far=7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
+    assert try_band_pass(gain=0, denorm=0, fpl=3000, fpr=5000, apl=3, apr=3, fal=-1000, far=7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
+    assert try_band_pass(gain=0, denorm=0, fpl=3000, fpr=5000, apl=3, apr=3, fal=1000, far=-7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
+
+    assert try_band_pass(gain=0, denorm=0, fpl=5000, fpr=3000, apl=3, apr=3, fal=1000, far=7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
+    assert try_band_pass(gain=0, denorm=0, fpl=3000, fpr=5000, apl=3, apr=3, fal=7000, far=1000, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
+    assert try_band_pass(gain=0, denorm=0, fpl=3000, fpr=8000, apl=3, apr=3, fal=1000, far=7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
+    assert try_band_pass(gain=0, denorm=0, fpl=100, fpr=5000, apl=3, apr=3, fal=1000, far=7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
+
+    assert try_band_pass(gain=0, denorm=0, fpl=0, fpr=5000, apl=3, apr=3, fal=1000, far=7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
+    assert try_band_pass(gain=0, denorm=0, fpl=3000, fpr=0, apl=3, apr=3, fal=1000, far=7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
+    assert try_band_pass(gain=0, denorm=0, fpl=3000, fpr=5000, apl=3, apr=3, fal=0, far=7000, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
+    assert try_band_pass(gain=0, denorm=0, fpl=3000, fpr=5000, apl=3, apr=3, fal=1000, far=0, aal=30, aar=30) is ApproximationErrorCode.INVALID_FREQ
 
 
 def test_band_stop_template():
