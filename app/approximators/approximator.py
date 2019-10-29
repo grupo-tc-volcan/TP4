@@ -127,13 +127,13 @@ class AttFilterApproximator:
 
                     # When a fixed order is given, it should be prioritised...
                     # calculates the normalised transfer function
+                    wan, aa, wpn, ap = self.get_norm_template()
                     if self.ord > 0:
                         try:
-                            error_code = self.compute_normalised_by_order(self.Apl, self.ord)
+                            error_code = self.compute_normalised_by_order(ap, self.ord, aa)
                         except NotImplementedError:
                             error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
                     else:
-                        wan, aa, wpn, ap = self.get_norm_template()
                         error_code = self.compute_normalised_by_template(ap, aa, wpn, wan)
                     
                     # Denormalisation process, first we need to pass every transfer function
@@ -186,9 +186,9 @@ class AttFilterApproximator:
 
     def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
-        return self._compute_normalised_by_match(ap, partial(self.matches_normalised_template, ap, aa, wan))
+        return self._compute_normalised_by_match(ap, aa, partial(self.matches_normalised_template, ap, aa, wan))
 
-    def compute_normalised_by_order(self, ap, n) -> ApproximationErrorCode:
+    def compute_normalised_by_order(self, ap, n, aa) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the fixed order """
         raise NotImplementedError
     
@@ -229,14 +229,14 @@ class AttFilterApproximator:
 
         return ApproximationErrorCode.OK
 
-    def _compute_normalised_by_match(self, ap, callback) -> ApproximationErrorCode:
+    def _compute_normalised_by_match(self, ap, aa, callback) -> ApproximationErrorCode:
         """ Generates normalised transfer function for each order until the callbacks
         verifies it matches the requierements. 
         The callback should expect a ZerosPoleGain object from Scipy.Signal,
         returning whether it verifies or not the requirements. """
         for order in range(1, MAXIMUM_ORDER + 1):
             try:
-                error_code = self.compute_normalised_by_order(ap, order)
+                error_code = self.compute_normalised_by_order(ap, order, aa)
             except NotImplementedError:
                 error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
 
@@ -280,13 +280,13 @@ class AttFilterApproximator:
             aa = aa + self.gain
 
         if self.type == FilterType.LOW_PASS.value:
-            return self.fal / self.fpl, aa, 1, ap
+            return None if self.fpl == 0 else self.fal / self.fpl, aa, 1, ap
         elif self.type == FilterType.HIGH_PASS.value:
-            return self.fpl / self.fal, aa, 1, ap
+            return None if self.fal == 0 else self.fpl / self.fal, aa, 1, ap
         elif self.type == FilterType.BAND_PASS.value:
-            return (self.far - self.fal) / (self.fpr - self.fpl), aa, 1, ap
+            return None if self.fpr == self.fpl else (self.far - self.fal) / (self.fpr - self.fpl), aa, 1, ap
         elif self.type == FilterType.BAND_REJECT.value:
-            return (self.fpr - self.fpl) / (self.far - self.fal), aa, 1, ap
+            return None if self.far == self.fal else (self.fpr - self.fpl) / (self.far - self.fal), aa, 1, ap
 
     def _validate_general(self) -> ApproximationErrorCode:
         """ Returns if general parameters are valid """

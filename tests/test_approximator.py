@@ -3,6 +3,7 @@ from app.approximators.butterworth import ButterworthApprox
 from app.approximators.chebyshev_i import ChebyshevIApprox
 from app.approximators.chebyshev_ii import ChebyshevIIApprox
 from app.approximators.legendre import LegendreApprox
+from app.approximators.cauer import CauerApprox
 
 from app.approximators.approximator import ApproximationErrorCode
 
@@ -22,7 +23,7 @@ import numpy as np
 @pytest.fixture
 def approximator():
     # Change the returning approximation to test it!
-    return ChebyshevIIApprox()
+    return CauerApprox()
 
 
 def run_by_template(
@@ -33,7 +34,7 @@ def run_by_template(
         fal=0, far=0,
         aal=0, aar=0,
         gain=0,
-        graph="bode" # other case should be zpk
+        graph="bode"    # other case should be zpk
 ):
     approximator.type = filter_type
     approximator.gain = gain
@@ -116,9 +117,10 @@ def test_by_fixed_order(approximator):
     approximator.gain = 0
     approximator.fpl = 1000
     approximator.Apl = 3.5
+    approximator.Aal = 10
 
     results = []
-    for order in range(5, 6):
+    for order in range(1, 6):
         approximator.ord = order
 
         if approximator.compute() is ApproximationErrorCode.OK:
@@ -281,4 +283,3 @@ def test_low_pass(approximator):
         aal=50,
         graph="zpk"
     )
-

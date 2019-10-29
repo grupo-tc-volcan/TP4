@@ -32,7 +32,7 @@ class ChebyshevIApprox(AttFilterApproximator):
         order = self.compute_order(ap, aa, wan)
         return self.compute_normalised_by_order(ap, order)
 
-    def compute_normalised_by_order(self, ap, n) -> ApproximationErrorCode:
+    def compute_normalised_by_order(self, ap, n, aa) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the fixed order """
         # Computing needed constants
         zeros, poles, gain = ss.cheb1ap(n, ap)

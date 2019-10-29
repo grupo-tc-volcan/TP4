@@ -21,7 +21,7 @@ class LegendreApprox(AttFilterApproximator):
     #  Internal Public Methods  #
     # ------------------------- #
 
-    def compute_normalised_by_order(self, ap, n) -> ApproximationErrorCode:
+    def compute_normalised_by_order(self, ap, n, aa) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the fixed order """
         # Computing needed constants from Legendre Approximation
         epsilon = LegendreApprox.compute_epsilon(ap) ** 2
