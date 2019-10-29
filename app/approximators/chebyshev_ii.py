@@ -34,7 +34,8 @@ class ChebyshevIIApprox(AttFilterApproximator):
         """ Generates normalised transfer function prioritising the fixed order """
         # Computing needed constants
         zeros, poles, gain = ss.cheb2ap(n, aa)
-        self.h_norm = ss.ZerosPolesGain(zeros, poles, gain)
+        wa, aa, wp, ap = self.get_norm_template()
+        self.h_norm = ss.ZerosPolesGain(zeros * (1 / wp), poles * (1 / wp), gain)
         return ApproximationErrorCode.OK
 
     def denormalisation_factor(self, wa, aa, wp, ap):
@@ -51,26 +52,40 @@ class ChebyshevIIApprox(AttFilterApproximator):
         return relative_adjust
 
     def _validate_low_pass_by_fixed(self) -> ApproximationErrorCode:
-        error_code = super(ChebyshevIIApprox, self)._validate_low_pass_by_fixed()
-        if error_code is ApproximationErrorCode.OK:
-            if self.ord > 0 or self.q > 0:
+        if self.Aal <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.fal <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        else:
+            return ApproximationErrorCode.OK
 
-        return error_code
+    def _validate_high_pass_by_fixed(self) -> ApproximationErrorCode:
+        if self.Aal <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.fal <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        else:
+            return ApproximationErrorCode.OK
 
-    def _validate_high_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a high-pass.
-        """
+    def _validate_band_pass_by_fixed(self) -> ApproximationErrorCode:
+        if self.Aal <= 0 or self.Aar < 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.fal <= 0 or self.far <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.far <= self.fal:
+            return ApproximationErrorCode.INVALID_FREQ
+        else:
+            return ApproximationErrorCode.OK
 
-    def _validate_band_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a band-pass.
-        """
-
-    def _validate_band_reject(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a band-reject.
-        """
+    def _validate_band_stop_by_fixed(self) -> ApproximationErrorCode:
+        if self.Aal <= 0 or self.Aar < 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.fal <= 0 or self.far <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.far <= self.fal:
+            return ApproximationErrorCode.INVALID_FREQ
+        else:
+            return ApproximationErrorCode.OK
 
     # ----------------- #
     #  Private Methods  #

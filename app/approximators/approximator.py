@@ -66,7 +66,7 @@ class AttFilterApproximator:
         self.h_norm = None
         self.h_denorm = None
         self.error_code = None
-    
+
     def get_norm_template(self) -> tuple:
         """ Returns a 4-element tuple containing the normalised
         parameters of the template.
@@ -253,16 +253,32 @@ class AttFilterApproximator:
 
         # Frequency transformation to get the desired filter
         if self.type == FilterType.LOW_PASS.value:
-            z, p, k = ss.lp2lp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fpl)
+            z, p, k = self.denormalise_to_low_pass()
         elif self.type == FilterType.HIGH_PASS.value:
-            z, p, k = ss.lp2hp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fpl)
+            z, p, k = self.denormalise_to_high_pass()
         elif self.type == FilterType.BAND_PASS.value:
-            z, p, k = ss.lp2bp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
+            z, p, k = self.denormalise_to_band_pass()
         elif self.type == FilterType.BAND_REJECT.value:
-            z, p, k = ss.lp2bs_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fal * self.far), 2 * np.pi * (self.fpr - self.fpl))
+            z, p, k = self.denormalise_to_band_stop()
         self.h_denorm = ss.ZerosPolesGain(z, p, k)
 
         return ApproximationErrorCode.OK
+
+    def denormalise_to_low_pass(self) -> tuple:
+        """ Denormalises the filter to low pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2lp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fpl)
+
+    def denormalise_to_high_pass(self) -> tuple:
+        """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2hp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fpl)
+
+    def denormalise_to_band_pass(self) -> tuple:
+        """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2bp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
+
+    def denormalise_to_band_stop(self) -> tuple:
+        """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2bs_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fal * self.far), 2 * np.pi * (self.fpr - self.fpl))
 
     def _compute_normalised_by_match(self, ap, aa, callback) -> ApproximationErrorCode:
         """ Generates normalised transfer function for each order until the callbacks

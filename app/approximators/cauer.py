@@ -34,36 +34,33 @@ class CauerApprox(AttFilterApproximator):
     def _validate_low_pass_by_fixed(self) -> ApproximationErrorCode:
         error_code = super(CauerApprox, self)._validate_low_pass_by_fixed()
         if error_code is ApproximationErrorCode.OK:
-            if self.ord > 0 or self.q > 0:
-                if self.Aal <= 0:
-                    error_code = ApproximationErrorCode.INVALID_ATTE
-                elif self.Aal <= self.Apl:
-                    error_code = ApproximationErrorCode.INVALID_ATTE
+            if self.Aal <= 0:
+                error_code = ApproximationErrorCode.INVALID_ATTE
+            elif self.Aal <= self.Apl:
+                error_code = ApproximationErrorCode.INVALID_ATTE
         return error_code
 
     def _validate_high_pass_by_fixed(self) -> ApproximationErrorCode:
         error_code = super(CauerApprox, self)._validate_high_pass_by_fixed()
         if error_code is ApproximationErrorCode.OK:
-            if self.ord > 0 or self.q > 0:
-                if self.Aal <= 0:
-                    error_code = ApproximationErrorCode.INVALID_ATTE
-                elif self.Aal <= self.Apl:
-                    error_code = ApproximationErrorCode.INVALID_ATTE
+            if self.Aal <= 0:
+                error_code = ApproximationErrorCode.INVALID_ATTE
+            elif self.Aal <= self.Apl:
+                error_code = ApproximationErrorCode.INVALID_ATTE
 
         return error_code
 
     def _validate_band_pass_by_fixed(self) -> ApproximationErrorCode:
         error_code = super(CauerApprox, self)._validate_band_pass_by_fixed()
         if error_code is ApproximationErrorCode.OK:
-            if self.ord > 0 or self.q > 0:
-                if self.Aal <= 0 or self.Aar < 0:
-                    error_code = ApproximationErrorCode.INVALID_ATTE
-                elif self.Apl >= self.Aal or (self.Apl >= self.Aar and self.Aar):
-                    error_code = ApproximationErrorCode.INVALID_ATTE
-                else:
-                    if self.Apr:
-                        if self.Apr >= self.Aal or (self.Apr >= self.Aar and self.Aar):
-                            error_code = ApproximationErrorCode.INVALID_ATTE
+            if self.Aal <= 0 or self.Aar < 0:
+                error_code = ApproximationErrorCode.INVALID_ATTE
+            elif self.Apl >= self.Aal or (self.Apl >= self.Aar and self.Aar):
+                error_code = ApproximationErrorCode.INVALID_ATTE
+            else:
+                if self.Apr:
+                    if self.Apr >= self.Aal or (self.Apr >= self.Aar and self.Aar):
+                        error_code = ApproximationErrorCode.INVALID_ATTE
 
         return error_code
 
@@ -73,14 +70,13 @@ class CauerApprox(AttFilterApproximator):
         """
         error_code = super(CauerApprox, self)._validate_band_stop_by_fixed()
         if error_code is ApproximationErrorCode.OK:
-            if self.ord > 0 or self.q > 0:
-                if self.Aal <= 0 or self.Aar < 0:
-                    error_code = ApproximationErrorCode.INVALID_ATTE
-                elif self.Apl >= self.Aal or (self.Apl >= self.Aar and self.Aar):
-                    error_code = ApproximationErrorCode.INVALID_ATTE
-                else:
-                    if self.Apr:
-                        if self.Apr >= self.Aal or (self.Apr >= self.Aar and self.Aar):
-                            error_code = ApproximationErrorCode.INVALID_ATTE
+            if self.Aal <= 0 or self.Aar < 0:
+                error_code = ApproximationErrorCode.INVALID_ATTE
+            elif self.Apl >= self.Aal or (self.Apl >= self.Aar and self.Aar):
+                error_code = ApproximationErrorCode.INVALID_ATTE
+            else:
+                if self.Apr:
+                    if self.Apr >= self.Aal or (self.Apr >= self.Aar and self.Aar):
+                        error_code = ApproximationErrorCode.INVALID_ATTE
 
         return error_code
