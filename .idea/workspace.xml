@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/approximators/approximator.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/approximators/approximator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_validation.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_validation.py" afterDir="false" />
     </list>
@@ -12,14 +13,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.27853882">
+    <splitter split-orientation="horizontal" split-proportion="0.4695586">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tests/test_validation.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1021">
-                  <caret line="235" column="113" selection-start-line="235" selection-start-column="113" selection-end-line="235" selection-end-column="113" />
+                <state relative-caret-position="376">
+                  <caret line="276" selection-start-line="276" selection-end-line="276" />
                   <folding>
                     <element signature="e#424#488#0" expanded="true" />
                   </folding>
@@ -34,8 +35,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="189">
-                  <caret line="356" column="58" selection-start-line="356" selection-start-column="58" selection-end-line="356" selection-end-column="58" />
+                <state relative-caret-position="295">
+                  <caret line="380" lean-forward="true" selection-start-line="380" selection-end-line="380" />
                   <folding>
                     <element signature="e#22#47#0" expanded="true" />
                   </folding>
@@ -56,8 +57,8 @@
         <option value="$PROJECT_DIR$/app/approximators/butterworth.py" />
         <option value="$PROJECT_DIR$/tests/test_butter.py" />
         <option value="$PROJECT_DIR$/requirements" />
-        <option value="$PROJECT_DIR$/tests/test_validation.py" />
         <option value="$PROJECT_DIR$/app/approximators/approximator.py" />
+        <option value="$PROJECT_DIR$/tests/test_validation.py" />
       </list>
     </option>
   </component>
@@ -119,7 +120,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_validation.test_band_stop_template">
+  <component name="RunManager" selected="Python tests.pytest for test_validation.test_fixed_order_high_pass">
     <configuration name="pytest for test_validation.test_band_pass_template" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -150,6 +151,36 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest for test_validation.test_fixed_order_high_pass" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="filters-tool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_validation.test_fixed_order_high_pass&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_validation.test_fixed_order_low_pass" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="filters-tool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_validation.test_fixed_order_low_pass&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="pytest for test_validation.test_high_pass_template" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -165,43 +196,13 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_validation.test_low_pass_template" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="filters-tool" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_validation.test_low_pass_template&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest for test_validation.test_order" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="filters-tool" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_validation.test_order&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for test_validation.test_fixed_order_high_pass" />
+        <item itemvalue="Python tests.pytest for test_validation.test_fixed_order_low_pass" />
         <item itemvalue="Python tests.pytest for test_validation.test_band_stop_template" />
         <item itemvalue="Python tests.pytest for test_validation.test_band_pass_template" />
         <item itemvalue="Python tests.pytest for test_validation.test_high_pass_template" />
-        <item itemvalue="Python tests.pytest for test_validation.test_low_pass_template" />
-        <item itemvalue="Python tests.pytest for test_validation.test_order" />
       </list>
     </recent_temporary>
   </component>
@@ -219,35 +220,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_validation_test_band_pass_template - 2019.10.29 at 01h 40m 22s.xml">
-      <configuration name="pytest for test_validation.test_band_pass_template" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_validation_test_band_pass_template - 2019.10.29 at 01h 41m 23s.xml">
-      <configuration name="pytest for test_validation.test_band_pass_template" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_validation_test_band_pass_template - 2019.10.29 at 01h 42m 11s.xml">
-      <configuration name="pytest for test_validation.test_band_pass_template" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_validation_test_band_pass_template - 2019.10.29 at 01h 43m 58s.xml">
-      <configuration name="pytest for test_validation.test_band_pass_template" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_validation_test_band_pass_template - 2019.10.29 at 01h 45m 17s.xml">
-      <configuration name="pytest for test_validation.test_band_pass_template" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_validation_test_band_pass_template - 2019.10.29 at 01h 46m 11s.xml">
-      <configuration name="pytest for test_validation.test_band_pass_template" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_validation_test_band_stop_template - 2019.10.29 at 01h 47m 49s.xml">
-      <configuration name="pytest for test_validation.test_band_stop_template" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_validation_test_band_pass_template - 2019.10.29 at 01h 49m 50s.xml">
-      <configuration name="pytest for test_validation.test_band_pass_template" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_validation_test_band_stop_template - 2019.10.29 at 01h 51m 53s.xml">
-      <configuration name="pytest for test_validation.test_band_stop_template" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_test_validation_test_band_stop_template - 2019.10.29 at 01h 52m 15s.xml">
       <configuration name="pytest for test_validation.test_band_stop_template" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_band_stop_template - 2019.10.29 at 01h 52m 50s.xml">
+      <configuration name="pytest for test_validation.test_band_stop_template" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_fixed_order_low_pass - 2019.10.29 at 01h 55m 02s.xml">
+      <configuration name="pytest for test_validation.test_fixed_order_low_pass" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_fixed_order_low_pass - 2019.10.29 at 01h 55m 11s.xml">
+      <configuration name="pytest for test_validation.test_fixed_order_low_pass" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_fixed_order_low_pass - 2019.10.29 at 01h 55m 39s.xml">
+      <configuration name="pytest for test_validation.test_fixed_order_low_pass" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_fixed_order_low_pass - 2019.10.29 at 01h 57m 18s.xml">
+      <configuration name="pytest for test_validation.test_fixed_order_low_pass" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_fixed_order_low_pass - 2019.10.29 at 01h 57m 43s.xml">
+      <configuration name="pytest for test_validation.test_fixed_order_low_pass" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_fixed_order_low_pass - 2019.10.29 at 01h 59m 20s.xml">
+      <configuration name="pytest for test_validation.test_fixed_order_low_pass" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_fixed_order_high_pass - 2019.10.29 at 02h 01m 25s.xml">
+      <configuration name="pytest for test_validation.test_fixed_order_high_pass" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_fixed_order_high_pass - 2019.10.29 at 02h 02m 25s.xml">
+      <configuration name="pytest for test_validation.test_fixed_order_high_pass" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -259,7 +260,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.41898528" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.07692308" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.27986908" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -323,22 +324,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_validation.py">
+    <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1021">
-          <caret line="235" column="113" selection-start-line="235" selection-start-column="113" selection-end-line="235" selection-end-column="113" />
+        <state relative-caret-position="295">
+          <caret line="380" lean-forward="true" selection-start-line="380" selection-end-line="380" />
           <folding>
-            <element signature="e#424#488#0" expanded="true" />
+            <element signature="e#22#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
+    <entry file="file://$PROJECT_DIR$/tests/test_validation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="356" column="58" selection-start-line="356" selection-start-column="58" selection-end-line="356" selection-end-column="58" />
+        <state relative-caret-position="376">
+          <caret line="276" selection-start-line="276" selection-end-line="276" />
           <folding>
-            <element signature="e#22#47#0" expanded="true" />
+            <element signature="e#424#488#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -236,9 +236,41 @@ def test_band_stop_template():
     assert try_band_stop(gain=0, denorm=0, fpl=1000, fpr=10000, apl=33, apr=33, fal=3000, far=7000, aal=30, aar=0) is ApproximationErrorCode.INVALID_ATTE
 
 
-def test_fixed_order():
-    pass
+def test_fixed_order_low_pass():
+
+    def try_low_pass(fp, ap, order):
+        app = AttFilterApproximator()
+        app.type = "low-pass"
+        app.fpl = fp
+        app.Apl = ap
+        app.ord = order
+        return app.compute()
+
+    assert try_low_pass(fp=100, ap=20, order=4) is ApproximationErrorCode.UNDEFINED_APPROXIMATION
+    assert try_low_pass(fp=100, ap=20, order=60) is ApproximationErrorCode.INVALID_ORDER
+
+    assert try_low_pass(fp=0, ap=20, order=6) is ApproximationErrorCode.INVALID_FREQ
+    assert try_low_pass(fp=-10, ap=20, order=6) is ApproximationErrorCode.INVALID_FREQ
+
+    assert try_low_pass(fp=10, ap=-20, order=6) is ApproximationErrorCode.INVALID_ATTE
+    assert try_low_pass(fp=10, ap=0, order=6) is ApproximationErrorCode.INVALID_ATTE
 
 
-def test_max_q():
-    pass
+def test_fixed_order_high_pass():
+
+    def try_low_pass(fp, ap, order):
+        app = AttFilterApproximator()
+        app.type = "high-pass"
+        app.fpl = fp
+        app.Apl = ap
+        app.ord = order
+        return app.compute()
+
+    assert try_low_pass(fp=100, ap=20, order=4) is ApproximationErrorCode.UNDEFINED_APPROXIMATION
+    assert try_low_pass(fp=100, ap=20, order=60) is ApproximationErrorCode.INVALID_ORDER
+
+    assert try_low_pass(fp=0, ap=20, order=6) is ApproximationErrorCode.INVALID_FREQ
+    assert try_low_pass(fp=-10, ap=20, order=6) is ApproximationErrorCode.INVALID_FREQ
+
+    assert try_low_pass(fp=10, ap=-20, order=6) is ApproximationErrorCode.INVALID_ATTE
+    assert try_low_pass(fp=10, ap=0, order=6) is ApproximationErrorCode.INVALID_ATTE

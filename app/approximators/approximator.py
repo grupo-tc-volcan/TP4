@@ -377,7 +377,7 @@ class AttFilterApproximator():
     @staticmethod
     def calculate_frequency(root):
         xi = AttFilterApproximator.calculate_xi(root)
-        return root.real / (xi * 2 * np.pi)
+        return abs(root.real) / (xi * 2 * np.pi)
 
     @staticmethod
     def calculate_selectivity(root):
