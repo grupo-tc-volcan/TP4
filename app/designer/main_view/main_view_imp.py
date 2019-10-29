@@ -48,6 +48,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.calculate_button.released.connect(self.calculate_approx)
         self.plot_template_1.stateChanged.connect(self.plot_template_toggle)
         self.stages_list.itemSelectionChanged.connect(self.plot_stage)
+        self.accumulative_plot.stateChanged.connect(self.plot_stage)
 
         # Loading callbacks
         self.stages_list.drag_action = self.pass_data_from_stages
@@ -133,7 +134,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
     def plot_stage(self):
         current_item = self.stages_list.currentItem()
-        stage_widget = self.stages_list.itemWidget(current_item)
         stage_index = self.stages_list.row(current_item)
 
         if self.accumulative_plot.isChecked():
@@ -147,12 +147,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         for i in range(start,stage_index + 1):
             widget = self.stages_list.itemWidget(self.stages_list.item(i))
             if widget.cell_data['zero'] is not None:
-                zero = widget.cell_data['zero']['f0'] * 2*np.pi
-                zeros_list.append(zero)
-            pole = widget.cell_data['pole']['fp'] * 2*np.pi
+                zeros = [zero * 2*np.pi for zero in widget.cell_data['zero']['zeros']]
+                zeros_list += zeros
+            poles = [pole * 2*np.pi for pole in widget.cell_data['pole']['poles']]
             gain = widget.cell_data['gain']
-            poles_list.append(pole)
+            poles_list += poles
             total_gain += gain
+        
+        total_gain = 10**(total_gain/20)
 
         tf = ss.ZerosPolesGain(zeros_list, poles_list, total_gain)
         self.plot_attenuation_for_stages(tf)
@@ -442,10 +444,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
     def plot_attenuation_for_stages(self, transfer_function : ss.ZerosPolesGain):
          # Loading transfer_function into plotter and setting filter type
-        filter_index = self.filter_selector.currentIndex()
         self.plotters[8].set_transfer_function(transfer_function)
-
-        self.plotters[8].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
 
         # Plotting attenuation
         self.plotters[8].plot_attenuation()

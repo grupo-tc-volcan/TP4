@@ -37,8 +37,11 @@ class StagesList(QtWid.QListWidget):
                 y = ev.pos().y()
                 item_index = self.row(self.itemAt(x, y))
 
-                # Deleting element added by super
-                self.takeItem(item_index)
+                # Checking if there is already a cell in that position
+                item_content = self.itemWidget(self.itemAt(x, y))
+                if not item_content:
+                    # Deleting element added by super
+                    self.takeItem(item_index)
 
                 # Creating cell block
                 new_stage_data = {
@@ -94,23 +97,45 @@ class StagesList(QtWid.QListWidget):
             # Only second order poles can have second order zeros
             if cell_widget.cell_data['pole']['n'] == 2 and cell_widget.cell_data['zero'] is None:
                 # Checking that the cell in which the zero was dropped has a second order pole doesn't have any zeros
-                cell_widget.cell_data['zero'] = self.dropped_data
+                cell_widget.cell_data['zero'] = zero_data
 
-                cell_widget.f0.setText('{:.3E}'.format(self.dropped_data['f0']))
-                cell_widget.n0.setText('{}'.format(self.dropped_data['n']))
+                cell_widget.f0.setText('{:.3E}'.format(cell_widget.cell_data['zero']['f0']))
+                cell_widget.n0.setText('{}'.format(cell_widget.cell_data['zero']['n']))
 
                 # Setting zero as used
                 self.dropped_data['used'] = True
 
         elif zero_data['n'] == 1:
             if cell_widget.cell_data['pole']['n'] == 2:
-                pass
+                if cell_widget.cell_data['zero'] is None:
+                    # If the cell has no zeros, this simple zero is added
+                    cell_widget.cell_data['zero'] = zero_data
+
+                    cell_widget.f0.setText('{:.3E}'.format(cell_widget.cell_data['zero']['f0']))
+                    cell_widget.n0.setText('{}'.format(cell_widget.cell_data['zero']['n']))
+
+                    # Setting zero as used
+                    self.dropped_data['used'] = True
+
+                elif cell_widget.cell_data['zero']['n'] == 1:
+                    # If the cell already has a first degree zero, this new first degree zero is added as well
+                    # Increasing order of the zero and adding it to the zeros list
+                    cell_widget.cell_data['zero']['n'] = 2
+                    cell_widget.cell_data['zero']['zeros'].append(zero_data['zeros'][0])
+                    cell_widget.cell_data['zero']['zero_attached'] = zero_data
+
+                    cell_widget.f0.setText('{:.3E}'.format(cell_widget.cell_data['zero']['f0']))
+                    cell_widget.n0.setText('{}'.format(cell_widget.cell_data['zero']['n']))
+
+                    # Setting zero as used
+                    self.dropped_data['used'] = True
+
             elif cell_widget.cell_data['pole']['n'] == 1 and cell_widget.cell_data['zero'] is None:
                 # Checking that the cell in which the zero was dropped doesn't have any zeros
-                cell_widget.cell_data['zero'] = self.dropped_data
+                cell_widget.cell_data['zero'] = zero_data
 
-                cell_widget.f0.setText('{:.3E}'.format(self.dropped_data['f0']))
-                cell_widget.n0.setText('{}'.format(self.dropped_data['n']))
+                cell_widget.f0.setText('{:.3E}'.format(cell_widget.cell_data['zero']['f0']))
+                cell_widget.n0.setText('{}'.format(cell_widget.cell_data['zero']['n']))
 
                 # Setting zero as used
                 self.dropped_data['used'] = True
@@ -148,6 +173,15 @@ class PolesList(QtWid.QListWidget):
             # Setting pole as unused
             self.dropped_data['pole']['used'] = False
             if self.dropped_data['zero'] is not None:
+                # If the zero is of second order, then it's possible that it was originally two first order zeros in the origin
+                if self.dropped_data['zero']['n'] == 2:
+                    if self.dropped_data['zero']['zeros'][0] == self.dropped_data['zero']['zeros'][1]:
+                        # Correcting changes done when combining zeros
+                        self.dropped_data['zero']['n'] = 1
+                        self.dropped_data['zero']['zeros'].pop()
+                        self.dropped_data['zero']['zero_attached']['used'] = False
+                        self.dropped_data['zero']['zero_attached'] = None
+
                 self.dropped_data['zero']['used'] = False
 
             # Executing callback
@@ -185,6 +219,15 @@ class ZerosList(QtWid.QListWidget):
             # Setting pole as unused
             self.dropped_data['pole']['used'] = False
             if self.dropped_data['zero'] is not None:
+                # If the zero is of second order, then it's possible that it was originally two first order zeros in the origin
+                if self.dropped_data['zero']['n'] == 2:
+                    if self.dropped_data['zero']['zeros'][0] == self.dropped_data['zero']['zeros'][1]:
+                        # Correcting changes done when combining zeros
+                        self.dropped_data['zero']['n'] = 1
+                        self.dropped_data['zero']['zeros'].pop()
+                        self.dropped_data['zero']['zero_attached']['used'] = False
+                        self.dropped_data['zero']['zero_attached'] = None
+
                 self.dropped_data['zero']['used'] = False
 
             # Executing callback

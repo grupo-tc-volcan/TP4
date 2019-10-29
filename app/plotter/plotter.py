@@ -237,18 +237,33 @@ class FilterPlotter():
 
 
     def plot_poles_and_zeros(self):
+        poles = {}
+        zeros = {}
+
+        for pole in self.tf.poles:
+            if pole not in poles.keys():
+                poles[pole] = 1
+            else:
+                poles[pole] += 1
+
+        for zero in self.tf.zeros:
+            if zero not in zeros.keys():
+                zeros[zero] = 1
+            else:
+                zeros[zero] += 1
+
         x_poles = [pole.real for pole in self.tf.poles]
         y_poles = [pole.imag for pole in self.tf.poles]
         x_zeros = [zero.real for zero in self.tf.zeros]
         y_zeros = [zero.imag for zero in self.tf.zeros]
 
         self.axes.clear()
-        self.axes.scatter(x_poles, y_poles, marker='x', c='red')
-        self.axes.scatter(x_zeros, y_zeros, marker='o', c='blue')
-        for i_x, i_y in zip(x_poles, y_poles):
-            self.axes.text(i_x, i_y, 'σ={:.3E}, ω={:.3E}'.format(i_x, i_y))
-        for i_x, i_y in zip(x_zeros, y_zeros):
-            self.axes.text(i_x, i_y, 'σ={:.3E}, ω={:.3E}'.format(i_x, i_y))
+        self.axes.scatter(x_poles, y_poles, marker='x', s=80, c='red')
+        self.axes.scatter(x_zeros, y_zeros, marker='o', s=80, c='blue')
+        for pole in poles.keys():
+            self.axes.text(pole.real, pole.imag, '  {} ({:.3E}, {:.3E})'.format(poles[pole], pole.real, pole.imag))
+        for zero in zeros.keys():
+            self.axes.text(zero.real, zero.imag, '  {} ({:.3E}, {:.3E})'.format(zeros[zero], zero.real, zero.imag))
         self.axes.grid(which='major')
         self.axes.grid(which='minor')
         self.axes.set_xlabel('Real part σ (Hz)')
