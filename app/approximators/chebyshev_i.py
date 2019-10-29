@@ -27,7 +27,7 @@ class ChebyshevIApprox(AttFilterApproximator):
             # Compute epsilon and the ripple and move the gain of the function
             self.h_norm.gain = self.h_norm.gain / (10 ** (ap / 20))
 
-    def compute_normalised_by_template(self, ap, aa, wan) -> ApproximationErrorCode:
+    def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
         order = self.compute_order(ap, aa, wan)
         return self.compute_normalised_by_order(ap, order)

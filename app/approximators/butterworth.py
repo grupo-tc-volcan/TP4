@@ -16,7 +16,7 @@ class ButterworthApprox(AttFilterApproximator):
     #  Internal Public Methods  #
     # ------------------------- #
 
-    def compute_normalised_by_template(self, ap, aa, wan) -> ApproximationErrorCode:
+    def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
         order = self.compute_order(ap, aa, wan)
         return self.compute_normalised_by_order(ap, order)

@@ -34,7 +34,7 @@ class FilterType(Enum):
 
 
 # noinspection PyAttributeOutsideInit
-class AttFilterApproximator():
+class AttFilterApproximator:
     def __init__(self):
         # Data to perform approximation
         self.reset_parameters()
@@ -132,8 +132,8 @@ class AttFilterApproximator():
                         except NotImplementedError:
                             error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
                     else:
-                        wan, aa, _, ap = self._normalised_template()
-                        error_code = self.compute_normalised_by_template(ap, aa, wan)
+                        wan, aa, wpn, ap = self.get_norm_template()
+                        error_code = self.compute_normalised_by_template(ap, aa, wpn, wan)
                     
                     # Denormalisation process, first we need to pass every transfer function
                     # to a TrasnferFunction object, using that apply the denormalisation
@@ -170,7 +170,7 @@ class AttFilterApproximator():
 
             self.h_norm.gain = (self.h_norm.gain / current_gain) * gain
 
-    def compute_normalised_by_template(self, ap, aa, wan) -> ApproximationErrorCode:
+    def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
         return self._compute_normalised_by_match(ap, partial(self.matches_normalised_template, ap, aa, wan))
 
@@ -188,7 +188,7 @@ class AttFilterApproximator():
         self.adjust_function_gain(1)
         wa, aa, wp, _ = self.get_norm_template()
 
-        if aa is not None:
+        if self.q == 0 and self.ord == 0:
             w_values, mag_values, _ = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
             stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= (-aa)]
             relative_adjust = ((wa - stop_band[0]) / stop_band[0]) * (self.denorm / 100) + 1
