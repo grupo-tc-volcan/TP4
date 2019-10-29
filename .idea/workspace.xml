@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/tests/test_butter.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_butter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/filters-tool.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/filters-tool.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/approximators/approximator.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/approximators/approximator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements" beforeDir="false" afterPath="$PROJECT_DIR$/requirements" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,16 +15,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6082317">
+    <splitter split-orientation="horizontal" split-proportion="0.42218402">
       <split-first>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/tests/test_butter.py">
+            <entry file="file://$PROJECT_DIR$/tests/test_validation.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="114">
-                  <caret line="147" column="13" selection-start-line="147" selection-start-column="13" selection-end-line="147" selection-end-column="13" />
+                <state relative-caret-position="367">
+                  <caret line="80" column="23" selection-start-line="80" selection-start-column="23" selection-end-line="80" selection-end-column="23" />
                   <folding>
-                    <element signature="e#18#77#0" expanded="true" />
+                    <element signature="e#424#488#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -29,30 +33,12 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="117">
-                  <caret line="249" selection-start-line="249" selection-end-line="249" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/scipy/signal/ltisys.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="125">
-                  <caret line="1011" selection-start-line="1011" selection-end-line="1011" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/approximators/butterworth.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="425">
-                  <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+                <state relative-caret-position="113">
+                  <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
                   <folding>
                     <element signature="e#22#47#0" expanded="true" />
                   </folding>
@@ -71,8 +57,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/approximators/butterworth.py" />
-        <option value="$PROJECT_DIR$/app/approximators/approximator.py" />
         <option value="$PROJECT_DIR$/tests/test_butter.py" />
+        <option value="$PROJECT_DIR$/requirements" />
+        <option value="$PROJECT_DIR$/tests/test_validation.py" />
+        <option value="$PROJECT_DIR$/app/approximators/approximator.py" />
       </list>
     </option>
   </component>
@@ -104,6 +92,22 @@
               <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
               <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
+              <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
+              <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="approximators" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
+              <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -114,6 +118,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../filter-simulator" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -127,7 +132,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python tests.pytest for test_validation.test_order">
     <configuration name="test_butter" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -149,8 +154,72 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest for test_validation.test_denormalisation" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="filters-tool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_validation.test_denormalisation&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_validation.test_invalid_gain" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="filters-tool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_validation.test_invalid_gain&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_validation.test_invalid_types" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="filters-tool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_validation.test_invalid_types&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_validation.test_order" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="filters-tool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_validation.test_order&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for test_validation.test_order" />
+        <item itemvalue="Python tests.pytest for test_validation.test_denormalisation" />
+        <item itemvalue="Python tests.pytest for test_validation.test_invalid_gain" />
+        <item itemvalue="Python tests.pytest for test_validation.test_invalid_types" />
         <item itemvalue="Python.test_butter" />
       </list>
     </recent_temporary>
@@ -168,25 +237,57 @@
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="pytest_for_test_validation_test_invalid_types - 2019.10.29 at 04h 02m 05s.xml">
+      <configuration name="pytest for test_validation.test_invalid_types" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_invalid_types - 2019.10.29 at 04h 02m 18s.xml">
+      <configuration name="pytest for test_validation.test_invalid_types" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_invalid_gain - 2019.10.29 at 04h 02m 55s.xml">
+      <configuration name="pytest for test_validation.test_invalid_gain" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_invalid_gain - 2019.10.29 at 04h 06m 52s.xml">
+      <configuration name="pytest for test_validation.test_invalid_gain" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_invalid_gain - 2019.10.29 at 04h 09m 05s.xml">
+      <configuration name="pytest for test_validation.test_invalid_gain" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_denormalisation - 2019.10.29 at 04h 09m 17s.xml">
+      <configuration name="pytest for test_validation.test_denormalisation" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_denormalisation - 2019.10.29 at 04h 10m 02s.xml">
+      <configuration name="pytest for test_validation.test_denormalisation" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_order - 2019.10.29 at 04h 12m 11s.xml">
+      <configuration name="pytest for test_validation.test_order" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_order - 2019.10.29 at 04h 12m 42s.xml">
+      <configuration name="pytest for test_validation.test_order" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_validation_test_order - 2019.10.29 at 04h 13m 19s.xml">
+      <configuration name="pytest for test_validation.test_order" configurationId="tests" />
+    </history-entry>
+  </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.023809524" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13467261" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Floobits" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3453355" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3633388" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.38952535" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Floobits" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -200,36 +301,56 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/scipy/signal/ltisys.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16541">
+          <caret line="1011" selection-start-line="1011" selection-end-line="1011" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/approximators/butterworth.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+        <state relative-caret-position="816">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
           <folding>
             <element signature="e#22#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/scipy/signal/ltisys.py">
+    <entry file="file://$PROJECT_DIR$/tests/test_butter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="1011" selection-start-line="1011" selection-end-line="1011" />
+        <state relative-caret-position="1066">
+          <caret line="149" column="14" lean-forward="true" selection-start-line="149" selection-start-column="14" selection-end-line="149" selection-end-column="14" />
+          <folding>
+            <element signature="e#18#77#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="80" column="23" selection-start-line="80" selection-start-column="23" selection-end-line="80" selection-end-column="23" />
+          <folding>
+            <element signature="e#424#488#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="249" selection-start-line="249" selection-end-line="249" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_butter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="147" column="13" selection-start-line="147" selection-start-column="13" selection-end-line="147" selection-end-column="13" />
+        <state relative-caret-position="113">
+          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
           <folding>
-            <element signature="e#18#77#0" expanded="true" />
+            <element signature="e#22#47#0" expanded="true" />
           </folding>
         </state>
       </provider>

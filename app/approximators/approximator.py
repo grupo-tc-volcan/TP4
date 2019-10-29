@@ -7,7 +7,7 @@ from enum import Enum
 from functools import partial
 
 # Constant Values
-MAXIMUM_ORDER = 50
+MAXIMUM_ORDER = 20
 
 
 class ApproximationErrorCode(Enum):
@@ -32,14 +32,15 @@ class FilterType(Enum):
     BAND_REJECT = "band-stop"
 
 
+# noinspection PyAttributeOutsideInit
 class AttFilterApproximator():
     def __init__(self):
         # Data to perform approximation
         self.reset_parameters()
 
-    #----------------#
-    # Public Methods #
-    #----------------#
+    # ---------------  #
+    # Public Methods   #
+    # ---------------- #
 
     def reset_parameters(self):
         """ Resets the parameters of the approximation to
@@ -127,7 +128,7 @@ class AttFilterApproximator():
                     if self.ord > 0:
                         error_code = self.compute_normalised_by_order(self.Apl, self.ord)
                     else:
-                        wan, aa, wpn, ap = self._normalised_template()
+                        wan, aa, _, ap = self._normalised_template()
                         error_code = self.compute_normalised_by_template(ap, aa, wan)
                     self.adjust_function_gain(self.h_norm, 1)
                     
@@ -152,9 +153,9 @@ class AttFilterApproximator():
         self.error_code = error_code
         return error_code
     
-    #-------------------------#
-    # Internal Public Methods #
-    #-------------------------#
+    # ------------------------- #
+    # Internal Public Methods   #
+    # ------------------------- #
 
     def compute_normalised_by_template(self, ap, aa, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
@@ -164,18 +165,18 @@ class AttFilterApproximator():
         """ Generates normalised transfer function prioritising the fixed order """
         raise NotImplementedError
     
-    #-----------------#
-    # Private Methods #
-    #-----------------#
+    # ----------------- #
+    # Private Methods   #
+    # ----------------- #
 
     def _denormalised_transfer_function(self) -> ApproximationErrorCode:
         """ Denormalises the transfer function returned by the approximation used. """
         # Adding the gain and the relative denormalisation between the transition band
-        wa, aa, wp, ap = self.get_norm_template()
+        wa, aa, wp, _ = self.get_norm_template()
 
         if aa is not None:
-            w_values, mag_values, phase_values = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
-            stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= -aa]
+            w_values, mag_values, _ = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
+            stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= (-aa)]
             relative_adjust = ((wa - stop_band[0]) / stop_band[0]) * (self.denorm / 100) + 1
         else:
             relative_adjust = 1
@@ -184,7 +185,7 @@ class AttFilterApproximator():
         new_poles = self.h_norm.poles * relative_adjust
         new_gain = self.h_norm.gain
 
-        self.h_norm = ss.lti(new_zeros, new_poles, new_gain)
+        self.h_norm = ss.ZerosPolesGain(new_zeros, new_poles, new_gain)
         self.adjust_function_gain(self.h_norm, 10 ** (self.gain / 20))
 
         # Frequency transformation to get the desired filter
@@ -196,8 +197,7 @@ class AttFilterApproximator():
             z, p, k = ss.lp2bp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
         elif self.type == FilterType.BAND_REJECT.value:
             z, p, k = ss.lp2bs_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fal * self.far), 2 * np.pi * (self.fpr - self.fpl))
-        self.h_denorm = ss.lti(z, p, k)
-        self.h_denorm = self.h_denorm.to_zpk()
+        self.h_denorm = ss.ZerosPolesGain(z, p, k)
 
         return ApproximationErrorCode.OK
 
@@ -258,13 +258,13 @@ class AttFilterApproximator():
 
     def _validate_general(self) -> ApproximationErrorCode:
         """ Returns if general parameters are valid """
-        if self.gain < 0:
+        if self.gain is None or type(self.gain) is str or self.gain < 0:
             return ApproximationErrorCode.INVALID_GAIN
-        elif self.ord < 0:
+        elif self.ord is None or type(self.ord) is str or self.ord < 0 or self.ord > MAXIMUM_ORDER:
             return ApproximationErrorCode.INVALID_ORDER
-        elif self.q < 0:
+        elif self.q is None or type(self.q) is str or self.q < 0:
             return ApproximationErrorCode.INVALID_Q
-        elif self.denorm < 0 or self.denorm > 100:
+        elif self.denorm is None or type(self.denorm) is str or self.denorm < 0 or self.denorm > 100:
             return ApproximationErrorCode.INVALID_DENORM
 
         return ApproximationErrorCode.OK
@@ -386,7 +386,7 @@ class AttFilterApproximator():
         if zpk is None:
             return False
 
-        w, mag, phase = ss.bode(zpk, w=[1, wa])
+        _, mag, _ = ss.bode(zpk, w=[1, wa])
         return mag[0] >= -ap and mag[1] <= -aa
 
     @staticmethod
