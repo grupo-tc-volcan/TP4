@@ -117,8 +117,6 @@ class SecondOrderAuxCalc():
                     for zero_block in self.zero_blocks:
                         if math.isclose(aux_wp_poles[i]/(2*math.pi), zero_block['f0']) and math.isclose(aux_q_poles[i], zero_block['q']):
                             zero_block['zeros'].append(self.tf.zeros[i])
-
-        print('hola')
     
 
     def get_wp_poles(self):
