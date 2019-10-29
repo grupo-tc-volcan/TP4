@@ -84,23 +84,8 @@ class SecondOrderAuxCalc():
 
         self.zero_blocks = []
         for i in range(len(aux_w0_zeros)):
-            list_w0_without_i = list(aux_w0_zeros)
-            list_w0_without_i.remove(aux_w0_zeros[i])
-            list_q_without_i = list(aux_q_zeros)
-            list_q_without_i.remove(aux_q_zeros[i])
-            if all([(not math.isclose(aux_w0_zeros[i], other_wp)) for other_wp in list_w0_without_i]) or all([(not math.isclose(aux_q_zeros[i], other_wp)) for other_wp in list_q_without_i]):
-                # If there are no matches, it means this Q and w0 belong to a first order zero
-                new_first_order_block = {
-                    'f0' : aux_w0_zeros[i] / (2*math.pi),
-                    'q' : 0.5,
-                    'n' : 1,
-                    'zeros': [self.tf.zeros[i]],
-                    'used': False,
-                    'type': 'zero'
-                }
-                self.zero_blocks.append(new_first_order_block)
-            else:
-                # If there is a match, it means this Q and w0 belong to a second order zero
+            if aux_w0_zeros[i]:
+                # If the zero is not in the origin, it's because it's a purely imaginary zero with multiplicity greater or equal than 2
                 if all([(not math.isclose(aux_w0_zeros[i]/(2*math.pi), self.zero_blocks[j]['f0'])) for j in range(len(self.zero_blocks))]) or all([(not math.isclose(aux_q_zeros[i], self.zero_blocks[j]['q'])) for j in range(len(self.zero_blocks))]):
                     # If this Q and w0 have not been added already
                     new_second_order_block = {
@@ -116,7 +101,68 @@ class SecondOrderAuxCalc():
                     # Finding matching Q and w0 and adding second zero
                     for zero_block in self.zero_blocks:
                         if math.isclose(aux_wp_poles[i]/(2*math.pi), zero_block['f0']) and math.isclose(aux_q_poles[i], zero_block['q']):
-                            zero_block['zeros'].append(self.tf.zeros[i])
+                            if len(zero_block['zeros']) > 1:
+                                # If this block already has both conjugated zeros, a new block is created
+                                new_second_order_block = {
+                                    'f0' : aux_w0_zeros[i] / (2*math.pi),
+                                    'q' : aux_q_zeros[i],
+                                    'n' : 2,
+                                    'zeros': [self.tf.zeros[i]],
+                                    'used': False,
+                                    'type': 'zero'
+                                }
+                                self.zero_blocks.append(new_second_order_block)
+                            else:
+                                # Adding conjugated zero
+                                zero_block['zeros'].append(self.tf.zeros[i])
+
+            else:
+                # If it is in the origin, it's a first degree zero.\
+                new_first_order_block = {
+                    'f0' : aux_w0_zeros[i] / (2*math.pi),
+                    'q' : 0.5,
+                    'n' : 1,
+                    'zeros': [self.tf.zeros[i]],
+                    'used': False,
+                    'type': 'zero'
+                }
+                self.zero_blocks.append(new_first_order_block)
+        #for i in range(len(aux_w0_zeros)):
+        #    list_w0_without_i = list(aux_w0_zeros)
+        #    list_w0_without_i.remove(aux_w0_zeros[i])
+        #    list_q_without_i = list(aux_q_zeros)
+        #    list_q_without_i.remove(aux_q_zeros[i])
+        #    if all([(not math.isclose(aux_w0_zeros[i], other_wp)) for other_wp in list_w0_without_i]) or all([(not math.isclose(aux_q_zeros[i], other_wp)) for other_wp in list_q_without_i]):
+        #        # If there are no matches, it means this Q and w0 belong to a first order zero
+        #        new_first_order_block = {
+        #            'f0' : aux_w0_zeros[i] / (2*math.pi),
+        #            'q' : 0.5,
+        #            'n' : 1,
+        #            'zeros': [self.tf.zeros[i]],
+        #            'used': False,
+        #            'type': 'zero'
+        #        }
+        #        self.zero_blocks.append(new_first_order_block)
+        #    else:
+        #        # If there is a match, it means this Q and w0 belong to a second order zero
+        #        if all([(not math.isclose(aux_w0_zeros[i]/(2*math.pi), self.zero_blocks[j]['f0'])) for j in range(len(self.zero_blocks))]) or all([(not math.isclose(aux_q_zeros[i], self.zero_blocks[j]['q'])) for j in range(len(self.zero_blocks))]):
+        #            # If this Q and w0 have not been added already
+        #            new_second_order_block = {
+        #                'f0' : aux_w0_zeros[i] / (2*math.pi),
+        #                'q' : aux_q_zeros[i],
+        #                'n' : 2,
+        #                'zeros': [self.tf.zeros[i]],
+        #                'used': False,
+        #                'type': 'zero'
+        #            }
+        #            self.zero_blocks.append(new_second_order_block)
+        #        else:
+        #            # Finding matching Q and w0 and adding second zero
+        #            for zero_block in self.zero_blocks:
+        #                if math.isclose(aux_wp_poles[i]/(2*math.pi), zero_block['f0']) and math.isclose(aux_q_poles[i], zero_block['q']):
+        #                    zero_block['zeros'].append(self.tf.zeros[i])
+
+        print('hola')
     
 
     def get_wp_poles(self):

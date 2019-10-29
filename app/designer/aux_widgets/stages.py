@@ -91,9 +91,9 @@ class StagesList(QtWid.QListWidget):
             x = ev.pos().x()
             y = ev.pos().y()
             item_index = self.row(self.itemAt(x, y))
-
+        
             # Deleting element added by super
-            self.takeItem(item_index)
+            #self.takeItem(item_index)
 
     
     def clean_empty_items(self):
