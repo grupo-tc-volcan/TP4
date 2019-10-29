@@ -243,20 +243,20 @@ def test_high_pass(approximator):
     run_by_template(
         approximator,
         "high-pass",
-        fpl=3000,
+        fpl=1500,
         apl=2,
         fal=1000,
-        aal=10,
+        aal=30,
         graph="bode"
     )
 
     run_by_template(
         approximator,
         "high-pass",
-        fpl=3000,
+        fpl=1500,
         apl=2,
         fal=1000,
-        aal=10,
+        aal=30,
         graph="zpk"
     )
 
@@ -267,8 +267,8 @@ def test_low_pass(approximator):
         "low-pass",
         fpl=1000,
         apl=2,
-        fal=3000,
-        aal=10,
+        fal=1500,
+        aal=50,
         graph="bode"
     )
 
@@ -277,10 +277,8 @@ def test_low_pass(approximator):
         "low-pass",
         fpl=1000,
         apl=2,
-        fal=3000,
-        aal=10,
+        fal=1500,
+        aal=50,
         graph="zpk"
     )
 
-
-test_by_fixed_order(ChebyshevIIApprox())

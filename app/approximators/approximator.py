@@ -116,6 +116,7 @@ class AttFilterApproximator:
 
             # Findind the transfer function for the given parameters
             if error_code is ApproximationErrorCode.OK:
+                self.adjust_symmetry_condition()
                 
                 # When using a maximum Q value, iterates with fixed orders
                 # and verifies if matches...
@@ -159,6 +160,19 @@ class AttFilterApproximator:
     # ------------------------- #
     # Internal Public Methods   #
     # ------------------------- #
+    def adjust_symmetry_condition(self):
+        """ Adjusts the template of the bandpass or bandstop filter """
+        if self.type == FilterType.BAND_PASS.value:
+            if self.fpl * self.fpr <= self.fal * self.far:
+                self.far = (self.fpl * self.fpr) / self.fal
+            else:
+                self.fal = (self.fpl * self.fpr) / self.far
+        elif self.type == FilterType.BAND_REJECT.value:
+            if self.fal * self.far <= self.fpl * self.fpr:
+                self.fpr = (self.fal * self.far) / self.fpl
+            else:
+                self.fpl = (self.fal * self.far) / self.fpr
+
     def adjust_function_gain(self, gain):
         """ Adjusts the normalised transfer function to have a unity gain """
         if self.h_norm is not None:

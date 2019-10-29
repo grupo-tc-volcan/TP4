@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/app/approximators/approximator.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/approximators/approximator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/approximators/butterworth.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/approximators/butterworth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/approximators/chebyshev_i.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/approximators/chebyshev_i.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/approximators/chebyshev_ii.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/approximators/chebyshev_ii.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_approximator.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_approximator.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,38 +12,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.8685714">
+    <splitter split-orientation="horizontal" split-proportion="0.3776509">
       <split-first>
         <leaf>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="146">
-                  <caret line="190" column="40" selection-start-line="190" selection-start-column="40" selection-end-line="190" selection-end-column="40" />
-                  <folding>
-                    <element signature="e#22#47#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/approximators/chebyshev_i.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="749">
-                  <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
-                  <folding>
-                    <element signature="e#22#47#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/app/approximators/chebyshev_ii.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="87">
-                  <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+                <state relative-caret-position="187">
+                  <caret line="67" column="30" lean-forward="true" selection-start-line="67" selection-start-column="30" selection-end-line="67" selection-end-column="30" />
                   <folding>
                     <element signature="e#22#47#0" expanded="true" />
                   </folding>
@@ -61,8 +34,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tests/test_approximator.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="256">
-                  <caret line="285" selection-start-line="285" selection-end-line="285" />
+                <state relative-caret-position="322">
+                  <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
                   <folding>
                     <element signature="e#18#77#0" expanded="true" />
                   </folding>
@@ -95,8 +68,8 @@
         <option value="$PROJECT_DIR$/app/approximators/legendre.py" />
         <option value="$PROJECT_DIR$/app/approximators/butterworth.py" />
         <option value="$PROJECT_DIR$/app/approximators/chebyshev_i.py" />
-        <option value="$PROJECT_DIR$/app/approximators/approximator.py" />
         <option value="$PROJECT_DIR$/app/approximators/chebyshev_ii.py" />
+        <option value="$PROJECT_DIR$/app/approximators/approximator.py" />
         <option value="$PROJECT_DIR$/tests/test_approximator.py" />
       </list>
     </option>
@@ -159,7 +132,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_approximator.test_by_fixed_order">
+  <component name="RunManager" selected="Python tests.pytest for test_approximator.test_band_stop">
     <configuration name="test_approximator" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -243,11 +216,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.pytest for test_approximator.test_by_fixed_order" />
         <item itemvalue="Python tests.pytest for test_approximator.test_band_stop" />
-        <item itemvalue="Python tests.pytest for test_approximator.test_low_pass" />
-        <item itemvalue="Python tests.pytest for test_approximator.test_high_pass" />
         <item itemvalue="Python.test_approximator" />
+        <item itemvalue="Python tests.pytest for test_approximator.test_high_pass" />
+        <item itemvalue="Python tests.pytest for test_approximator.test_low_pass" />
+        <item itemvalue="Python tests.pytest for test_approximator.test_by_fixed_order" />
       </list>
     </recent_temporary>
   </component>
@@ -265,24 +238,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 11h 36m 24s.xml">
-      <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 11h 40m 32s.xml">
-      <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 11h 41m 37s.xml">
-      <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 11h 43m 13s.xml">
-      <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 11h 43m 59s.xml">
-      <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 11h 44m 23s.xml">
-      <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 11h 44m 38s.xml">
       <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
     </history-entry>
@@ -295,24 +250,43 @@
     <history-entry file="pytest_for_test_approximator_test_by_fixed_order - 2019.10.29 at 11h 48m 30s.xml">
       <configuration name="pytest for test_approximator.test_by_fixed_order" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 12h 02m 50s.xml">
+      <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_approximator_test_by_fixed_order - 2019.10.29 at 12h 09m 31s.xml">
+      <configuration name="pytest for test_approximator.test_by_fixed_order" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_approximator_test_low_pass - 2019.10.29 at 12h 10m 31s.xml">
+      <configuration name="pytest for test_approximator.test_low_pass" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_approximator_test_high_pass - 2019.10.29 at 12h 11m 41s.xml">
+      <configuration name="pytest for test_approximator.test_high_pass" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 12h 19m 57s.xml">
+      <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 12h 20m 31s.xml">
+      <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.08779762" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8385417" weight="0.119476266" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.4985119" visible="true" weight="0.4762684" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.83779764" visible="true" weight="0.119476266" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4985119" weight="0.4762684" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Floobits" order="7" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5014881" side_tool="true" visible="true" weight="0.4762684" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.16220239" side_tool="true" visible="true" weight="0.119476266" />
       <window_info anchor="bottom" id="Python Console" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -322,11 +296,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/test_approximator.py</url>
-          <line>285</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/approximators/chebyshev_ii.py</url>
           <line>34</line>
@@ -428,10 +397,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/approximators/chebyshev_ii.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="39" column="11" lean-forward="true" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+          <folding>
+            <element signature="e#22#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="190" column="40" selection-start-line="190" selection-start-column="40" selection-end-line="190" selection-end-column="40" />
+        <state relative-caret-position="187">
+          <caret line="67" column="30" lean-forward="true" selection-start-line="67" selection-start-column="30" selection-end-line="67" selection-end-column="30" />
           <folding>
             <element signature="e#22#47#0" expanded="true" />
           </folding>
@@ -440,20 +419,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_approximator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="285" selection-start-line="285" selection-end-line="285" />
+        <state relative-caret-position="322">
+          <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
           <folding>
             <element signature="e#18#77#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/approximators/chebyshev_ii.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
-          <folding>
-            <element signature="e#22#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
