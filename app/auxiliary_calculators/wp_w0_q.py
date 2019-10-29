@@ -29,8 +29,8 @@ class SecondOrderAuxCalc():
                 aux_wp_poles.append(abs(self.poles_real_part[i]))
             else:
                 self.calculate_xi(self.tf.poles[i])
-                aux_q_poles.append(self.calculate_selectivity(self.tf.poles[i]))
-                aux_wp_poles.append(self.calculate_frequency(self.tf.poles[i]))
+                aux_q_poles.append(abs(self.calculate_selectivity(self.tf.poles[i])))
+                aux_wp_poles.append(abs(self.calculate_frequency(self.tf.poles[i])))
         
         for i in range(len(self.zeros_real_part)):
             if self.zeros_real_part[i] == 0:
@@ -41,8 +41,8 @@ class SecondOrderAuxCalc():
                 aux_w0_zeros.append(abs(self.zeros_real_part[i]))
             else:
                 self.calculate_xi(self.tf.zeros[i])
-                aux_q_poles.append(self.calculate_selectivity(self.tf.zeros[i]))
-                aux_wp_poles.append(self.calculate_frequency(self.tf.zeros[i]))
+                aux_q_poles.append(abs(self.calculate_selectivity(self.tf.zeros[i])))
+                aux_wp_poles.append(abs(self.calculate_frequency(self.tf.zeros[i])))
 
         # Now repeated Q and wp or w0 will be deleted, and all of them will be loaded in second order cells
         self.pole_blocks = []
@@ -52,27 +52,35 @@ class SecondOrderAuxCalc():
             list_q_without_i = list(aux_q_poles)
             list_q_without_i.remove(aux_q_poles[i])
             if all([(not math.isclose(aux_wp_poles[i], other_wp)) for other_wp in list_wp_without_i]) or all([(not math.isclose(aux_q_poles[i], other_wp)) for other_wp in list_q_without_i]):
-                # If there are no matches, it means this Q belongs to a first order pole
+                # If there are no matches, it means this Q and wp belong to a first order pole
                 new_first_order_block = {
                     'fp' : aux_wp_poles[i] / (2*math.pi),
                     'q' : 0.5,
                     'n' : 1,
+                    'poles': [self.tf.poles[i]],
                     'used': False,
                     'type': 'pole'
                 }
                 self.pole_blocks.append(new_first_order_block)
             else:
-                # If there is a match, it means this Q belongs to a second order pole
+                # If there is a match, it means this Q and wp belong to a second order pole
                 if all([(not math.isclose(aux_wp_poles[i]/(2*math.pi), self.pole_blocks[j]['fp'])) for j in range(len(self.pole_blocks))]) or all([(not math.isclose(aux_q_poles[i], self.pole_blocks[j]['q'])) for j in range(len(self.pole_blocks))]):
-                    # If this Q has not been added already
+                    # If this Q and wp have not been added already
                     new_second_order_block = {
                         'fp' : aux_wp_poles[i] / (2*math.pi),
                         'q' : aux_q_poles[i],
                         'n' : 2,
+                        'poles': [self.tf.poles[i]],
                         'used': False,
                         'type': 'pole'
                     }
                     self.pole_blocks.append(new_second_order_block)
+                else:
+                    # Finding matching Q and wp and adding second pole
+                    for pole_block in self.pole_blocks:
+                        if math.isclose(aux_wp_poles[i]/(2*math.pi), pole_block['fp']) and math.isclose(aux_q_poles[i], pole_block['q']):
+                            pole_block['poles'].append(self.tf.poles[i])
+
 
         self.zero_blocks = []
         for i in range(len(aux_w0_zeros)):
@@ -81,27 +89,36 @@ class SecondOrderAuxCalc():
             list_q_without_i = list(aux_q_zeros)
             list_q_without_i.remove(aux_q_zeros[i])
             if all([(not math.isclose(aux_w0_zeros[i], other_wp)) for other_wp in list_w0_without_i]) or all([(not math.isclose(aux_q_zeros[i], other_wp)) for other_wp in list_q_without_i]):
-                # If there are no matches, it means this Q belongs to a first order zero
+                # If there are no matches, it means this Q and w0 belong to a first order zero
                 new_first_order_block = {
                     'f0' : aux_w0_zeros[i] / (2*math.pi),
                     'q' : 0.5,
                     'n' : 1,
+                    'zeros': [self.tf.zeros[i]],
                     'used': False,
                     'type': 'zero'
                 }
                 self.zero_blocks.append(new_first_order_block)
             else:
-                # If there is a match, it means this Q belongs to a second order zero
+                # If there is a match, it means this Q and w0 belong to a second order zero
                 if all([(not math.isclose(aux_w0_zeros[i]/(2*math.pi), self.zero_blocks[j]['f0'])) for j in range(len(self.zero_blocks))]) or all([(not math.isclose(aux_q_zeros[i], self.zero_blocks[j]['q'])) for j in range(len(self.zero_blocks))]):
-                    # If this Q has not been added already
+                    # If this Q and w0 have not been added already
                     new_second_order_block = {
                         'f0' : aux_w0_zeros[i] / (2*math.pi),
                         'q' : aux_q_zeros[i],
                         'n' : 2,
+                        'zeros': [self.tf.zeros[i]],
                         'used': False,
                         'type': 'zero'
                     }
                     self.zero_blocks.append(new_second_order_block)
+                else:
+                    # Finding matching Q and w0 and adding second zero
+                    for zero_block in self.zero_blocks:
+                        if math.isclose(aux_wp_poles[i]/(2*math.pi), zero_block['f0']) and math.isclose(aux_q_poles[i], zero_block['q']):
+                            zero_block['zeros'].append(self.tf.zeros[i])
+
+        print('hola')
     
 
     def get_wp_poles(self):

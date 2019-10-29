@@ -43,7 +43,8 @@ class StagesList(QtWid.QListWidget):
                 # Creating cell block
                 new_stage_data = {
                     'pole': self.dropped_data,
-                    'zero': None
+                    'zero': None,
+                    'gain': 0
                 }
                 self.stages_data.append(new_stage_data)
 

@@ -37,7 +37,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.filter_data_widgets = [LowPassData(), HighPassData(), BandPassData(), BandStopData(), GroupDelayData()]
 
         # Loading plotter
-        self.plotters = [FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter()]
+        self.plotters = [FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter(), FilterPlotter()]
 
         # Creating auxiliary calculators
         self.second_order_calc = SecondOrderAuxCalc()
@@ -143,8 +143,19 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         poles_list = []
         zeros_list = []
+        total_gain = 0
         for i in range(start,stage_index + 1):
-            pass
+            widget = self.stages_list.itemWidget(self.stages_list.item(i))
+            if widget.cell_data['zero'] is not None:
+                zero = widget.cell_data['zero']['f0'] * 2*np.pi
+                zeros_list.append(zero)
+            pole = widget.cell_data['pole']['fp'] * 2*np.pi
+            gain = widget.cell_data['gain']
+            poles_list.append(pole)
+            total_gain += gain
+
+        tf = ss.ZerosPolesGain(zeros_list, poles_list, total_gain)
+        self.plot_attenuation_for_stages(tf)
 
 
     def plot_template_toggle(self):
@@ -156,11 +167,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 ############# METHODS FOR PLOTTING #############
 
 
-    def plot_attenuation(self):
+    def plot_attenuation(self, transfer_function : ss.ZerosPolesGain = None):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        if transfer_function is None:
+            tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        else:
+            tf = transfer_function
         self.plotters[0].set_transfer_function(tf)
 
         self.plotters[0].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -214,11 +228,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.toolbar_1.setCurrentIndex(self.toolbar_1.addWidget(toolbar))
 
 
-    def plot_norm_attenuation(self):
+    def plot_norm_attenuation(self, transfer_function : ss.ZerosPolesGain = None):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_zpk()
+        if transfer_function is None:
+            tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_normalised_zpk()
+        else:
+            tf = transfer_function
         self.plotters[1].set_transfer_function(tf)
 
         self.plotters[1].set_filter_type('low-pass')
@@ -251,11 +268,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.toolbar_2.setCurrentIndex(self.toolbar_2.addWidget(toolbar))
 
 
-    def plot_phase(self):
+    def plot_phase(self, transfer_function : ss.ZerosPolesGain = None):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        if transfer_function is None:
+            tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        else:
+            tf = transfer_function
         self.plotters[2].set_transfer_function(tf)
 
         self.plotters[2].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -275,11 +295,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.toolbar_3.setCurrentIndex(self.toolbar_3.addWidget(toolbar))
 
 
-    def plot_group_delay(self):
-        # Loading transfer_function into plotter and setting filter type
-        filter_index = self.filter_selector.currentIndex()
-        approx_index = self.approx_selector.currentIndex()
-        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+    def plot_group_delay(self, transfer_function : ss.ZerosPolesGain = None):
+        if transfer_function is None:
+            # Loading transfer_function into plotter and setting filter type
+            filter_index = self.filter_selector.currentIndex()
+            approx_index = self.approx_selector.currentIndex()
+            tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        else:
+            tf = transfer_function
         self.plotters[3].set_transfer_function(tf)
 
         self.plotters[3].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -309,11 +332,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.toolbar_4.setCurrentIndex(self.toolbar_4.addWidget(toolbar))
 
 
-    def plot_poles_and_zeros(self):
+    def plot_poles_and_zeros(self, transfer_function : ss.ZerosPolesGain = None):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        if transfer_function is None:
+            tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        else:
+            tf = transfer_function
         self.plotters[4].set_transfer_function(tf)
 
         self.plotters[4].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -333,11 +359,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.toolbar_5.setCurrentIndex(self.toolbar_5.addWidget(toolbar))
 
 
-    def plot_q(self):
+    def plot_q(self, transfer_function : ss.ZerosPolesGain = None):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        if transfer_function is None:
+            tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        else:
+            tf = transfer_function
         self.plotters[5].set_transfer_function(tf)
 
         self.plotters[5].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -357,11 +386,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.toolbar_6.setCurrentIndex(self.toolbar_6.addWidget(toolbar))
 
 
-    def plot_impulse_response(self):
+    def plot_impulse_response(self, transfer_function : ss.ZerosPolesGain = None):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        if transfer_function is None:
+            tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        else:
+            tf = transfer_function
         self.plotters[6].set_transfer_function(tf)
 
         self.plotters[6].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -381,11 +413,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.toolbar_7.setCurrentIndex(self.toolbar_7.addWidget(toolbar))
 
 
-    def plot_step_response(self):
+    def plot_step_response(self, transfer_function : ss.ZerosPolesGain = None):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        if transfer_function is None:
+            tf = self.filter_data_widgets[filter_index].approximators[approx_index].get_zpk()
+        else:
+            tf = transfer_function
         self.plotters[7].set_transfer_function(tf)
 
         self.plotters[7].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
@@ -403,6 +438,28 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             # Cleaning stacked widget
             self.toolbar_8.removeWidget(self.filter_data.currentWidget())
         self.toolbar_8.setCurrentIndex(self.toolbar_8.addWidget(toolbar))
+
+
+    def plot_attenuation_for_stages(self, transfer_function : ss.ZerosPolesGain):
+         # Loading transfer_function into plotter and setting filter type
+        filter_index = self.filter_selector.currentIndex()
+        self.plotters[8].set_transfer_function(transfer_function)
+
+        self.plotters[8].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
+
+        # Plotting attenuation
+        self.plotters[8].plot_attenuation()
+
+        # Adding plot and navigation toolbar
+        if self.stage_plot.count() > 2:
+            # Cleaning stacked widget
+            self.stage_plot.removeWidget(self.filter_data.currentWidget())
+        self.stage_plot.setCurrentIndex(self.stage_plot.addWidget(self.plotters[8].canvas))
+        toolbar = NavigationToolbar(self.plotters[8].canvas, self)
+        if self.stages_toolbar.count() > 2:
+            # Cleaning stacked widget
+            self.stages_toolbar.removeWidget(self.filter_data.currentWidget())
+        self.stages_toolbar.setCurrentIndex(self.stages_toolbar.addWidget(toolbar))
 
 
 ############# CALLBACKS FOR DRAG AND DROP #############

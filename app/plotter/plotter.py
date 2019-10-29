@@ -270,7 +270,6 @@ class FilterPlotter():
         self.axes.plot(x, y, marker='o')
         for i_x, i_y in zip(x, y):
             self.axes.text(i_x, i_y, 'fp={:.3E}, Q={:.3E}'.format(i_x, i_y))
-        self.axes.set_xscale('log')
         self.axes.grid(which='major')
         self.axes.grid(which='minor')
         self.axes.set_xlabel('Frequency (Hz)')
