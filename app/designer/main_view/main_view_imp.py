@@ -47,7 +47,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.approx_selector.currentIndexChanged.connect(self.set_approx)
         self.calculate_button.released.connect(self.calculate_approx)
         self.plot_template_1.stateChanged.connect(self.plot_template_toggle)
-        self.stages_list.itemSelectionChanged(self.plot_stage)
+        self.stages_list.itemSelectionChanged.connect(self.plot_stage)
 
         # Loading callbacks
         self.stages_list.drag_action = self.pass_data_from_stages
@@ -141,9 +141,10 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         else:
             start = stage_index
 
-        poles_list
+        poles_list = []
+        zeros_list = []
         for i in range(start,stage_index + 1):
-
+            pass
 
 
     def plot_template_toggle(self):
