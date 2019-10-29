@@ -1,6 +1,7 @@
 # Third-party modules
 import scipy.signal as ss
 import numpy as np
+from matplotlib import pyplot
 
 # filters-tool project modules
 from app.approximators.approximator import AttFilterApproximator
@@ -15,7 +16,6 @@ class ChebyshevIIApprox(AttFilterApproximator):
     # ------------------------- #
     #  Internal Public Methods  #
     # ------------------------- #
-
     def get_norm_template(self) -> tuple:
         """ Returns a 4-element tuple containing the normalised
         parameters of the template.
@@ -23,6 +23,22 @@ class ChebyshevIIApprox(AttFilterApproximator):
         """
         wa, aa, wp, ap = super(ChebyshevIIApprox, self)._normalised_template()
         return None if wp == 0 else 1 / wp, aa, None if wa == 0 else 1 / wa, ap
+
+    def denormalise_to_low_pass(self) -> tuple:
+        """ Denormalises the filter to low pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2lp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fal)
+
+    def denormalise_to_high_pass(self) -> tuple:
+        """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2hp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fal)
+
+    def denormalise_to_band_pass(self) -> tuple:
+        """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2bp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fal * self.far), 2 * np.pi * (self.far - self.fal))
+
+    def denormalise_to_band_stop(self) -> tuple:
+        """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2bs_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.far - self.fal))
 
     def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
@@ -35,7 +51,7 @@ class ChebyshevIIApprox(AttFilterApproximator):
         # Computing needed constants
         zeros, poles, gain = ss.cheb2ap(n, aa)
         wa, aa, wp, ap = self.get_norm_template()
-        self.h_norm = ss.ZerosPolesGain(zeros * (1 / wp), poles * (1 / wp), gain)
+        self.h_norm = ss.ZerosPolesGain(zeros, poles, gain)
         return ApproximationErrorCode.OK
 
     def denormalisation_factor(self, wa, aa, wp, ap):
@@ -43,7 +59,7 @@ class ChebyshevIIApprox(AttFilterApproximator):
         adjusting the zeros and poles of the transfer function between the transition
         band. """
         if self.q == 0 and self.ord == 0:
-            w_values, mag_values, _ = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
+            w_values, mag_values, _ = ss.bode(self.h_norm, w=np.linspace(wp / 100, wa * 10, num=10000))
             pass_band = [w for w, mag in zip(w_values, mag_values) if mag >= (-ap)]
             relative_adjust = ((wp - pass_band[-1]) / pass_band[-1]) * ((100 - self.denorm) / 100) + 1
         else:

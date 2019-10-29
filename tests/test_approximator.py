@@ -1,6 +1,7 @@
 # Project modules
 from app.approximators.butterworth import ButterworthApprox
 from app.approximators.chebyshev_i import ChebyshevIApprox
+from app.approximators.chebyshev_ii import ChebyshevIIApprox
 from app.approximators.legendre import LegendreApprox
 from app.approximators.cauer import CauerApprox
 
@@ -22,7 +23,7 @@ import numpy as np
 @pytest.fixture
 def approximator():
     # Change the returning approximation to test it!
-    return CauerApprox()
+    return ChebyshevIIApprox()
 
 
 def run_by_template(
@@ -90,14 +91,14 @@ def plot_zpk_results(results):
         poles_plot.scatter(x_poles, y_poles, label=name, marker='x', c=colors[index])
         zeros_plot.scatter(x_zeros, y_zeros, label=name, marker='o', c=colors[index])
 
-    poles_plot.set_xlabel('Parte real σ (Hz)')
+    poles_plot.set_xlabel('Parte real σ (Np)')
     poles_plot.set_ylabel('Parte imaginaria jω (Hz)')
     poles_plot.set_title('Polos')
-    poles_plot.ticklabel_format(axis='both', scilimits=(-2,2))
+    poles_plot.ticklabel_format(axis='both', scilimits=(-2, 2))
     poles_plot.grid()
     poles_plot.autoscale()
 
-    zeros_plot.set_xlabel('Parte real σ (Hz)')
+    zeros_plot.set_xlabel('Parte real σ (Np)')
     zeros_plot.set_ylabel('Parte imaginaria jω (Hz)')
     zeros_plot.set_title('Ceros')
     zeros_plot.ticklabel_format(axis='both', scilimits=(-2, 2))
@@ -167,11 +168,12 @@ def test_by_template_denorm(approximator):
     approximator.Aal = 20
 
     results = []
-    for denorm in range(0, 101, 10):
+    for denorm in [0, 100]:
         approximator.denorm = denorm if denorm != 0 else 1
 
         if approximator.compute() is ApproximationErrorCode.OK:
             results.append(("Approximation Denorm={}".format(denorm), approximator.h_denorm))
+            results.append(("Approximation Norm={}".format(denorm), approximator.h_norm))
         else:
             print("[ERROR] => {}".format(approximator.error_code))
 
@@ -282,3 +284,7 @@ def test_low_pass(approximator):
         aal=50,
         graph="zpk"
     )
+
+
+if __name__ == "__main__":
+    test_by_template_denorm(ChebyshevIIApprox())
