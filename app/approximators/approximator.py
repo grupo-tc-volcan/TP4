@@ -412,11 +412,11 @@ class AttFilterApproximator():
             return False
 
         for pole in zpk.poles:
-            q = AttFilterApproximator.calculate_selectivity(pole)
-            if q > max_q:
-                return False
-        else:
-            return True
+            if pole.imag:
+                q = AttFilterApproximator.calculate_selectivity(pole)
+                if q > max_q:
+                    return False
+        return True
 
 
 class GroupDelayFilterApproximator():

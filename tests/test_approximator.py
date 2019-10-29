@@ -1,6 +1,7 @@
 # Project modules
 from app.approximators.butterworth import ButterworthApprox
 from app.approximators.chebyshev_i import ChebyshevIApprox
+from app.approximators.legendre import LegendreApprox
 
 from app.approximators.approximator import ApproximationErrorCode
 
@@ -19,7 +20,8 @@ import numpy as np
 
 @pytest.fixture
 def approximator():
-    return ChebyshevIApprox()
+    # Change the returning approximation to test it!
+    return LegendreApprox()
 
 
 def run_by_template(
@@ -155,10 +157,10 @@ def test_band_stop(approximator):
         far=4000,
         apl=2,
         apr=2,
-        fpl=1000,
-        fpr=10000,
-        aal=10,
-        aar=10
+        fpl=100,
+        fpr=100000,
+        aal=5,
+        aar=5
     )
 
 
@@ -182,4 +184,3 @@ def test_low_pass(approximator):
         fal=3000,
         aal=10
     )
-
