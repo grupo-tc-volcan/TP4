@@ -23,7 +23,7 @@ import numpy as np
 @pytest.fixture
 def approximator():
     # Change the returning approximation to test it!
-    return CauerApprox()
+    return ChebyshevIIApprox()
 
 
 def run_by_template(

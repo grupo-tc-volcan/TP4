@@ -19,7 +19,7 @@ class ButterworthApprox(AttFilterApproximator):
     def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
         order = self.compute_order(ap, aa, wan)
-        return self.compute_normalised_by_order(ap, order)
+        return self.compute_normalised_by_order(ap, order, aa)
 
     def compute_normalised_by_order(self, ap, n, aa) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the fixed order """

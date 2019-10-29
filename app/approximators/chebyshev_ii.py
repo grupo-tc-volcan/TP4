@@ -27,12 +27,12 @@ class ChebyshevIIApprox(AttFilterApproximator):
     def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
         order = self.compute_order(ap, aa, wpn)
-        return self.compute_normalised_by_order(ap, order)
+        return self.compute_normalised_by_order(ap, order, aa)
 
     def compute_normalised_by_order(self, ap, n, aa) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the fixed order """
         # Computing needed constants
-        zeros, poles, gain = ss.cheb2ap(n, ap)
+        zeros, poles, gain = ss.cheb2ap(n, aa)
         self.h_norm = ss.ZerosPolesGain(zeros, poles, gain)
         return ApproximationErrorCode.OK
 
