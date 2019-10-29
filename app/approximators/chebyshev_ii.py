@@ -50,11 +50,8 @@ class ChebyshevIIApprox(AttFilterApproximator):
 
         return relative_adjust
 
-    def _validate_low_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a low-pass.
-        """
-        error_code = super(ChebyshevIIApprox, self)._validate_low_pass()
+    def _validate_low_pass_by_fixed(self) -> ApproximationErrorCode:
+        error_code = super(ChebyshevIIApprox, self)._validate_low_pass_by_fixed()
         if error_code is ApproximationErrorCode.OK:
             if self.ord > 0 or self.q > 0:
 

@@ -31,11 +31,8 @@ class CauerApprox(AttFilterApproximator):
         self.h_norm = ss.ZerosPolesGain(zeros, poles, gain)
         return ApproximationErrorCode.OK
 
-    def _validate_low_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-            are valid or not using a low-pass.
-        """
-        error_code = super(CauerApprox, self)._validate_low_pass()
+    def _validate_low_pass_by_fixed(self) -> ApproximationErrorCode:
+        error_code = super(CauerApprox, self)._validate_low_pass_by_fixed()
         if error_code is ApproximationErrorCode.OK:
             if self.ord > 0 or self.q > 0:
                 if self.Aal <= 0:
@@ -44,11 +41,8 @@ class CauerApprox(AttFilterApproximator):
                     error_code = ApproximationErrorCode.INVALID_ATTE
         return error_code
 
-    def _validate_high_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a high-pass.
-        """
-        error_code = super(CauerApprox, self)._validate_high_pass()
+    def _validate_high_pass_by_fixed(self) -> ApproximationErrorCode:
+        error_code = super(CauerApprox, self)._validate_high_pass_by_fixed()
         if error_code is ApproximationErrorCode.OK:
             if self.ord > 0 or self.q > 0:
                 if self.Aal <= 0:
@@ -58,11 +52,8 @@ class CauerApprox(AttFilterApproximator):
 
         return error_code
 
-    def _validate_band_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a band-pass.
-        """
-        error_code = super(CauerApprox, self)._validate_band_pass()
+    def _validate_band_pass_by_fixed(self) -> ApproximationErrorCode:
+        error_code = super(CauerApprox, self)._validate_band_pass_by_fixed()
         if error_code is ApproximationErrorCode.OK:
             if self.ord > 0 or self.q > 0:
                 if self.Aal <= 0 or self.Aar < 0:
@@ -76,11 +67,11 @@ class CauerApprox(AttFilterApproximator):
 
         return error_code
 
-    def _validate_band_reject(self) -> ApproximationErrorCode:
+    def _validate_band_stop_by_fixed(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation
         are valid or not using a band-reject.
         """
-        error_code = super(CauerApprox, self)._validate_band_reject()
+        error_code = super(CauerApprox, self)._validate_band_stop_by_fixed()
         if error_code is ApproximationErrorCode.OK:
             if self.ord > 0 or self.q > 0:
                 if self.Aal <= 0 or self.Aar < 0:
