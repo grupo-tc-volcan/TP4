@@ -47,6 +47,10 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.approx_selector.currentIndexChanged.connect(self.set_approx)
         self.calculate_button.released.connect(self.calculate_approx)
         self.plot_template_1.stateChanged.connect(self.plot_template_toggle)
+        self.stages_list.itemSelectionChanged(self.plot_stage)
+
+        # Loading callbacks
+        self.stages_list.drag_action = self.pass_data_from_stages
 
         # Set up things for the first time
         self.on_start_up()
@@ -103,7 +107,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
         if self.filter_data_widgets[filter_index].approximators[approx_index].compute() == ApproximationErrorCode.OK:
-        # if True:
             # Enabling all widgets that make sense once the approximation is calculated
             self.enable_when_calculating()
 
@@ -128,13 +131,28 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             self.stages_list.clear()
 
 
-############# METHODS FOR PLOTTING #############
+    def plot_stage(self):
+        current_item = self.stages_list.currentItem()
+        stage_widget = self.stages_list.itemWidget(current_item)
+        stage_index = self.stages_list.row(current_item)
+
+        if self.accumulative_plot.isChecked():
+            start = 0
+        else:
+            start = stage_index
+
+        poles_list
+        for i in range(start,stage_index + 1):
+
 
 
     def plot_template_toggle(self):
         self.plot_attenuation()
         self.plot_norm_attenuation()
         self.plot_phase()
+
+
+############# METHODS FOR PLOTTING #############
 
 
     def plot_attenuation(self):
@@ -433,6 +451,9 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
                 self.zeros_list.insertItem(i, new_item)
                 self.zeros_list.setItemWidget(new_item, new_zero_widget)
 
+        # When a stage was dragged out of stages_list, this cleans the empty icon remaining 
+        self.stages_list.clean_empty_items()
+
 
     def pass_data_from_poles(self, data):
         for block in self.second_order_calc.pole_blocks:
@@ -442,6 +463,10 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Setting callback for drop event
         self.stages_list.drop_action = self.fill_poles_and_zeros_lists
 
+        # Cleaning data from drags of other lists
+        self.zeros_list.dropped_data = {}
+        self.poles_list.dropped_data = {}
+
 
     def pass_data_from_zeros(self, data):
         for block in self.second_order_calc.zero_blocks:
@@ -450,6 +475,26 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         # Setting callback for drop event
         self.stages_list.drop_action = self.fill_poles_and_zeros_lists
+
+        # Cleaning data from drags of other lists
+        self.poles_list.dropped_data = {}
+        self.zeros_list.dropped_data = {}
+
+    
+    def pass_data_from_stages(self, data):
+        for block in self.second_order_calc.pole_blocks:
+            if block == data['pole']:
+                self.poles_list.dropped_data = data
+        for block in self.second_order_calc.zero_blocks:
+            if block == data['zero']:
+                self.zeros_list.dropped_data = data
+
+        # Setting callback for drop event
+        self.poles_list.drop_action = self.fill_poles_and_zeros_lists
+        self.zeros_list.drop_action = self.fill_poles_and_zeros_lists
+
+        # Cleaning data from drags of other lists
+        self.stages_list.dropped_data = {}
 
 
 ############# AUXILIARY METHODS #############

@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 # filters-tool project modules
-from app.designer.aux_widgets.stages import StagesList, PolesList
+from app.designer.aux_widgets.stages import StagesList, PolesList, ZerosList
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -376,7 +376,7 @@ class Ui_MainView(object):
         self.gridLayout_16.addWidget(self.label_82, 6, 10, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_16.addItem(spacerItem, 6, 6, 1, 1)
-        self.zeros_list = PolesList(self.tab_stages)
+        self.zeros_list = ZerosList(self.tab_stages)
         self.zeros_list.setMaximumSize(QtCore.QSize(230, 16777215))
         self.zeros_list.setDragEnabled(True)
         self.zeros_list.setDragDropOverwriteMode(True)
@@ -428,7 +428,7 @@ class Ui_MainView(object):
         self.label_70.setMaximumSize(QtCore.QSize(16777215, 40))
         self.label_70.setObjectName("label_70")
         self.gridLayout_16.addWidget(self.label_70, 0, 0, 1, 1)
-        self.poles_list = QtWidgets.QListWidget(self.tab_stages)
+        self.poles_list = PolesList(self.tab_stages)
         self.poles_list.setMaximumSize(QtCore.QSize(230, 16777215))
         self.poles_list.setDragEnabled(True)
         self.poles_list.setDragDropOverwriteMode(True)
