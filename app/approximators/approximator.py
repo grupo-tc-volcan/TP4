@@ -139,7 +139,6 @@ class AttFilterApproximator():
                     # to a TrasnferFunction object, using that apply the denormalisation
                     # algorithm of scipy.signal... finally translating ir to a ZeroPolesGain object!
                     if error_code is ApproximationErrorCode.OK:
-                        self.adjust_function_gain(self.h_norm, 1)
                         error_code = self._denormalised_transfer_function()
 
                         # If using the Q maximum value mode of design, check if valid h_denorm
@@ -160,6 +159,16 @@ class AttFilterApproximator():
     # ------------------------- #
     # Internal Public Methods   #
     # ------------------------- #
+    def adjust_function_gain(self, gain):
+        """ Adjusts the normalised transfer function to have a unity gain """
+        if self.h_norm is not None:
+            current_gain = self.h_norm.gain
+            for zero in self.h_norm.zeros:
+                current_gain *= abs(zero)
+            for pole in self.h_norm.poles:
+                current_gain /= abs(pole)
+
+            self.h_norm.gain = (self.h_norm.gain / current_gain) * gain
 
     def compute_normalised_by_template(self, ap, aa, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
@@ -176,6 +185,7 @@ class AttFilterApproximator():
     def _denormalised_transfer_function(self) -> ApproximationErrorCode:
         """ Denormalises the transfer function returned by the approximation used. """
         # Adding the gain and the relative denormalisation between the transition band
+        self.adjust_function_gain(1)
         wa, aa, wp, _ = self.get_norm_template()
 
         if aa is not None:
@@ -190,7 +200,7 @@ class AttFilterApproximator():
         new_gain = self.h_norm.gain
 
         self.h_norm = ss.ZerosPolesGain(new_zeros, new_poles, new_gain)
-        self.adjust_function_gain(self.h_norm, 10 ** (self.gain / 20))
+        self.adjust_function_gain(10 ** (self.gain / 20))
 
         # Frequency transformation to get the desired filter
         if self.type == FilterType.LOW_PASS.value:
@@ -383,17 +393,6 @@ class AttFilterApproximator():
     def calculate_selectivity(root):
         xi = AttFilterApproximator.calculate_xi(root)
         return 1 / (2 * xi)
-
-    @staticmethod
-    def adjust_function_gain(transfer_function, gain):
-        if transfer_function is not None:
-            current_gain = transfer_function.gain
-            for zero in transfer_function.zeros:
-                current_gain *= abs(zero)
-            for pole in transfer_function.poles:
-                current_gain /= abs(pole)
-
-            transfer_function.gain = (transfer_function.gain / current_gain) * gain
 
     @staticmethod
     def matches_normalised_template(ap, aa, wa, zpk) -> bool:

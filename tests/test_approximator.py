@@ -1,5 +1,7 @@
 # Project modules
 from app.approximators.butterworth import ButterworthApprox
+from app.approximators.chebyshev_i import ChebyshevIApprox
+
 from app.approximators.approximator import ApproximationErrorCode
 
 # Third-Party modules
@@ -17,7 +19,7 @@ import numpy as np
 
 @pytest.fixture
 def approximator():
-    return ButterworthApprox()
+    return ChebyshevIApprox()
 
 
 def run_by_template(
@@ -45,15 +47,8 @@ def run_by_template(
 
     results = []
     if approximator.compute() is ApproximationErrorCode.OK:
-        results.append(
-            ("Butterworth fp={} fa={} Ap={} Aa={}".format(
-                approximator.fpl,
-                approximator.fal,
-                approximator.Apl,
-                approximator.Aal
-            ),
-             approximator.h_denorm)
-        )
+        results.append(("Denormalised |H(f)| [dB]", approximator.h_denorm))
+        results.append(("Normalised |H(f)| [dB]", approximator.h_norm))
     else:
         input("[ERROR] => {}".format(approximator.error_code))
     plot_results(results)
@@ -76,10 +71,10 @@ def test_by_fixed_order(approximator):
     approximator.type = "low-pass"
     approximator.gain = 0
     approximator.fpl = 1000
-    approximator.Apl = 2
+    approximator.Apl = 3.5
 
     results = []
-    for order in range(1, 20):
+    for order in range(1, 10):
         approximator.ord = order
 
         if approximator.compute() is ApproximationErrorCode.OK:
@@ -148,7 +143,7 @@ def test_band_pass(approximator):
         far=10000,
         aal=10,
         aar=10,
-        gain=5
+        gain=0
     )
 
 
@@ -187,3 +182,4 @@ def test_low_pass(approximator):
         fal=3000,
         aal=10
     )
+
