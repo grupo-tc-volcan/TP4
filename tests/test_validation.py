@@ -82,7 +82,33 @@ def test_order():
 
 
 def test_low_pass_template():
-    pass
+
+    def try_low_pass(gain, denorm, fp, ap, fa, aa):
+        app = AttFilterApproximator()
+        app.type = "low-pass"
+        app.gain = gain
+        app.denorm = denorm
+        app.fpl = fp
+        app.fal = fa
+        app.Apl = ap
+        app.Aal = aa
+        return app.compute()
+
+    assert try_low_pass(gain=0, denorm=0, fp=100, ap=3, fa=1000, aa=20) is ApproximationErrorCode.UNDEFINED_APPROXIMATION
+    assert try_low_pass(gain=-5, denorm=0, fp=100, ap=3, fa=1000, aa=20) is ApproximationErrorCode.INVALID_GAIN
+    assert try_low_pass(gain=0, denorm=600, fp=100, ap=3, fa=1000, aa=20) is ApproximationErrorCode.INVALID_DENORM
+
+    assert try_low_pass(gain=0, denorm=0, fp=-10, ap=3, fa=1000, aa=20) is ApproximationErrorCode.INVALID_FREQ
+    assert try_low_pass(gain=0, denorm=0, fp=-15, ap=3, fa=-10, aa=20) is ApproximationErrorCode.INVALID_FREQ
+    assert try_low_pass(gain=0, denorm=0, fp=10, ap=3, fa=-10, aa=20) is ApproximationErrorCode.INVALID_FREQ
+    assert try_low_pass(gain=0, denorm=0, fp=100, ap=3, fa=10, aa=20) is ApproximationErrorCode.INVALID_FREQ
+
+    assert try_low_pass(gain=0, denorm=0, fp=100, ap=-3, fa=1000, aa=20) is ApproximationErrorCode.INVALID_ATTE
+    assert try_low_pass(gain=0, denorm=0, fp=100, ap=3, fa=1000, aa=-20) is ApproximationErrorCode.INVALID_ATTE
+    assert try_low_pass(gain=0, denorm=0, fp=100, ap=-3, fa=1000, aa=-20) is ApproximationErrorCode.INVALID_ATTE
+    assert try_low_pass(gain=0, denorm=0, fp=100, ap=30, fa=1000, aa=20) is ApproximationErrorCode.INVALID_ATTE
+    assert try_low_pass(gain=0, denorm=0, fp=100, ap=0, fa=1000, aa=20) is ApproximationErrorCode.INVALID_ATTE
+    assert try_low_pass(gain=0, denorm=0, fp=100, ap=10, fa=1000, aa=0) is ApproximationErrorCode.INVALID_ATTE
 
 
 def test_high_pass_template():

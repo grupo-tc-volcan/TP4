@@ -21,7 +21,8 @@ class ApproximationErrorCode(Enum):
     INVALID_Q = "INVALID_Q"                         # Negative Q factor
     INVALID_ORDER = "INVALID_ORDER"                 # Negative order
     INVALID_DENORM = "INVALID_DENORM"               # Invalid range of denormalisation factor
-    MAXIMUM_ORDER_REACHED = "MAXIMUM_ORDER_REACHED" # Iterative approximation reached maximum order
+    MAXIMUM_ORDER_REACHED = "MAXIMUM_ORDER_REACHED"         # Iterative approximation reached maximum order
+    UNDEFINED_APPROXIMATION = "UNDEFINED_APPROXIMATION"     # Using the base class not an specific one
 
 
 class FilterType(Enum):
@@ -126,16 +127,19 @@ class AttFilterApproximator():
                     # When a fixed order is given, it should be prioritised...
                     # calculates the normalised transfer function
                     if self.ord > 0:
-                        error_code = self.compute_normalised_by_order(self.Apl, self.ord)
+                        try:
+                            error_code = self.compute_normalised_by_order(self.Apl, self.ord)
+                        except NotImplementedError:
+                            error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
                     else:
                         wan, aa, _, ap = self._normalised_template()
                         error_code = self.compute_normalised_by_template(ap, aa, wan)
-                    self.adjust_function_gain(self.h_norm, 1)
                     
                     # Denormalisation process, first we need to pass every transfer function
                     # to a TrasnferFunction object, using that apply the denormalisation
                     # algorithm of scipy.signal... finally translating ir to a ZeroPolesGain object!
                     if error_code is ApproximationErrorCode.OK:
+                        self.adjust_function_gain(self.h_norm, 1)
                         error_code = self._denormalised_transfer_function()
 
                         # If using the Q maximum value mode of design, check if valid h_denorm
@@ -207,7 +211,11 @@ class AttFilterApproximator():
         The callback should expect a ZerosPoleGain object from Scipy.Signal,
         returning whether it verifies or not the requirements. """
         for order in range(1, MAXIMUM_ORDER + 1):
-            error_code = self.compute_normalised_by_order(ap, order)
+            try:
+                error_code = self.compute_normalised_by_order(ap, order)
+            except NotImplementedError:
+                error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
+
             if error_code is ApproximationErrorCode.OK:
                 if callback(self.h_norm):
                     return ApproximationErrorCode.OK
@@ -277,6 +285,8 @@ class AttFilterApproximator():
             if self.fpl >= self.fal or self.fpl <= 0 or self.fal <= 0:
                 return ApproximationErrorCode.INVALID_FREQ
             elif self.Apl <= 0 or self.Aal <= 0:
+                return ApproximationErrorCode.INVALID_ATTE
+            elif self.Apl >= self.Aal:
                 return ApproximationErrorCode.INVALID_ATTE
         else:
             if self.Apl <= 0:
