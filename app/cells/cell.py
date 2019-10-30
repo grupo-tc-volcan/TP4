@@ -75,7 +75,15 @@ class Cell:
 
     def get_sensitivities(self) -> dict:
         """ Returns a dictionary with the sensitivities of the circuit, using the internal values
-            of components to calculate them. """
+            of components to calculate them.
+            Should expect that sensitivities are returned with the following syntax:
+                {
+                    "wp": {
+                        "R2": 1,
+                        "R1": -1
+                    }
+                }
+            """
         raise NotImplementedError
 
     def design_components(self, zeros: dict, poles: dict, gain: float) -> dict:
