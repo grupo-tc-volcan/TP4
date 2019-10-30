@@ -59,6 +59,10 @@ class Cell:
         """ Sets the relative tolerance used to calculate all components """
         self.error = error
 
+    def set_components(self, components: dict):
+        """ Sets the current dictionary of components """
+        self.components = components
+
     def get_name(self) -> str:
         """ Returns the name of the cell. """
         return self.name
@@ -145,6 +149,10 @@ class CellGroup:
     def set_error(self, cell_type: str, error: float):
         """ Sets the error or relative tolerance used to calculate components. """
         self._switch_cell_method_by_type(cell_type, "set_error", error)
+
+    def set_components(self, cell_type: str, components: dict):
+        """ Sets the current dictionary of components """
+        self._switch_cell_method_by_type(cell_type, "set_components", components)
 
     def get_name(self) -> str:
         """ Returns the name of the group of cells. """

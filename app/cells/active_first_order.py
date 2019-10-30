@@ -9,6 +9,7 @@ from app.cells.electronics import build_expression_callback
 from app.cells.electronics import ComponentType
 
 from app.cells.cell import CellErrorCodes
+from app.cells.cell import CellGroup
 from app.cells.cell import CellError
 from app.cells.cell import CellType
 from app.cells.cell import Cell
@@ -17,6 +18,16 @@ from app.cells.cell import Cell
 # --------------------- #
 # Cell Group Definition #
 # --------------------- #
+class ActiveFirstOrder(CellGroup):
+
+    def __init__(self):
+        super(ActiveFirstOrder, self).__init__(
+            "Active First Order",
+            {
+                CellType.LOW_PASS.value: CompensatedIntegrator(),
+                CellType.HIGH_PASS.value: CompensatedDerivator()
+            }
+        )
 
 
 # ---------------- #
@@ -41,7 +52,7 @@ class CompensatedDerivator(Cell):
     # Public Methods #
     # -------------- #
     def design_components(self, zeros: dict, poles: dict, gain: float) -> dict:
-        if "wp" not in poles.keys() or gain >= 0 or poles["wp"] <= 0:
+        if "wp" not in poles.keys() or "wz" not in zeros.keys() or gain >= 0 or poles["wp"] <= 0 or zeros["wz"] != 0:
             raise CellError(CellErrorCodes.INVALID_PARAMETERS)
         else:
             R1, R2 = self.k().free_symbols
