@@ -4,6 +4,17 @@
 from enum import Enum
 
 
+class CellError(Exception):
+    """ Handling errors is solved by raising always only one exception whenever an error
+    has occured. Internal error codes and messages will be stored in this class to ease
+    the error finding process. """
+    def __init__(self, error_code):
+        super(CellError, self).__init__("An error occurred when using a Cell. Check the error code {}!".format(error_code))
+
+        # Internal storage of the error code
+        self.error_code = error_code
+
+
 class CellType(Enum):
     """ Internal mapping of filter types, strings are expected and are matched
     with these enumerated values. """
@@ -43,9 +54,7 @@ class Cell:
         return self.type
 
     def get_circuit(self) -> str:
-        """ Returns the file path of the circuit's image for the given cell type.
-            None is returned if asking for a non-available type of cell.
-            """
+        """ Returns the file path of the circuit's image for the given cell type. """
         raise NotImplementedError
 
     def get_components(self, zeros: dict, poles: dict, gain: float) -> dict:
@@ -73,5 +82,5 @@ class Cell:
 
     def get_sensitivities(self) -> dict:
         """ Returns a dictionary with the sensitivities of the circuit, using the internal values
-         of components to calculate them. """
+            of components to calculate them. """
         raise NotImplementedError
