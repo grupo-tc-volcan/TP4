@@ -300,7 +300,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Normalised filters are all low-pass
         wa, Aa, wp, Ap = self.filter_data_widgets[filter_index].approximators[approx_index].get_norm_template()
         template = {
-            'G' : self.filter_data_widgets[filter_index].gain.value(),
+            'G' : 0,
             'fp': wp/(2*np.pi),
             'fa': wa/(2*np.pi),
             'Ap': Ap,
