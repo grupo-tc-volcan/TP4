@@ -20,6 +20,9 @@ class StagesList(QtWid.QListWidget):
         # Callback to execute when dropping events
         self.drop_action = self.ignore_drop_action
 
+        # Callback to execute when a cell changes its gain
+        self.update_gain_action = self.ignore_drop_action
+
         # Callback for cell_widgets to call when they are dragged
         self.drag_action = self.ignore_drop_action
 
@@ -59,8 +62,10 @@ class StagesList(QtWid.QListWidget):
                 else:
                     new_cell_widget.q_val.setText('-')
 
-                # Setting callback for drag event
+                # Setting callback for drag event and Gain input
                 new_cell_widget.pass_data_action = self.drag_action
+                new_cell_widget.update_gain_action = self.update_gain_action
+
                 new_item = QtWid.QListWidgetItem()
                 new_item.setSizeHint(new_cell_widget.sizeHint())
 
@@ -76,7 +81,8 @@ class StagesList(QtWid.QListWidget):
                 list_item = self.itemAt(x, y)
                 item_widget = self.itemWidget(list_item)
 
-                self.validate_and_add_zero(item_widget, self.dropped_data)
+                if item_widget is not None:
+                    self.validate_and_add_zero(item_widget, self.dropped_data)
 
             # Executing callback
             self.drop_action()

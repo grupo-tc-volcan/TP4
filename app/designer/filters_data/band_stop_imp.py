@@ -64,8 +64,13 @@ class BandStopData(QtWid.QWidget, Ui_BandStopData):
             else:
                 self.stop_att.setEnabled(True)
             self.q_max.setEnabled(True)
-            self.stop_freq_l.setDisabled(True)
-            self.stop_freq_r.setDisabled(True)
+            if self.approx_index != 2:
+                # Cheby 2 needs the stopband frequency instead of the passband frequency
+                self.pass_freq_l.setDisabled(True)
+                self.pass_freq_r.setDisabled(True)
+            else:
+                self.stop_freq_l.setDisabled(True)
+                self.stop_freq_r.setDisabled(True)
             self.denorm_select.setCurrentIndex(0)
             self.denorm_perc.setValue(0)
             self.denorm_select.setDisabled(True)
@@ -75,8 +80,13 @@ class BandStopData(QtWid.QWidget, Ui_BandStopData):
         else:
             self.order.setDisabled(True)
             self.q_max.setDisabled(True)
-            self.stop_freq_l.setEnabled(True)
-            self.stop_freq_r.setEnabled(True)
+            if self.approx_index != 2:
+                # Cheby 2 needs the stopband frequency instead of the passband frequency
+                self.pass_freq_l.setDisabled(True)
+                self.pass_freq_r.setDisabled(True)
+            else:
+                self.stop_freq_l.setDisabled(True)
+                self.stop_freq_r.setDisabled(True)
             self.stop_att.setEnabled(True)
             self.denorm_select.setEnabled(True)
             self.order_fixed.setEnabled(True)

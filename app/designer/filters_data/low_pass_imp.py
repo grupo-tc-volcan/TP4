@@ -45,7 +45,11 @@ class LowPassData(QtWid.QWidget, Ui_LowPassData):
             else:
                 self.stop_att.setEnabled(True)
             self.order.setEnabled(True)
-            self.stop_freq.setDisabled(True)
+            if self.approx_index != 2:
+                # Cheby 2 needs the stopband frequency instead of the passband frequency
+                self.pass_freq.setDisabled(True)
+            else:
+                self.stop_freq.setDisabled(True)
             self.denorm_select.setCurrentIndex(0)
             self.denorm_perc.setValue(0)
             self.denorm_select.setDisabled(True)
@@ -59,7 +63,11 @@ class LowPassData(QtWid.QWidget, Ui_LowPassData):
             else:
                 self.stop_att.setEnabled(True)
             self.q_max.setEnabled(True)
-            self.stop_freq.setDisabled(True)
+            if self.approx_index != 2:
+                # Cheby 2 needs the stopband frequency instead of the passband frequency
+                self.pass_freq.setDisabled(True)
+            else:
+                self.stop_freq.setDisabled(True)
             self.denorm_select.setCurrentIndex(0)
             self.denorm_perc.setValue(0)
             self.denorm_select.setDisabled(True)

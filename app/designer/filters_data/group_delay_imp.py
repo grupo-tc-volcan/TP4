@@ -46,7 +46,11 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
             else:
                 self.stop_att.setEnabled(True)
             self.order.setEnabled(True)
-            self.stop_freq.setDisabled(True)
+            if self.approx_index != 2:
+                # Cheby 2 needs the stopband frequency instead of the passband frequency
+                self.pass_freq.setDisabled(True)
+            else:
+                self.stop_freq.setDisabled(True)
             self.q_fixed.setDisabled(True)
 
         elif self.q_fixed.isChecked():

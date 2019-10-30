@@ -47,11 +47,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.approx_selector.currentIndexChanged.connect(self.set_approx)
         self.calculate_button.released.connect(self.calculate_approx)
         self.plot_template_1.stateChanged.connect(self.plot_template_toggle)
-        self.stages_list.itemSelectionChanged.connect(self.plot_stage)
+        self.stages_list.itemClicked.connect(self.plot_stage)
         self.accumulative_plot.stateChanged.connect(self.plot_stage)
+        self.v_min.valueChanged.connect(self.update_dynamic_range)
+        self.v_max.valueChanged.connect(self.update_dynamic_range)
 
         # Loading callbacks
         self.stages_list.drag_action = self.pass_data_from_stages
+        self.stages_list.update_gain_action = self.update_gain_in_stage
 
         # Set up things for the first time
         self.on_start_up()
@@ -131,6 +134,22 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             # Clearing stages_list
             self.stages_list.clear()
 
+        elif self.filter_data_widgets[filter_index].approximators[approx_index].compute() == ApproximationErrorCode.INVALID_FREQ:
+            mb = QtWid.QMessageBox()
+            mb.setIcon(QtWid.QMessageBox.Critical)
+            mb.setWindowTitle('Wrong input data.')
+            mb.setText("Inconsistent frequencies entered. Please reffer to the filter's template image for better understanding of the input values.")
+            mb.setFixedSize(500,200)
+            mb.exec()
+
+        elif self.filter_data_widgets[filter_index].approximators[approx_index].compute() == ApproximationErrorCode.INVALID_ATTE:
+            mb = QtWid.QMessageBox()
+            mb.setIcon(QtWid.QMessageBox.Critical)
+            mb.setWindowTitle('Wrong input data.')
+            mb.setText("Inconsistent attenuations entered. Please reffer to the filter's template image for better understanding of the input values. Recall that attenuation cannot be 0.")
+            mb.setFixedSize(500,200)
+            mb.exec()
+
 
     def plot_stage(self):
         current_item = self.stages_list.currentItem()
@@ -164,6 +183,41 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.plot_attenuation()
         self.plot_norm_attenuation()
         self.plot_phase()
+
+
+    def update_dynamic_range(self):
+        v_min = self.v_min.value()
+        v_max = self.v_max.value()
+
+        filter_index = self.filter_selector.currentIndex()
+        gain_in_db = self.filter_data_widgets[filter_index].gain.value()
+        gain = 10**(gain_in_db/20)
+
+        if gain_in_db > 0:
+            dr = 20 * np.log10((v_max / gain) / v_min)
+        else:
+            dr = 20 * np.log10(v_max / (v_min / gain))
+
+        self.dynamic_range.setText('{:.3f}'.format(dr))
+
+
+    def update_gain_in_stage(self, stage_block_changed : QtWid.QWidget):
+        filter_index = self.filter_selector.currentIndex()
+        total_gain = 0
+        for i in range(self.stages_list.count()):
+            stage_widget = self.stages_list.itemWidget(self.stages_list.item(i))
+            total_gain += stage_widget.gain.value()
+
+        if total_gain > self.filter_data_widgets[filter_index].gain.value():
+            mb = QtWid.QMessageBox()
+            mb.setIcon(QtWid.QMessageBox.Critical)
+            mb.setWindowTitle('Beware.')
+            mb.setText("Total gain excedes the design specifications.")
+            mb.setFixedSize(500,200)
+            mb.exec()
+
+        # Now plotting with new gain.
+        self.plot_stage()
 
 
 ############# METHODS FOR PLOTTING #############
@@ -584,3 +638,15 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.accumulative_plot.setEnabled(True)
         self.v_min.setEnabled(True)
         self.v_max.setEnabled(True)
+
+
+    @staticmethod
+    def adjust_function_gain(transfer_function, gain):
+        if transfer_function is not None:
+            current_gain = transfer_function.gain
+            for zero in transfer_function.zeros:
+                current_gain *= abs(zero)
+            for pole in transfer_function.poles:
+                current_gain /= abs(pole)
+
+            transfer_function.gain = (transfer_function.gain / current_gain) * gain
