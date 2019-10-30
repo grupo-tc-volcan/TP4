@@ -4,3 +4,4 @@ sympy
 math
 PyQt5
 matplotlib
+pytest
