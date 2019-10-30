@@ -409,9 +409,9 @@ class AttFilterApproximator:
             return ApproximationErrorCode.INVALID_FREQ
         elif self.fpl <= self.fal or self.fpr >= self.far:
             return ApproximationErrorCode.INVALID_FREQ
-        elif self.Apl <= 0 or self.Aal <= 0 or self.Apr < 0 or self.Aar < 0:
+        elif self.Apl <= 0 or self.Aal <= 0 or self.Aar < 0:
             return ApproximationErrorCode.INVALID_ATTE
-        elif self.Apl >= self.Aal or self.Apr > self.Aar:
+        elif self.Apl >= self.Aal or self.Apl >= self.Aar:
             return ApproximationErrorCode.INVALID_ATTE
         else:
             return ApproximationErrorCode.OK
@@ -435,9 +435,9 @@ class AttFilterApproximator:
             return ApproximationErrorCode.INVALID_FREQ
         elif self.fpl >= self.fal or self.fpr <= self.far:
             return ApproximationErrorCode.INVALID_FREQ
-        elif self.Apl <= 0 or self.Aal <= 0 or self.Apr < 0 or self.Aar < 0:
+        elif self.Apl <= 0 or self.Aal <= 0 or self.Apr < 0:
             return ApproximationErrorCode.INVALID_ATTE
-        elif self.Apl >= self.Aal or self.Apr > self.Aar:
+        elif self.Apl >= self.Aal or self.Apr >= self.Aal:
             return ApproximationErrorCode.INVALID_ATTE
         else:
             return ApproximationErrorCode.OK
