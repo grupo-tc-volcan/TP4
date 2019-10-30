@@ -32,7 +32,7 @@ class CellType(Enum):
 
 class Cell:
     """ Abstract base class of cells """
-    def __init__(self, name: str, cell_type: str):
+    def __init__(self, name: str, cell_type: str, circuit: str):
 
         # Internal storage of the cell component values, as dictionary,
         # the names are formatted as "R1", "C1", etc... and should be matched
@@ -45,6 +45,7 @@ class Cell:
         # Example, type="low-pass", name = "Sallen Key"
         self.name = name
         self.type = cell_type
+        self.circuit = circuit
 
     # -------------- #
     # Public Methods #
@@ -63,7 +64,7 @@ class Cell:
 
     def get_circuit(self) -> str:
         """ Returns the file path of the circuit's image for the given cell type. """
-        raise NotImplementedError
+        raise self.circuit
 
     def get_parameters(self) -> tuple:
         """ Returns (zeros, poles, gain) in the same format as described in get_components(...),
