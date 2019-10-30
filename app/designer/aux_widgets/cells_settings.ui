@@ -24,6 +24,16 @@
      </property>
      <item>
       <property name="text">
+       <string>Compensated Integrator</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Compensated Derivator</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Sallen-Key</string>
       </property>
      </item>
@@ -59,8 +69,21 @@
      </item>
     </widget>
    </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="report_button">
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>HTML Report</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0">
-    <widget class="QListView" name="cell_components">
+    <widget class="QListWidget" name="cell_components">
      <property name="maximumSize">
       <size>
        <width>300</width>
@@ -79,7 +102,7 @@
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QListView" name="cell_sensitivities">
+    <widget class="QListWidget" name="cell_sensitivities">
      <property name="maximumSize">
       <size>
        <width>300</width>
@@ -94,19 +117,6 @@
      </property>
      <property name="dragDropMode">
       <enum>QAbstractItemView::InternalMove</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QPushButton" name="report_button">
-     <property name="maximumSize">
-      <size>
-       <width>300</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>HTML Report</string>
      </property>
     </widget>
    </item>
