@@ -102,7 +102,7 @@ class StagesList(QtWid.QListWidget):
         if zero_data['n'] == 2:
             # Only second order poles can have second order zeros
             if cell_widget.cell_data['pole']['n'] == 2 and cell_widget.cell_data['zero'] is None:
-                # Checking that the cell in which the zero was dropped has a second order pole doesn't have any zeros
+                # Checking that the cell in which the zero was dropped has a second order pole and doesn't have any zeros
                 cell_widget.cell_data['zero'] = zero_data
 
                 cell_widget.f0.setText('{:.3E}'.format(cell_widget.cell_data['zero']['f0']))

@@ -266,7 +266,7 @@ class FilterPlotter():
             self.axes.text(zero.real, zero.imag, '  {} ({:.3E}, {:.3E})'.format(zeros[zero], zero.real, zero.imag))
         self.axes.grid(which='major')
         self.axes.grid(which='minor')
-        self.axes.set_xlabel('Real part σ (Hz)')
+        self.axes.set_xlabel('Real part σ (Np)')
         self.axes.set_ylabel('Imaginary part jω (Hz)')
         self.axes.axvline(c='black')
         self.axes.axhline(c='black')
@@ -284,7 +284,7 @@ class FilterPlotter():
         self.axes.clear()
         self.axes.plot(x, y, marker='o')
         for i_x, i_y in zip(x, y):
-            self.axes.text(i_x, i_y, 'fp={:.3E}, Q={:.3E}'.format(i_x, i_y))
+            self.axes.text(i_x, i_y, '  fp={:.3E}, Q={:.3E}'.format(i_x, i_y))
         self.axes.grid(which='major')
         self.axes.grid(which='minor')
         self.axes.set_xlabel('Frequency (Hz)')

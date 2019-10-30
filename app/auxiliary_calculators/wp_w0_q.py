@@ -101,7 +101,7 @@ class SecondOrderAuxCalc():
                 else:
                     # Finding matching Q and w0 and adding second zero
                     for zero_block in self.zero_blocks:
-                        if math.isclose(aux_wp_poles[i]/(2*math.pi), zero_block['f0']) and math.isclose(aux_q_poles[i], zero_block['q']):
+                        if math.isclose(aux_w0_zeros[i]/(2*math.pi), zero_block['f0']) and math.isclose(aux_q_zeros[i], zero_block['q']):
                             if len(zero_block['zeros']) > 1:
                                 # If this block already has both conjugated zeros, a new block is created
                                 new_second_order_block = {
