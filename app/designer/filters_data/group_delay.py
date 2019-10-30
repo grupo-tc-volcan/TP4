@@ -146,10 +146,6 @@ class Ui_GroupDelayData(object):
         self.label_10 = QtWidgets.QLabel(GroupDelayData)
         self.label_10.setObjectName("label_10")
         self.gridLayout.addWidget(self.label_10, 6, 4, 1, 1)
-        self.label_16 = QtWidgets.QLabel(GroupDelayData)
-        self.label_16.setMaximumSize(QtCore.QSize(16777215, 22))
-        self.label_16.setObjectName("label_16")
-        self.gridLayout.addWidget(self.label_16, 4, 0, 1, 1)
         self.pass_freq = QtWidgets.QDoubleSpinBox(GroupDelayData)
         self.pass_freq.setAlignment(QtCore.Qt.AlignCenter)
         self.pass_freq.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
@@ -169,6 +165,10 @@ class Ui_GroupDelayData(object):
         self.pass_att.setProperty("value", 1.0)
         self.pass_att.setObjectName("pass_att")
         self.gridLayout.addWidget(self.pass_att, 4, 2, 1, 1)
+        self.label_16 = QtWidgets.QLabel(GroupDelayData)
+        self.label_16.setMaximumSize(QtCore.QSize(16777215, 22))
+        self.label_16.setObjectName("label_16")
+        self.gridLayout.addWidget(self.label_16, 4, 0, 1, 2)
 
         self.retranslateUi(GroupDelayData)
         QtCore.QMetaObject.connectSlotsByName(GroupDelayData)
@@ -193,8 +193,8 @@ class Ui_GroupDelayData(object):
         self.order_fixed.setText(_translate("GroupDelayData", "Fixed:"))
         self.label_9.setText(_translate("GroupDelayData", "Group-Delay freq. (fτ):"))
         self.label_10.setText(_translate("GroupDelayData", "Hz"))
-        self.label_16.setText(_translate("GroupDelayData", "Passband Att. (Ap):"))
         self.label_17.setText(_translate("GroupDelayData", "Hz"))
+        self.label_16.setText(_translate("GroupDelayData", "Passband Att. (Ap):"))
 
 
 if __name__ == "__main__":
