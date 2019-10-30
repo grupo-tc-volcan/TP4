@@ -1,3 +1,9 @@
+"""
+NOTE: Remember, every time you change the approximation used to test every filter design feature,
+you need to set correctly the parameters used to test... for example, when using a fixed order
+in Chebyshev II, you have to set the stop band frequency, not the pass.
+"""
+
 # Project modules
 from app.approximators.butterworth import ButterworthApprox
 from app.approximators.chebyshev_i import ChebyshevIApprox
@@ -23,7 +29,7 @@ import numpy as np
 @pytest.fixture
 def approximator():
     # Change the returning approximation to test it!
-    return ChebyshevIIApprox()
+    return CauerApprox()
 
 
 def run_by_template(
@@ -55,7 +61,7 @@ def run_by_template(
         results.append(("Denormalised", approximator.h_denorm))
         results.append(("Normalised", approximator.h_norm))
     else:
-        input("[ERROR] => {}".format(approximator.error_code))
+        print("[ERROR] => {}".format(approximator.error_code))
 
     if graph == "bode":
         plot_bode_results(results)
@@ -170,7 +176,7 @@ def test_by_template_denorm(approximator):
     approximator.Aal = 20
 
     results = []
-    for denorm in [0, 100]:
+    for denorm in range(0, 101, 10):
         approximator.denorm = denorm if denorm != 0 else 1
 
         if approximator.compute() is ApproximationErrorCode.OK:
@@ -248,7 +254,7 @@ def test_high_pass(approximator):
     run_by_template(
         approximator,
         "high-pass",
-        fpl=1500,
+        fpl=4000,
         apl=2,
         fal=1000,
         aal=30,
@@ -258,7 +264,7 @@ def test_high_pass(approximator):
     run_by_template(
         approximator,
         "high-pass",
-        fpl=1500,
+        fpl=4000,
         apl=2,
         fal=1000,
         aal=30,
@@ -272,7 +278,7 @@ def test_low_pass(approximator):
         "low-pass",
         fpl=1000,
         apl=2,
-        fal=1500,
+        fal=4500,
         aal=50,
         graph="bode"
     )
@@ -282,7 +288,7 @@ def test_low_pass(approximator):
         "low-pass",
         fpl=1000,
         apl=2,
-        fal=1500,
+        fal=4500,
         aal=50,
         graph="zpk"
     )

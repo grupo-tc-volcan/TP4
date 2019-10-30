@@ -195,28 +195,28 @@ class AttFilterApproximator:
 
     def validate_low_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation are valid or not using a low-pass. """
-        if self.ord == 0 or self.q == 0:
+        if self.ord == 0 and self.q == 0:
             return self._validate_low_pass_by_template()
         else:
             return self._validate_low_pass_by_fixed()
 
     def validate_high_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation are valid or not using a high pass. """
-        if self.ord == 0 or self.q == 0:
+        if self.ord == 0 and self.q == 0:
             return self._validate_high_pass_by_template()
         else:
             return self._validate_high_pass_by_fixed()
 
     def validate_band_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation are valid or not using a band pass. """
-        if self.ord == 0 or self.q == 0:
+        if self.ord == 0 and self.q == 0:
             return self._validate_band_pass_by_template()
         else:
             return self._validate_band_pass_by_fixed()
 
     def validate_band_stop(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation are valid or not using a band stop. """
-        if self.ord == 0 or self.q == 0:
+        if self.ord == 0 and self.q == 0:
             return self._validate_band_stop_by_template()
         else:
             return self._validate_band_stop_by_fixed()

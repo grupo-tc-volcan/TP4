@@ -22,7 +22,7 @@ class ChebyshevIIApprox(AttFilterApproximator):
         Returns -> (wa, aa, wp, ap)
         """
         wa, aa, wp, ap = super(ChebyshevIIApprox, self)._normalised_template()
-        return None if wp == 0 else 1 / wp, aa, None if wa == 0 else 1 / wa, ap
+        return None if wp == 0 or wp is None else 1 / wp, aa, None if wa == 0 or wa is None else 1 / wa, ap
 
     def denormalise_to_low_pass(self) -> tuple:
         """ Denormalises the filter to low pass and returns the denormalised (zeros, poles, gain) """
