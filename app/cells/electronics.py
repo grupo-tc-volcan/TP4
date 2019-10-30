@@ -102,14 +102,3 @@ def build_proportional_callback(k: float):
     def callback(element_two_value: float):
         return element_two_value * k
     return callback
-
-
-if __name__ == "__main__":
-    R, C = symbols("R C")
-    expression = 1 / (R * C)
-    results = compute_commercial_by_iteration(
-        ComponentType.Resistor, ComponentType.Capacitor,
-        build_expression_callback(expression, 10, R),
-        0.1
-    )
-    print(results)
