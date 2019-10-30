@@ -198,9 +198,9 @@ def test_band_pass(approximator):
         apr=2,
         fal=1000,
         far=10000,
-        aal=10,
-        aar=10,
-        gain=0,
+        aal=40,
+        aar=40,
+        gain=5,
         graph="bode"
     )
 
@@ -213,9 +213,9 @@ def test_band_pass(approximator):
         apr=2,
         fal=1000,
         far=10000,
-        aal=10,
-        aar=10,
-        gain=0,
+        aal=40,
+        aar=40,
+        gain=5,
         graph="zpk"
     )
 

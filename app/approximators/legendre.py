@@ -42,7 +42,7 @@ class LegendreApprox(AttFilterApproximator):
                 new_poles.append(new_pole)
 
         # Updating state of transfer function
-        self.h_norm = signal.ZerosPolesGain([], new_poles, new_gain)
+        self.h_aux = signal.ZerosPolesGain([], new_poles, new_gain)
         return ApproximationErrorCode.OK
 
     # ----------------- #

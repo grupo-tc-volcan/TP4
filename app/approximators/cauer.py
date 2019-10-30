@@ -21,14 +21,14 @@ class CauerApprox(AttFilterApproximator):
 
         # According to the order... normalise
         wa, aa, _, ap = self.get_norm_template()
-        if len(self.h_norm.poles) % 2 == 0:
-            self.h_norm.gain = self.h_norm.gain / (10 ** (ap / 20))
+        if len(self.h_aux.poles) % 2 == 0:
+            self.h_aux.gain = self.h_aux.gain / (10 ** (ap / 20))
 
     def compute_normalised_by_order(self, ap, n, aa=None) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the fixed order """
         # Computing needed constants
         zeros, poles, gain = ss.ellipap(n, ap, aa)
-        self.h_norm = ss.ZerosPolesGain(zeros, poles, gain)
+        self.h_aux = ss.ZerosPolesGain(zeros, poles, gain)
         return ApproximationErrorCode.OK
 
     def _validate_low_pass_by_fixed(self) -> ApproximationErrorCode:

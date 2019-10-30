@@ -25,7 +25,7 @@ class ChebyshevIApprox(AttFilterApproximator):
         order = self.ord if self.ord else self.compute_order(ap, aa, wa)
         if order % 2 == 0:
             # Compute epsilon and the ripple and move the gain of the function
-            self.h_norm.gain = self.h_norm.gain / (10 ** (ap / 20))
+            self.h_aux.gain = self.h_aux.gain / (10 ** (ap / 20))
 
     def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
@@ -36,7 +36,7 @@ class ChebyshevIApprox(AttFilterApproximator):
         """ Generates normalised transfer function prioritising the fixed order """
         # Computing needed constants
         zeros, poles, gain = ss.cheb1ap(n, ap)
-        self.h_norm = ss.ZerosPolesGain(zeros, poles, gain)
+        self.h_aux = ss.ZerosPolesGain(zeros, poles, gain)
         return ApproximationErrorCode.OK
 
     # ----------------- #
