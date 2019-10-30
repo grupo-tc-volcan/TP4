@@ -8,6 +8,7 @@ class CellErrorCodes(Enum):
     """ Error codes used to classify what went wrong. """
     OK = "Ok"                                   # Everything is ok
     NOT_AVAILABLE_TYPE = "NotAvailableType"     # Using a not available type of cell
+    NOT_DEFINED_COMPONENTS = "NotDefinedComp"   # Trying to calculate or compute without setting component values
 
 
 class CellError(Exception):
@@ -132,11 +133,13 @@ class CellGroup:
         """ Returns (zeros, poles, gain) in the same format as described in get_components(...),
             and it uses the internal values of components to calculate them.
         """
+        self._verify_components(cell_type)
         return self._switch_cell_method_by_type(cell_type, "get_parameters")
 
     def get_sensitivities(self, cell_type: str) -> dict:
         """ Returns a dictionary with the sensitivities of the circuit, using the internal values
             of components to calculate them. """
+        self._verify_components(cell_type)
         return self._switch_cell_method_by_type(cell_type, "get_sensitivities")
 
     def design_components(self, cell_type: str, zeros: dict, poles: dict, gain: float) -> dict:
@@ -152,3 +155,10 @@ class CellGroup:
             return getattr(self.mapping_types[cell_type], method_name)(*args, *kwargs)
         else:
             raise CellError(CellErrorCodes.NOT_AVAILABLE_TYPE)
+
+    def _verify_components(self, cell_type: str):
+        """ Verifies if component values have been set into the cell, if not
+        raises an error. """
+        components = self.get_components(cell_type)
+        if None in components.values():
+            raise CellError(CellErrorCodes.NOT_DEFINED_COMPONENTS)
