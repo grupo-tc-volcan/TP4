@@ -50,30 +50,10 @@ class StagesList(QtWid.QListWidget):
                 new_stage_data = {
                     'pole': self.dropped_data,
                     'zero': None,
-                    'gain': 0
+                    'gain': 0,
+                    'type': ''
                 }
-                self.stages_data.append(new_stage_data)
-
-                new_cell_widget = CellBlock(new_stage_data)
-                new_cell_widget.fp.setText('{:.3E}'.format(self.dropped_data['fp']))
-                new_cell_widget.np.setText('{}'.format(self.dropped_data['n']))
-                if self.dropped_data['n'] == 2:
-                    new_cell_widget.q_val.setText('{:.3E}'.format(self.dropped_data['q']))
-                else:
-                    new_cell_widget.q_val.setText('-')
-
-                # Setting callback for drag event and Gain input
-                new_cell_widget.pass_data_action = self.drag_action
-                new_cell_widget.update_gain_action = self.update_gain_action
-
-                new_item = QtWid.QListWidgetItem()
-                new_item.setSizeHint(new_cell_widget.sizeHint())
-
-                self.insertItem(item_index, new_item)
-                self.setItemWidget(new_item, new_cell_widget)
-
-                # Setting pole as used
-                self.dropped_data['used'] = True
+                self.add_cell(item_index, new_stage_data)
 
             elif self.dropped_data['type'] == 'zero':
                 x = ev.pos().x()
@@ -83,6 +63,8 @@ class StagesList(QtWid.QListWidget):
 
                 if item_widget is not None:
                     self.validate_and_add_zero(item_widget, self.dropped_data)
+
+                item_widget.what_am_i()
 
             # Executing callback
             self.drop_action()
@@ -145,6 +127,32 @@ class StagesList(QtWid.QListWidget):
 
                 # Setting zero as used
                 self.dropped_data['used'] = True
+
+
+    def add_cell(self, index, new_data):
+        self.stages_data.append(new_data)
+
+        new_cell_widget = CellBlock(new_data)
+        new_cell_widget.fp.setText('{:.3E}'.format(self.dropped_data['fp']))
+        new_cell_widget.np.setText('{}'.format(self.dropped_data['n']))
+        if self.dropped_data['n'] == 2:
+            new_cell_widget.q_val.setText('{:.3E}'.format(self.dropped_data['q']))
+        else:
+            new_cell_widget.q_val.setText('-')
+        new_cell_widget.what_am_i()
+
+        # Setting callback for drag event and Gain input
+        new_cell_widget.pass_data_action = self.drag_action
+        new_cell_widget.update_gain_action = self.update_gain_action
+
+        new_item = QtWid.QListWidgetItem()
+        new_item.setSizeHint(new_cell_widget.sizeHint())
+
+        self.insertItem(index, new_item)
+        self.setItemWidget(new_item, new_cell_widget)
+
+        # Setting pole as used
+        self.dropped_data['used'] = True
 
 
 

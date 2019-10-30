@@ -192,6 +192,10 @@ class SecondOrderAuxCalc():
                 ret.append(zero_block['q'])
 
         return ret
+
+
+    def adjust_gain(self, tf : ss.ZerosPolesGain, filter_type):
+        pass
         
 
     @staticmethod

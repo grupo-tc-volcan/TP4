@@ -6,6 +6,7 @@ from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as Navigatio
 
 import scipy.signal as ss
 import numpy as np
+import math
 
 # filters-tool project modules
 from app.designer.main_view.main_view import Ui_MainView
@@ -47,7 +48,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.approx_selector.currentIndexChanged.connect(self.set_approx)
         self.calculate_button.released.connect(self.calculate_approx)
         self.plot_template_1.stateChanged.connect(self.plot_template_toggle)
-        self.stages_list.itemClicked.connect(self.plot_stage)
+        self.stages_list.itemSelectionChanged.connect(self.plot_stage)
         self.accumulative_plot.stateChanged.connect(self.plot_stage)
         self.v_min.valueChanged.connect(self.update_dynamic_range)
         self.v_max.valueChanged.connect(self.update_dynamic_range)
@@ -162,18 +163,20 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         poles_list = []
         zeros_list = []
-        total_gain = 0
+        total_gain = 1
         for i in range(start,stage_index + 1):
             widget = self.stages_list.itemWidget(self.stages_list.item(i))
             if widget.cell_data['zero'] is not None:
                 zeros = [zero * 2*np.pi for zero in widget.cell_data['zero']['zeros']]
-                zeros_list += zeros
+            else:
+                zeros = []
+            zeros_list += zeros
             poles = [pole * 2*np.pi for pole in widget.cell_data['pole']['poles']]
-            gain = widget.cell_data['gain']
             poles_list += poles
-            total_gain += gain
-        
-        total_gain = 10**(total_gain/20)
+
+            gain = 10**(widget.cell_data['gain']/20)
+            gain_needed_to_plot = self.adjust_function_gain(zeros, poles, gain)
+            total_gain *= gain_needed_to_plot
 
         tf = ss.ZerosPolesGain(zeros_list, poles_list, total_gain)
         self.plot_attenuation_for_stages(tf)
@@ -641,12 +644,22 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
 
     @staticmethod
-    def adjust_function_gain(transfer_function, gain):
-        if transfer_function is not None:
-            current_gain = transfer_function.gain
-            for zero in transfer_function.zeros:
-                current_gain *= abs(zero)
-            for pole in transfer_function.poles:
-                current_gain /= abs(pole)
+    def adjust_function_gain(zeros: list, poles: list, gain):
+        transfer_function = ss.ZerosPolesGain(zeros, poles, gain)
+        w, mag, phase = ss.bode(transfer_function, n=1000)
 
-            transfer_function.gain = (transfer_function.gain / current_gain) * gain
+        dmag = np.diff(mag)/np.diff(w)
+
+        frequencies_to_check = 10
+        zero_condition = 1.0e-4
+        for i in range(len(dmag) - frequencies_to_check):
+            values_checked = []
+            for j in range(frequencies_to_check):
+                values_checked.append(dmag[i + j])
+            
+            if all([value < zero_condition for value in values_checked]):
+                frequency_to_evaluate = math.floor(i + frequencies_to_check/2)
+                useless_1, gain_in_passband, useless_2 = ss.bode(transfer_function, [w[frequency_to_evaluate]])
+                gain_in_passband = 10**(gain_in_passband/20)
+                gain_needed = gain**2/gain_in_passband
+                return gain_needed
