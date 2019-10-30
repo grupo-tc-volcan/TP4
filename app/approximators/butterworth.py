@@ -35,7 +35,7 @@ class ButterworthApprox(AttFilterApproximator):
         new_gain = gain
 
         # Updating the local transfer function, no errors!
-        self.h_norm = ss.ZerosPolesGain(new_zeros, new_poles, new_gain)
+        self.h_aux = ss.ZerosPolesGain(new_zeros, new_poles, new_gain)
         return ApproximationErrorCode.OK
 
     # ----------------- #

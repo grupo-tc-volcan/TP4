@@ -62,6 +62,7 @@ class AttFilterApproximator:
         self.ord = 0
         self.q = 0
 
+        self.h_aux = None
         self.h_norm = None
         self.h_denorm = None
         self.error_code = None
@@ -78,10 +79,10 @@ class AttFilterApproximator:
         of the normalised transfer function.
         Return -> (zeros, poles, gain) or None if not computed!
         """
-        if self.h_norm is None:
+        if self.h_aux is None:
             return None
         else:
-            return self.h_norm
+            return self.h_aux
     
     def get_zpk(self):
         """ Returns a tuple of three elements containing Zeros, Poles and Gain,
@@ -174,16 +175,18 @@ class AttFilterApproximator:
             else:
                 self.fpl = (self.fal * self.far) / self.fpr
 
-    def adjust_function_gain(self, gain):
+    def adjust_function_gain(self, gain, target=None):
         """ Adjusts the normalised transfer function to have a unity gain """
-        if self.h_norm is not None:
-            current_gain = self.h_norm.gain
-            for zero in self.h_norm.zeros:
+        transfer = self.h_aux if target is None else target
+
+        if transfer is not None:
+            current_gain = self.h_aux.gain
+            for zero in transfer.zeros:
                 current_gain *= abs(zero)
-            for pole in self.h_norm.poles:
+            for pole in transfer.poles:
                 current_gain /= abs(pole)
 
-            self.h_norm.gain = (self.h_norm.gain / current_gain) * gain
+            transfer.gain = (transfer.gain / current_gain) * gain
 
     def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
@@ -226,7 +229,7 @@ class AttFilterApproximator:
         adjusting the zeros and poles of the transfer function between the transition
         band. """
         if self.q == 0 and self.ord == 0:
-            w_values, mag_values, _ = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
+            w_values, mag_values, _ = ss.bode(self.h_aux, w=np.linspace(wp / 10, wa * 5, num=100000))
             stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= (-aa)]
             relative_adjust = ((wa - stop_band[0]) / stop_band[0]) * (self.denorm / 100) + 1
         else:
@@ -236,35 +239,41 @@ class AttFilterApproximator:
 
     def denormalise_to_low_pass(self) -> tuple:
         """ Denormalises the filter to low pass and returns the denormalised (zeros, poles, gain) """
-        return ss.lp2lp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fpl)
+        return ss.lp2lp_zpk(self.h_aux.zeros, self.h_aux.poles, self.h_aux.gain, 2 * np.pi * self.fpl)
 
     def denormalise_to_high_pass(self) -> tuple:
         """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
-        return ss.lp2hp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fpl)
+        return ss.lp2hp_zpk(self.h_aux.zeros, self.h_aux.poles, self.h_aux.gain, 2 * np.pi * self.fpl)
 
     def denormalise_to_band_pass(self) -> tuple:
         """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
-        return ss.lp2bp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
+        return ss.lp2bp_zpk(self.h_aux.zeros, self.h_aux.poles, self.h_aux.gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
 
     def denormalise_to_band_stop(self) -> tuple:
         """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
-        return ss.lp2bs_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fal * self.far), 2 * np.pi * (self.fpr - self.fpl))
+        return ss.lp2bs_zpk(self.h_aux.zeros, self.h_aux.poles, self.h_aux.gain, 2 * np.pi * np.sqrt(self.fal * self.far), 2 * np.pi * (self.fpr - self.fpl))
 
     # ----------------- #
     # Private Methods   #
     # ----------------- #
     def _denormalised_transfer_function(self) -> ApproximationErrorCode:
         """ Denormalises the transfer function returned by the approximation used. """
-        # Adding the gain and the relative denormalisation between the transition band
+
+        # Unity gain of the normalised transfer function, factor of denormalisation...
+        # moving it between the transition band
         self.adjust_function_gain(1)
         wa, aa, wp, ap = self.get_norm_template()
         relative_adjust = self.denormalisation_factor(wa, aa, wp, ap)
 
-        new_zeros = self.h_norm.zeros * relative_adjust
-        new_poles = self.h_norm.poles * relative_adjust
-        new_gain = self.h_norm.gain
+        new_zeros = self.h_aux.zeros * relative_adjust
+        new_poles = self.h_aux.poles * relative_adjust
+        new_gain = self.h_aux.gain * relative_adjust
 
-        self.h_norm = ss.ZerosPolesGain(new_zeros, new_poles, new_gain)
+        self.h_aux = ss.ZerosPolesGain(new_zeros, new_poles, new_gain)
+        self.adjust_function_gain(1)
+
+        # Final normalised transfer function being stored, keep working on auxiliar transfer function
+        self.h_norm = ss.ZerosPolesGain(self.h_aux.zeros, self.h_aux.poles, self.h_aux.gain)
         self.adjust_function_gain(10 ** (self.gain / 20))
 
         # Frequency transformation to get the desired filter
@@ -292,10 +301,10 @@ class AttFilterApproximator:
                 error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
 
             if error_code is ApproximationErrorCode.OK:
-                if callback(self.h_norm):
+                if callback(self.h_aux):
                     return ApproximationErrorCode.OK
                 else:
-                    self.h_norm = None
+                    self.h_aux = None
             else:
                 return error_code
         else:
@@ -400,9 +409,9 @@ class AttFilterApproximator:
             return ApproximationErrorCode.INVALID_FREQ
         elif self.fpl <= self.fal or self.fpr >= self.far:
             return ApproximationErrorCode.INVALID_FREQ
-        elif self.Apl <= 0 or self.Aal <= 0 or self.Apr < 0 or self.Aar < 0:
+        elif self.Apl <= 0 or self.Aal <= 0 or self.Aar < 0:
             return ApproximationErrorCode.INVALID_ATTE
-        elif self.Apl >= self.Aal or self.Apr > self.Aar:
+        elif self.Apl >= self.Aal or self.Apl >= self.Aar:
             return ApproximationErrorCode.INVALID_ATTE
         else:
             return ApproximationErrorCode.OK
@@ -426,9 +435,9 @@ class AttFilterApproximator:
             return ApproximationErrorCode.INVALID_FREQ
         elif self.fpl >= self.fal or self.fpr <= self.far:
             return ApproximationErrorCode.INVALID_FREQ
-        elif self.Apl <= 0 or self.Aal <= 0 or self.Apr < 0 or self.Aar < 0:
+        elif self.Apl <= 0 or self.Aal <= 0 or self.Apr < 0:
             return ApproximationErrorCode.INVALID_ATTE
-        elif self.Apl >= self.Aal or self.Apr > self.Aar:
+        elif self.Apl >= self.Aal or self.Apr >= self.Aal:
             return ApproximationErrorCode.INVALID_ATTE
         else:
             return ApproximationErrorCode.OK
