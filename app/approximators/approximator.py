@@ -79,10 +79,10 @@ class AttFilterApproximator:
         of the normalised transfer function.
         Return -> (zeros, poles, gain) or None if not computed!
         """
-        if self.h_aux is None:
+        if self.h_norm is None:
             return None
         else:
-            return self.h_aux
+            return self.h_norm
     
     def get_zpk(self):
         """ Returns a tuple of three elements containing Zeros, Poles and Gain,
