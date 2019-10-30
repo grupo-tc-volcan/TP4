@@ -2,6 +2,7 @@
 
 # Python native modules
 from enum import Enum
+from random import *
 
 
 class CellErrorCodes(Enum):
@@ -9,6 +10,7 @@ class CellErrorCodes(Enum):
     OK = "Ok"                                   # Everything is ok
     NOT_AVAILABLE_TYPE = "NotAvailableType"     # Using a not available type of cell
     NOT_DEFINED_COMPONENTS = "NotDefinedComp"   # Trying to calculate or compute without setting component values
+    INVALID_PARAMETERS = "InvalidParameters"   # Designing with wrong parameters or missing some of them
 
 
 class CellError(Exception):
@@ -40,17 +42,23 @@ class Cell:
         # with the names used in the circuit being drawn.
         # Components dictionary is of public access to allow live design of the cell.
         self.components = {}
+        self.results = []
 
         # Description of the cell, its name and the available type of transfer function
         # that can be implemented, should be always filled by the children class.
         # Example, type="low-pass", name = "Sallen Key"
         self.name = name
+        self.error = 0.1
         self.type = cell_type
         self.circuit = circuit
 
     # -------------- #
     # Public Methods #
     # -------------- #
+    def set_error(self, error: float):
+        """ Sets the relative tolerance used to calculate all components """
+        self.error = error
+
     def get_name(self) -> str:
         """ Returns the name of the cell. """
         return self.name
@@ -58,6 +66,10 @@ class Cell:
     def get_type(self) -> str:
         """ Returns the type of transfer function that can be implemented with this cell. """
         return self.type
+
+    def get_results(self) -> list:
+        """ Returns the list of possible results of components. """
+        return self.results
 
     def get_components(self) -> dict:
         """ Returns the dictionary of components of the cell. """
@@ -103,6 +115,15 @@ class Cell:
          """
         raise NotImplementedError
 
+    # ---------------- #
+    # Internal Methods #
+    # ---------------- #
+    def choose_random_result(self):
+        """ Update the current selection of components using any of the possible results randomly. """
+        if self.results:
+            shuffle(self.results)
+            self.components = choice(self.results)
+
 
 class CellGroup:
     """ Grouping cell types class, used to manage the usage of different types of cells of the same
@@ -121,6 +142,10 @@ class CellGroup:
     # -------------- #
     # Public Methods #
     # -------------- #
+    def set_error(self, cell_type: str, error: float):
+        """ Sets the error or relative tolerance used to calculate components. """
+        self._switch_cell_method_by_type(cell_type, "set_error", error)
+
     def get_name(self) -> str:
         """ Returns the name of the group of cells. """
         return self.name
@@ -132,6 +157,10 @@ class CellGroup:
     def get_circuit(self, cell_type: str) -> str:
         """ Given a type of a cell, the filepath of its circuit's image is returned. """
         return self._switch_cell_method_by_type(cell_type, "get_circuit")
+
+    def get_results(self, cell_type: str) -> list:
+        """ Returns a list of possible combinations of components to be used. """
+        return self._switch_cell_method_by_type(cell_type, "get_results")
 
     def get_components(self, cell_type: str) -> dict:
         """ Returns a dictionary of components by reference to allow external changes. """

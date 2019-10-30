@@ -56,13 +56,16 @@ def compute_commercial_values(component_type: ComponentType) -> list:
 
 def compute_commercial_by_iteration(
         element_one: ComponentType, element_two: ComponentType,
-        callback: callable, error: float) -> list:
+        callback: callable, error: float,
+        fixed_one_values=None,
+        fixed_two_values=None) -> list:
     """ Returns [(element_one_value, element_two_value)], list of 2-tuple with possible values
     that verify the expression element_one = element_two * k, with a relative decimal expressed error.
+    Fixed list of values can be used to process the iteration.
     """
     # Loading possible choices for each element, setting up the result list
-    element_one_values = compute_commercial_values(element_one)
-    element_two_values = compute_commercial_values(element_two)
+    element_one_values = compute_commercial_values(element_one) if fixed_one_values is None else fixed_one_values
+    element_two_values = compute_commercial_values(element_two) if fixed_two_values is None else fixed_two_values
     results = []
 
     # Find for each possible element_two value, a resulting element_one and verify

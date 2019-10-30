@@ -4,6 +4,12 @@ from sympy import *
 # Python native modules
 
 # Project modules
+from app.cells.electronics import compute_commercial_by_iteration
+from app.cells.electronics import build_expression_callback
+from app.cells.electronics import ComponentType
+
+from app.cells.cell import CellErrorCodes
+from app.cells.cell import CellError
 from app.cells.cell import CellType
 from app.cells.cell import Cell
 
@@ -36,7 +42,42 @@ class CompensatedIntegrator(Cell):
     # Public Methods #
     # -------------- #
     def design_components(self, zeros: dict, poles: dict, gain: float) -> dict:
-        pass
+        if "wp" not in poles.keys() or gain >= 0 or poles["wp"] <= 0:
+            raise CellError(CellErrorCodes.INVALID_PARAMETERS)
+        else:
+            R1, R2 = self.k().free_symbols
+            self.results = []
+
+            # First, compute possible R2 values based on C1 targetting the Wp value
+            r2_c1_options = compute_commercial_by_iteration(
+                ComponentType.Resistor, ComponentType.Capacitor,
+                build_expression_callback(self.wp(), poles["wp"], R2),
+                self.error
+            )
+
+            # With the given values of R2, targetting K gain, calculates R1
+            r1_r2_options = compute_commercial_by_iteration(
+                ComponentType.Resistor, ComponentType.Resistor,
+                build_expression_callback(self.k(), gain, R1),
+                self.error,
+                fixed_two_values=[r2_option for r2_option, _ in r2_c1_options]
+            )
+
+            # Cross selection of possible values of components
+            for r1_option, r2_option in r1_r2_options:
+                for r2_option_match, c1_option in r2_c1_options:
+                    if r2_option == r2_option_match:
+                        self.results.append(
+                            {
+                                "R1": r1_option,
+                                "R2": r2_option,
+                                "C1": c1_option
+                            }
+                        )
+                        break
+
+            # Choosing one to be updated
+            self.choose_random_result()
 
     def get_parameters(self) -> tuple:
         poles = {"wp": self.wp().evalf(subs=self.components)}
