@@ -53,7 +53,7 @@ class FilterPlotter():
 
     def plot_attenuation(self):
         # Calculating plot points
-        w, mag, self.phase = ss.bode(self.tf)
+        w, mag, self.phase = ss.bode(self.tf, n=10000)
         self.f_att = [ang_freq/(2*np.pi) for ang_freq in w]
         self.attenuation = [-magnitude for magnitude in mag]
 
