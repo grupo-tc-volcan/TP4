@@ -137,14 +137,16 @@ def test_by_max_q(approximator):
     approximator.type = "low-pass"
     approximator.gain = 0
     approximator.fpl = 1000
+    approximator.fal = 10000
+    approximator.Aal = 20
     approximator.Apl = 2
 
     results = []
-    for max_q in np.linspace(0.1, 0.6, 20):
+    for max_q in np.linspace(0.1, 10, 20):
         approximator.q = max_q
 
-        print("Using MaxQ={} and Order={}".format(max_q, approximator.ord))
         if approximator.compute() is ApproximationErrorCode.OK:
+            print("Using MaxQ={} and Order={}".format(max_q, len(approximator.get_zpk().poles)))
             for pole in approximator.get_zpk().poles:
                 print("fo: {} Q: {}".format(
                     approximator.calculate_frequency(pole),
@@ -284,7 +286,3 @@ def test_low_pass(approximator):
         aal=50,
         graph="zpk"
     )
-
-
-if __name__ == "__main__":
-    test_by_template_denorm(ChebyshevIIApprox())

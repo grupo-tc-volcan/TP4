@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/app/approximators/approximator.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/approximators/approximator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/approximators/chebyshev_ii.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/approximators/chebyshev_ii.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_approximator.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_approximator.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -13,73 +12,80 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5848214">
-      <split-first>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/tests/test_approximator.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="182">
-                  <caret line="289" column="28" selection-start-line="289" selection-start-column="28" selection-end-line="289" selection-end-column="28" />
-                  <folding>
-                    <element signature="e#18#77#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tests/test_validation.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="408">
-                  <caret line="110" column="22" selection-start-line="110" selection-start-column="22" selection-end-line="110" selection-end-column="22" />
-                  <folding>
-                    <element signature="e#424#488#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="178">
-                  <caret line="265" column="41" lean-forward="true" selection-start-line="265" selection-start-column="41" selection-end-line="265" selection-end-column="41" />
-                  <folding>
-                    <element signature="e#22#47#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/app/approximators/chebyshev_ii.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="288">
-                  <caret line="63" selection-start-line="63" selection-end-line="63" />
-                  <folding>
-                    <element signature="e#22#47#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/scipy/signal/ltisys.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="79">
-                  <caret line="971" selection-start-line="971" selection-end-line="971" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-378">
+              <caret line="218" column="39" selection-start-line="218" selection-start-column="39" selection-end-line="218" selection-end-column="39" />
+              <folding>
+                <element signature="e#224#1191#0" />
+                <element signature="e#1222#1368#0" />
+                <element signature="e#1470#1533#0" />
+                <element signature="e#1651#2112#0" />
+                <element signature="e#1651#1737#1" />
+                <element signature="e#2168#2350#0" />
+                <element signature="e#2168#2307#1" />
+                <element signature="e#2398#2691#0" />
+                <element signature="e#2398#2590#1" />
+                <element signature="e#2728#3027#0" />
+                <element signature="e#2728#2922#1" />
+                <element signature="e#6375#6940#0" />
+                <element signature="e#6503#6687#0" />
+                <element signature="e#6756#6940#0" />
+                <element signature="e#6992#7384#0" />
+                <element signature="e#7110#7384#0" />
+                <element signature="e#7770#7879#0" />
+                <element signature="e#9271#9829#0" />
+                <element signature="e#9275#9433#1" />
+                <element signature="e#9488#9755#0" />
+                <element signature="e#9888#10087#0" />
+                <element signature="e#10146#10346#0" />
+                <element signature="e#10405#10660#0" />
+                <element signature="e#10719#10974#0" />
+                <element signature="e#9999#11533#0" />
+                <element signature="e#11631#12503#0" />
+                <element signature="e#11631#11900#1" />
+                <element signature="e#11963#12425#0" />
+                <element signature="e#12234#12373#0" />
+                <element signature="e#12558#14032#0" />
+                <element signature="e#12558#12732#1" />
+                <element signature="e#12741#12792#0" />
+                <element signature="e#13067#13118#0" />
+                <element signature="e#15350#15644#0" />
+                <element signature="e#15727#16166#0" />
+                <element signature="e#16246#16540#0" />
+                <element signature="e#16623#17355#0" />
+                <element signature="e#17435#17837#0" />
+                <element signature="e#17920#18652#0" />
+                <element signature="e#19076#19478#0" />
+                <element signature="e#19270#19338#0" />
+                <element signature="e#19401#19495#0" />
+                <element signature="e#19560#19633#0" />
+                <element signature="e#20499#21122#0" />
+                <element signature="e#20527#20590#0" />
+                <element signature="e#20632#20924#0" />
+                <element signature="e#20632#20718#1" />
+                <element signature="e#20961#21122#0" />
+                <element signature="e#20961#21109#1" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/test_approximator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="144" column="40" selection-start-line="144" selection-start-column="40" selection-end-line="144" selection-end-column="40" />
+              <folding>
+                <element signature="e#18#77#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -87,6 +93,7 @@
       <find>plot_results</find>
       <find>get</find>
       <find>temap</find>
+      <find>_validate</find>
     </findStrings>
     <replaceStrings>
       <replace>plot_bode_results</replace>
@@ -105,9 +112,9 @@
         <option value="$PROJECT_DIR$/app/approximators/chebyshev_i.py" />
         <option value="$PROJECT_DIR$/app/approximators/butterworth.py" />
         <option value="$PROJECT_DIR$/app/approximators/cauer.py" />
-        <option value="$PROJECT_DIR$/app/approximators/approximator.py" />
         <option value="$PROJECT_DIR$/app/approximators/chebyshev_ii.py" />
         <option value="$PROJECT_DIR$/tests/test_approximator.py" />
+        <option value="$PROJECT_DIR$/app/approximators/approximator.py" />
       </list>
     </option>
   </component>
@@ -154,7 +161,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../filter-simulator" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests/test_approximator.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -169,7 +176,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test_approximator">
+  <component name="RunManager" selected="Python tests.pytest for test_approximator.test_by_max_q">
     <configuration name="test_approximator" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -221,6 +228,21 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest for test_approximator.test_by_max_q" type="tests" factoryName="py.test" nameIsGenerated="true">
+      <module name="filters-tool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="C:\Users\Lucas\AppData\Local\Programs\Python\Python36-32\python.exe" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_approximator.test_by_max_q&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="pytest for test_approximator.test_high_pass" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -251,6 +273,14 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.test_approximator" />
+      <item itemvalue="Python tests.pytest for test_approximator.test_by_max_q" />
+      <item itemvalue="Python tests.pytest for test_approximator.test_band_stop" />
+      <item itemvalue="Python tests.pytest for test_approximator.test_by_fixed_order" />
+      <item itemvalue="Python tests.pytest for test_approximator.test_high_pass" />
+      <item itemvalue="Python tests.pytest for test_approximator.test_low_pass" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.test_approximator" />
@@ -275,48 +305,48 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_approximator_test_by_fixed_order - 2019.10.29 at 16h 08m 37s.xml">
-      <configuration name="pytest for test_approximator.test_by_fixed_order" configurationId="tests" />
+    <history-entry file="pytest_for_test_approximator_test_by_max_q - 2019.10.29 at 22h 30m 11s.xml">
+      <configuration name="pytest for test_approximator.test_by_max_q" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_low_pass - 2019.10.29 at 16h 10m 36s.xml">
-      <configuration name="pytest for test_approximator.test_low_pass" configurationId="tests" />
+    <history-entry file="pytest_for_test_approximator_test_by_max_q - 2019.10.29 at 22h 32m 53s.xml">
+      <configuration name="pytest for test_approximator.test_by_max_q" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_high_pass - 2019.10.29 at 16h 10m 50s.xml">
-      <configuration name="pytest for test_approximator.test_high_pass" configurationId="tests" />
+    <history-entry file="pytest_for_test_approximator_test_by_max_q - 2019.10.29 at 22h 33m 32s.xml">
+      <configuration name="pytest for test_approximator.test_by_max_q" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_low_pass - 2019.10.29 at 17h 07m 26s.xml">
-      <configuration name="pytest for test_approximator.test_low_pass" configurationId="tests" />
+    <history-entry file="pytest_for_test_approximator_test_by_max_q - 2019.10.29 at 22h 34m 15s.xml">
+      <configuration name="pytest for test_approximator.test_by_max_q" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_high_pass - 2019.10.29 at 17h 19m 12s.xml">
-      <configuration name="pytest for test_approximator.test_high_pass" configurationId="tests" />
+    <history-entry file="pytest_for_test_approximator_test_by_max_q - 2019.10.29 at 22h 35m 19s.xml">
+      <configuration name="pytest for test_approximator.test_by_max_q" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 17h 28m 30s.xml">
-      <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
+    <history-entry file="pytest_for_test_approximator_test_by_max_q - 2019.10.29 at 22h 35m 21s.xml">
+      <configuration name="pytest for test_approximator.test_by_max_q" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_band_stop - 2019.10.29 at 17h 30m 41s.xml">
-      <configuration name="pytest for test_approximator.test_band_stop" configurationId="tests" />
+    <history-entry file="pytest_for_test_approximator_test_by_max_q - 2019.10.29 at 22h 35m 31s.xml">
+      <configuration name="pytest for test_approximator.test_by_max_q" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_low_pass - 2019.10.29 at 19h 36m 49s.xml">
-      <configuration name="pytest for test_approximator.test_low_pass" configurationId="tests" />
+    <history-entry file="pytest_for_test_approximator_test_by_max_q - 2019.10.29 at 22h 35m 46s.xml">
+      <configuration name="pytest for test_approximator.test_by_max_q" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_high_pass - 2019.10.29 at 19h 37m 17s.xml">
-      <configuration name="pytest for test_approximator.test_high_pass" configurationId="tests" />
+    <history-entry file="pytest_for_test_approximator_test_by_max_q - 2019.10.29 at 22h 36m 49s.xml">
+      <configuration name="pytest for test_approximator.test_by_max_q" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_approximator_test_high_pass - 2019.10.29 at 19h 37m 40s.xml">
-      <configuration name="pytest for test_approximator.test_high_pass" configurationId="tests" />
+    <history-entry file="pytest_for_test_approximator_test_by_max_q - 2019.10.29 at 22h 38m 25s.xml">
+      <configuration name="pytest for test_approximator.test_by_max_q" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.054315478" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15550596" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.83630955" weight="0.07037643" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49702382" visible="true" weight="0.32569557" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.83630955" visible="true" weight="0.12602292" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49702382" weight="0.47954175" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -450,23 +480,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/scipy/signal/ltisys.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79">
-          <caret line="971" selection-start-line="971" selection-end-line="971" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="265" column="41" lean-forward="true" selection-start-line="265" selection-start-column="41" selection-end-line="265" selection-end-column="41" />
-          <folding>
-            <element signature="e#22#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_validation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -479,7 +492,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/approximators/chebyshev_ii.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
+        <state relative-caret-position="216">
           <caret line="63" selection-start-line="63" selection-end-line="63" />
           <folding>
             <element signature="e#22#47#0" expanded="true" />
@@ -487,12 +500,77 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/scipy/signal/ltisys.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="971" selection-start-line="971" selection-end-line="971" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_approximator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="289" column="28" selection-start-line="289" selection-start-column="28" selection-end-line="289" selection-end-column="28" />
+        <state relative-caret-position="126">
+          <caret line="144" column="40" selection-start-line="144" selection-start-column="40" selection-end-line="144" selection-end-column="40" />
           <folding>
             <element signature="e#18#77#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-378">
+          <caret line="218" column="39" selection-start-line="218" selection-start-column="39" selection-end-line="218" selection-end-column="39" />
+          <folding>
+            <element signature="e#224#1191#0" />
+            <element signature="e#1222#1368#0" />
+            <element signature="e#1470#1533#0" />
+            <element signature="e#1651#2112#0" />
+            <element signature="e#1651#1737#1" />
+            <element signature="e#2168#2350#0" />
+            <element signature="e#2168#2307#1" />
+            <element signature="e#2398#2691#0" />
+            <element signature="e#2398#2590#1" />
+            <element signature="e#2728#3027#0" />
+            <element signature="e#2728#2922#1" />
+            <element signature="e#6375#6940#0" />
+            <element signature="e#6503#6687#0" />
+            <element signature="e#6756#6940#0" />
+            <element signature="e#6992#7384#0" />
+            <element signature="e#7110#7384#0" />
+            <element signature="e#7770#7879#0" />
+            <element signature="e#9271#9829#0" />
+            <element signature="e#9275#9433#1" />
+            <element signature="e#9488#9755#0" />
+            <element signature="e#9888#10087#0" />
+            <element signature="e#10146#10346#0" />
+            <element signature="e#10405#10660#0" />
+            <element signature="e#10719#10974#0" />
+            <element signature="e#9999#11533#0" />
+            <element signature="e#11631#12503#0" />
+            <element signature="e#11631#11900#1" />
+            <element signature="e#11963#12425#0" />
+            <element signature="e#12234#12373#0" />
+            <element signature="e#12558#14032#0" />
+            <element signature="e#12558#12732#1" />
+            <element signature="e#12741#12792#0" />
+            <element signature="e#13067#13118#0" />
+            <element signature="e#15350#15644#0" />
+            <element signature="e#15727#16166#0" />
+            <element signature="e#16246#16540#0" />
+            <element signature="e#16623#17355#0" />
+            <element signature="e#17435#17837#0" />
+            <element signature="e#17920#18652#0" />
+            <element signature="e#19076#19478#0" />
+            <element signature="e#19270#19338#0" />
+            <element signature="e#19401#19495#0" />
+            <element signature="e#19560#19633#0" />
+            <element signature="e#20499#21122#0" />
+            <element signature="e#20527#20590#0" />
+            <element signature="e#20632#20924#0" />
+            <element signature="e#20632#20718#1" />
+            <element signature="e#20961#21122#0" />
+            <element signature="e#20961#21109#1" />
           </folding>
         </state>
       </provider>

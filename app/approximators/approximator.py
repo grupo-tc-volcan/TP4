@@ -15,7 +15,7 @@ class ApproximationErrorCode(Enum):
     """
     OK = "OK"                                       # No errors detected
     INVALID_TYPE = "INVALID_TYPE"                   # Non-identified filter type in self.type
-    INVALID_GAIN = "INVALID_GAIN"                   # Gain is 0
+    INVALID_GAIN = "INVALID_GAIN"                   # Gain < 0
     INVALID_FREQ = "INVALID_FREQ"                   # Frequency is <= 0 or fpr < fpl or fp > fa (Depending the type of filter)
     INVALID_ATTE = "INVALID_ATTE"                   # Attenuation is 0, or negative...
     INVALID_Q = "INVALID_Q"                         # Negative Q factor
@@ -33,16 +33,15 @@ class FilterType(Enum):
     BAND_REJECT = "band-stop"
 
 
-# noinspection PyAttributeOutsideInit
+# noinspection PyAttributeOutsideInit,PyUnresolvedReferences
 class AttFilterApproximator:
     def __init__(self):
         # Data to perform approximation
         self.reset_parameters()
 
     # ---------------  #
-    # Public Methods   #
+    #  Public Methods  #
     # ---------------- #
-
     def reset_parameters(self):
         """ Resets the parameters of the approximation to
         a default state.
@@ -114,7 +113,7 @@ class AttFilterApproximator:
             else:
                 error_code = ApproximationErrorCode.INVALID_TYPE
 
-            # Findind the transfer function for the given parameters
+            # Finding the transfer function for the given parameters
             if error_code is ApproximationErrorCode.OK:
                 self.adjust_symmetry_condition()
                 
@@ -125,8 +124,8 @@ class AttFilterApproximator:
                 for order in range(end_order, begin_order - 1, -1):
                     self.ord = order
 
-                    # When a fixed order is given, it should be prioritised...
-                    # calculates the normalised transfer function
+                    # Normalising the filter template, choosing design mode between fixed order or
+                    # a template based design, trying to match the given parameters
                     wan, aa, wpn, ap = self.get_norm_template()
                     if self.ord > 0:
                         try:
@@ -135,6 +134,8 @@ class AttFilterApproximator:
                             error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
                     else:
                         error_code = self.compute_normalised_by_template(ap, aa, wpn, wan)
+
+                    # If maxima
                     
                     # Denormalisation process, first we need to pass every transfer function
                     # to a TrasnferFunction object, using that apply the denormalisation
@@ -145,7 +146,7 @@ class AttFilterApproximator:
                         # If using the Q maximum value mode of design, check if valid h_denorm
                         if error_code is ApproximationErrorCode.OK:
                             if self.q > 0:
-                                if self.matches_normalised_selectivity(self.q, self.h_denorm):
+                                if self.matches_selectivity(self.q, self.h_denorm):
                                     break
                         else:
                             break
@@ -153,7 +154,7 @@ class AttFilterApproximator:
                     if self.q > 0:
                         error_code = ApproximationErrorCode.MAXIMUM_ORDER_REACHED
 
-        # Returning the error code...
+        # Returning the error code and storing it in the class
         self.error_code = error_code
         return error_code
     
@@ -194,28 +195,28 @@ class AttFilterApproximator:
 
     def validate_low_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation are valid or not using a low-pass. """
-        if self.ord == 0 and self.q == 0:
+        if self.ord == 0 or self.q == 0:
             return self._validate_low_pass_by_template()
         else:
             return self._validate_low_pass_by_fixed()
 
     def validate_high_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation are valid or not using a high pass. """
-        if self.ord == 0 and self.q == 0:
+        if self.ord == 0 or self.q == 0:
             return self._validate_high_pass_by_template()
         else:
             return self._validate_high_pass_by_fixed()
 
     def validate_band_pass(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation are valid or not using a band pass. """
-        if self.ord == 0 and self.q == 0:
+        if self.ord == 0 or self.q == 0:
             return self._validate_band_pass_by_template()
         else:
             return self._validate_band_pass_by_fixed()
 
     def validate_band_stop(self) -> ApproximationErrorCode:
         """ Returns whether the parameters of the approximation are valid or not using a band stop. """
-        if self.ord == 0 and self.q == 0:
+        if self.ord == 0 or self.q == 0:
             return self._validate_band_stop_by_template()
         else:
             return self._validate_band_stop_by_fixed()
@@ -446,7 +447,6 @@ class AttFilterApproximator:
     # ---------------- #
     #  Static Methods  #
     # ---------------- #
-
     @staticmethod
     def calculate_xi(root):
         k = (root.imag / root.real) ** 2
@@ -473,7 +473,7 @@ class AttFilterApproximator:
         return mag[0] >= -ap and mag[1] <= -aa
 
     @staticmethod
-    def matches_normalised_selectivity(max_q, zpk) -> bool:
+    def matches_selectivity(max_q, zpk) -> bool:
         """ Returns whether the ZeroPolesGain object does not exceed the maximum
         selectivity value given by the user. """
         if zpk is None:
@@ -487,7 +487,7 @@ class AttFilterApproximator:
         return True
 
 
-class GroupDelayFilterApproximator():
+class GroupDelayFilterApproximator:
     def __init__(self):
         # Data to perform approximation
         self.reset_parameters()
