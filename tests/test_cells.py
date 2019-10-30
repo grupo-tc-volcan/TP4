@@ -5,12 +5,18 @@ import pytest
 
 # project modules
 from app.cells.active_first_order import CompensatedIntegrator
+from app.cells.active_first_order import CompensatedDerivator
 
 
 @pytest.fixture
 def cell():
     # Change the returning cell to test it!
-    return CompensatedIntegrator()
+    return CompensatedDerivator()
+
+
+def test_description(cell):
+    print(cell.get_name())
+    print(cell.get_type())
 
 
 def test_parameters(cell):
