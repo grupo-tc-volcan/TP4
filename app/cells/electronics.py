@@ -25,7 +25,7 @@ COMMERCIAL_RESISTORS = [
     5.6, 6.2, 6.8, 7.5, 8.2, 9.1
 ]
 
-MULTIPLIER_RESISTORS = [1e0, 1e1, 1e2, 1e3, 1e4, 1e5]
+MULTIPLIER_RESISTORS = [1e2, 1e3, 1e4, 1e5]
 
 COMMERCIAL_CAPACITORS = [
     1, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2
@@ -106,9 +106,12 @@ def expand_component_list(current: list, new_options: list, label_one: str, labe
 def matches_commercial_values(component_type: ComponentType, component_value: float, error: float) -> tuple:
     """ Returns a tuple -> (bool, commercial_value). Verifying if it matches with some error with any
         of the commercial values of components. """
-    def logarithmic_interpolation(x: float) -> int:
+    def logarithmic_interpolation(component_type: ComponentType, x: float) -> int:
         """ Approximates the initial searching of values """
-        return int(9.9584 * ln(x) - 0.85)
+        if component_type is ComponentType.Resistor:
+            return int(9.9584 * ln(x) - 0.85)
+        elif component_type is ComponentType.Capacitor:
+            return int(5.226 * ln(x) - 0.085)
 
     def scale_element(element: float) -> tuple:
         """ Scales the element to the non multiplied values.
@@ -123,7 +126,7 @@ def matches_commercial_values(component_type: ComponentType, component_value: fl
     # We scale the given value to the interval of nominal components given by [1, 9.1]
     # then we calculate using an approximation to interpole the searching list
     multiplier, nominal = scale_element(component_value)
-    initial_interpolation = logarithmic_interpolation(nominal)
+    initial_interpolation = logarithmic_interpolation(component_type, nominal)
 
     # Prevent overdimension of components
     if multiplier < min(get_multiplier_by_type(component_type)) or multiplier > max(get_multiplier_by_type(component_type)):
@@ -173,6 +176,21 @@ def compute_commercial_values(component_type: ComponentType) -> list:
         return multiply_lists(MULTIPLER_CAPACITORS, COMMERCIAL_CAPACITORS)
     else:
         return None
+
+
+def compute_commercial_by_iteration_list(
+        element_one: ComponentType, element_two: ComponentType,
+        callbacks: list, error: float,
+        fixed_two_values=None) -> list:
+    """ Returns [(element_one_value, element_two_value)], list of 2-tuple with possible values
+    that verify the expression element_one = callback(element_two), with a relative decimal expressed error.
+    Fixed list of values can be used to process the iteration.
+    """
+    results = []
+    for callback in callbacks:
+        result = compute_commercial_by_iteration(element_one, element_two, callback, error, fixed_two_values=fixed_two_values)
+        results += result
+    return results
 
 
 def compute_commercial_by_iteration(

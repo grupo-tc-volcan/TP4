@@ -1,5 +1,4 @@
 # Third-party modules
-from sympy import *
 
 # Python native modules
 
@@ -63,20 +62,19 @@ class CompensatedDerivator(Cell):
             raise CellError(CellErrorCodes.INVALID_PARAMETERS)
         else:
             # Declaring and cleaning
-            R1, R2, C1, wp, k = CompensatedDerivator.declare_symbols()
             self.results = []
 
             # First, compute possible R2 values based on C1 targetting the Wp value
             r1_c1_options = compute_commercial_by_iteration(
                 ComponentType.Resistor, ComponentType.Capacitor,
-                build_expression_callback(self.wp(), poles["wp"], R1),
+                lambda c1: 1 / (poles["wp"] * c1),
                 self.error
             )
 
             # With the given values of R2, targetting K gain, calculates R1
             r2_r1_options = compute_commercial_by_iteration(
                 ComponentType.Resistor, ComponentType.Resistor,
-                build_expression_callback(self.k(), gain, R2),
+                lambda r1: -gain * r1,
                 self.error,
                 fixed_two_values=[r2_option for r2_option, _ in r1_c1_options]
             )
@@ -89,8 +87,8 @@ class CompensatedDerivator(Cell):
 
     def get_parameters(self) -> tuple:
         zeros = {"wz": 0, "nz": 1}
-        poles = {"wp": self.calculate_with_components(self.wp())}
-        gain = self.calculate_with_components(self.k())
+        poles = {"wp": self.wp()}
+        gain = self.k()
         return zeros, poles, gain
 
     def get_sensitivities(self) -> dict:
@@ -110,18 +108,19 @@ class CompensatedDerivator(Cell):
     # -------------- #
     # Static Methods #
     # -------------- #
-    @staticmethod
-    def declare_symbols():
-        return symbols("R1 R2 C1 wp k")
+    def load_variables(self):
+        return (
+            self.components["R1"],
+            self.components["R2"],
+            self.components["C1"]
+        )
 
-    @staticmethod
-    def wp():
-        R1, R2, C1, wp, k = CompensatedDerivator.declare_symbols()
+    def wp(self):
+        R1, R2, C1 = self.load_variables()
         return 1 / (R1 * C1)
 
-    @staticmethod
-    def k():
-        R1, R2, C1, wp, k = CompensatedDerivator.declare_symbols()
+    def k(self):
+        R1, R2, C1 = self.load_variables()
         return - R2 / R1
 
 
@@ -155,20 +154,19 @@ class CompensatedIntegrator(Cell):
             raise CellError(CellErrorCodes.INVALID_PARAMETERS)
         else:
             # Declaring and cleaning
-            R1, R2, C1, wp, k = CompensatedIntegrator.declare_symbols()
             self.results = []
 
             # First, compute possible R2 values based on C1 targetting the Wp value
             r2_c1_options = compute_commercial_by_iteration(
                 ComponentType.Resistor, ComponentType.Capacitor,
-                build_expression_callback(self.wp(), poles["wp"], R2),
+                lambda c1: 1 / (c1 * poles["wp"]),
                 self.error
             )
 
             # With the given values of R2, targetting K gain, calculates R1
             r1_r2_options = compute_commercial_by_iteration(
                 ComponentType.Resistor, ComponentType.Resistor,
-                build_expression_callback(self.k(), gain, R1),
+                lambda r2: - r2 / gain,
                 self.error,
                 fixed_two_values=[r2_option for r2_option, _ in r2_c1_options]
             )
@@ -180,8 +178,8 @@ class CompensatedIntegrator(Cell):
             self.choose_random_result()
 
     def get_parameters(self) -> tuple:
-        poles = {"wp": self.calculate_with_components(self.wp())}
-        gain = self.calculate_with_components(self.k())
+        poles = {"wp": self.wp()}
+        gain = self.k()
         return {}, poles, gain
 
     def get_sensitivities(self) -> dict:
@@ -201,16 +199,17 @@ class CompensatedIntegrator(Cell):
     # -------------- #
     # Static Methods #
     # -------------- #
-    @staticmethod
-    def declare_symbols():
-        return symbols("R1 R2 C1 wp k")
+    def load_variables(self):
+        return (
+            self.components["R1"],
+            self.components["R2"],
+            self.components["C1"]
+        )
 
-    @staticmethod
-    def wp():
-        R1, R2, C1, wp, k = CompensatedIntegrator.declare_symbols()
+    def wp(self):
+        R1, R2, C1 = self.load_variables()
         return 1 / (R2 * C1)
 
-    @staticmethod
-    def k():
-        R1, R2, C1, wp, k = CompensatedIntegrator.declare_symbols()
+    def k(self):
+        R1, R2, C1 = self.load_variables()
         return - R2 / R1

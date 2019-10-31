@@ -3,6 +3,7 @@
 # Python native modules
 from enum import Enum
 from random import *
+from time import *
 
 
 class CellErrorCodes(Enum):
@@ -173,6 +174,7 @@ class Cell:
     def choose_random_result(self):
         """ Update the current selection of components using any of the possible results randomly. """
         if self.results:
+            seed(time())
             shuffle(self.results)
             self.components = choice(self.results)
 
