@@ -122,6 +122,12 @@ class Cell:
     # ---------------- #
     # Internal Methods #
     # ---------------- #
+    def flush_results(self):
+        """ Clean the non-complete results, when not all components are defined in every result """
+        targets = [result for result in self.results if len(result.keys()) < len(self.components.keys())]
+        for target in targets:
+            self.results.remove(target)
+
     def choose_random_result(self):
         """ Update the current selection of components using any of the possible results randomly. """
         if self.results:
