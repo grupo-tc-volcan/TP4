@@ -202,7 +202,7 @@ class CellGroup:
             raise CellError(CellErrorCodes.NOT_DEFINED_CELL)
         else:
             if cell_type not in self.get_available_types():
-                raise CellError(CellErrorCodes.NOT_AVAILABLE_TYPE)
+                return False
             else:
                 target_mode = mode if mode is not None else CellMode.float_to_cell_mode(gain)
                 if type(self.mapping_types[cell_type]) is list:
@@ -220,7 +220,7 @@ class CellGroup:
 
     def get_available_types(self) -> list:
         """ Returns a list of the available types of cells in this group. """
-        return self.mapping_types.keys()
+        return list(self.mapping_types.keys())
 
     def get_circuit(self) -> str:
         """ Given a type of a cell, the filepath of its circuit's image is returned. """
@@ -274,7 +274,7 @@ class CellGroup:
         self._verify_components()
         return self.current_cell.get_parameters()
 
-    def get_sensitivities(self, cell_type: str) -> dict:
+    def get_sensitivities(self) -> dict:
         """ Returns a dictionary with the sensitivities of the circuit, using the internal values
             of components to calculate them. """
         self._verify_cell()

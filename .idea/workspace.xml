@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/tests/test_cell_group.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cells/active_first_order.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/active_first_order.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/cells/cell.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/cell.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cells/electronics.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/electronics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/sallen_key_low_pass_attenuation" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/images/draw.io/sallen_key_low_pass_attenuation" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cells/images/sallen_key_low_pass_attenuation.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/images/sallen_key_low_pass_attenuation.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cells/sallen_key.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/sallen_key.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_cells.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_cells.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,35 +13,26 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5281583">
+    <splitter split-orientation="horizontal" split-proportion="0.62450904">
       <split-first>
         <leaf>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
+            <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="168">
-                  <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="120">
-                  <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+                <state relative-caret-position="123">
+                  <caret line="32" column="15" lean-forward="true" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
                   <folding>
-                    <element signature="e#22#41#0" expanded="true" />
+                    <element signature="e#22#35#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
+            <entry file="file://$PROJECT_DIR$/tests/test_cell_group.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="120">
-                  <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
+                <state relative-caret-position="151">
+                  <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
                   <folding>
                     <element signature="e#22#35#0" expanded="true" />
                   </folding>
@@ -59,12 +45,12 @@
       <split-second>
         <leaf>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
+            <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-643">
-                  <caret line="166" column="27" selection-start-line="166" selection-start-column="27" selection-end-line="166" selection-end-column="27" />
+                <state relative-caret-position="96">
+                  <caret line="276" column="30" selection-start-line="276" selection-start-column="30" selection-end-line="276" selection-end-column="30" />
                   <folding>
-                    <element signature="e#66#131#0" expanded="true" />
+                    <element signature="e#47#68#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -117,11 +103,12 @@
         <option value="$PROJECT_DIR$/tests/test_approximator.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/app/approximators/approximator.py" />
-        <option value="$PROJECT_DIR$/app/cells/cell.py" />
         <option value="$PROJECT_DIR$/app/cells/electronics.py" />
         <option value="$PROJECT_DIR$/app/cells/active_first_order.py" />
         <option value="$PROJECT_DIR$/app/cells/sallen_key.py" />
         <option value="$PROJECT_DIR$/tests/test_cells.py" />
+        <option value="$PROJECT_DIR$/app/cells/cell.py" />
+        <option value="$PROJECT_DIR$/tests/test_cell_group.py" />
       </list>
     </option>
   </component>
@@ -190,7 +177,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_cells.test_design">
+  <component name="RunManager" selected="Python tests.pytest for test_cell_group.test_design">
     <configuration name="Unnamed" type="Tox" factoryName="Tox" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -253,7 +240,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_cells.test_description" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_cell_group.test_design" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -264,11 +251,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cells.test_description&quot;" />
+      <option name="_new_target" value="&quot;test_cell_group.test_design&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_cells.test_design" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_cell_group.test_parameters" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -279,11 +266,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cells.test_design&quot;" />
+      <option name="_new_target" value="&quot;test_cell_group.test_parameters&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_cells.test_parameters" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_cell_group.test_sensitivities" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -294,11 +281,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cells.test_parameters&quot;" />
+      <option name="_new_target" value="&quot;test_cell_group.test_sensitivities&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_cells.test_sensitivities" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_cell_group.test_set" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -309,11 +296,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cells.test_sensitivities&quot;" />
+      <option name="_new_target" value="&quot;test_cell_group.test_set&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_cells.test_validation" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_cell_group.test_validation" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -324,7 +311,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cells.test_validation&quot;" />
+      <option name="_new_target" value="&quot;test_cell_group.test_validation&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -333,19 +320,19 @@
       <item itemvalue="Python tests.pytest for test_approximator.test_by_template_denorm" />
       <item itemvalue="Python tests.pytest for test_approximator.test_by_max_q" />
       <item itemvalue="Tox.Unnamed" />
-      <item itemvalue="Python tests.pytest for test_cells.test_description" />
-      <item itemvalue="Python tests.pytest for test_cells.test_parameters" />
-      <item itemvalue="Python tests.pytest for test_cells.test_sensitivities" />
-      <item itemvalue="Python tests.pytest for test_cells.test_design" />
-      <item itemvalue="Python tests.pytest for test_cells.test_validation" />
+      <item itemvalue="Python tests.pytest for test_cell_group.test_validation" />
+      <item itemvalue="Python tests.pytest for test_cell_group.test_set" />
+      <item itemvalue="Python tests.pytest for test_cell_group.test_parameters" />
+      <item itemvalue="Python tests.pytest for test_cell_group.test_sensitivities" />
+      <item itemvalue="Python tests.pytest for test_cell_group.test_design" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.pytest for test_cells.test_design" />
-        <item itemvalue="Python tests.pytest for test_cells.test_sensitivities" />
-        <item itemvalue="Python tests.pytest for test_cells.test_parameters" />
-        <item itemvalue="Python tests.pytest for test_cells.test_validation" />
-        <item itemvalue="Python tests.pytest for test_cells.test_description" />
+        <item itemvalue="Python tests.pytest for test_cell_group.test_design" />
+        <item itemvalue="Python tests.pytest for test_cell_group.test_sensitivities" />
+        <item itemvalue="Python tests.pytest for test_cell_group.test_parameters" />
+        <item itemvalue="Python tests.pytest for test_cell_group.test_set" />
+        <item itemvalue="Python tests.pytest for test_cell_group.test_validation" />
       </list>
     </recent_temporary>
   </component>
@@ -363,47 +350,47 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_cells_test_parameters - 2019.10.31 at 20h 37m 23s.xml">
-      <configuration name="pytest for test_cells.test_parameters" configurationId="tests" />
+    <history-entry file="pytest_for_test_cell_group_test_sensitivities - 2019.10.31 at 20h 56m 52s.xml">
+      <configuration name="pytest for test_cell_group.test_sensitivities" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_sensitivities - 2019.10.31 at 20h 37m 38s.xml">
-      <configuration name="pytest for test_cells.test_sensitivities" configurationId="tests" />
+    <history-entry file="pytest_for_test_cell_group_test_sensitivities - 2019.10.31 at 20h 57m 20s.xml">
+      <configuration name="pytest for test_cell_group.test_sensitivities" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 20h 37m 45s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    <history-entry file="pytest_for_test_cell_group_test_design - 2019.10.31 at 20h 57m 26s.xml">
+      <configuration name="pytest for test_cell_group.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 20h 37m 55s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    <history-entry file="pytest_for_test_cell_group_test_description - 2019.10.31 at 20h 57m 41s.xml">
+      <configuration name="pytest for test_cell_group.test_description" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_description - 2019.10.31 at 20h 45m 47s.xml">
-      <configuration name="pytest for test_cells.test_description" configurationId="tests" />
+    <history-entry file="pytest_for_test_cell_group_test_validation - 2019.10.31 at 20h 57m 45s.xml">
+      <configuration name="pytest for test_cell_group.test_validation" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_validation - 2019.10.31 at 20h 45m 54s.xml">
-      <configuration name="pytest for test_cells.test_validation" configurationId="tests" />
+    <history-entry file="pytest_for_test_cell_group_test_set - 2019.10.31 at 20h 57m 58s.xml">
+      <configuration name="pytest for test_cell_group.test_set" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_parameters - 2019.10.31 at 20h 46m 05s.xml">
-      <configuration name="pytest for test_cells.test_parameters" configurationId="tests" />
+    <history-entry file="pytest_for_test_cell_group_test_parameters - 2019.10.31 at 20h 58m 04s.xml">
+      <configuration name="pytest for test_cell_group.test_parameters" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_sensitivities - 2019.10.31 at 20h 46m 14s.xml">
-      <configuration name="pytest for test_cells.test_sensitivities" configurationId="tests" />
+    <history-entry file="pytest_for_test_cell_group_test_parameters - 2019.10.31 at 20h 58m 16s.xml">
+      <configuration name="pytest for test_cell_group.test_parameters" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 20h 46m 30s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    <history-entry file="pytest_for_test_cell_group_test_sensitivities - 2019.10.31 at 20h 58m 24s.xml">
+      <configuration name="pytest for test_cell_group.test_sensitivities" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 20h 46m 37s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    <history-entry file="pytest_for_test_cell_group_test_design - 2019.10.31 at 20h 58m 31s.xml">
+      <configuration name="pytest for test_cell_group.test_design" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.102678575" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.05282738" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.83630955" visible="true" weight="0.049099836" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.83630955" visible="true" weight="0.5433715" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" weight="0.049099836" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -705,16 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="176" column="23" selection-start-line="176" selection-start-column="23" selection-end-line="176" selection-end-column="23" />
-          <folding>
-            <element signature="e#47#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -728,16 +705,6 @@
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-643">
-          <caret line="166" column="27" selection-start-line="166" selection-start-column="27" selection-end-line="166" selection-end-column="27" />
-          <folding>
-            <element signature="e#66#131#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -745,10 +712,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="202" column="16" lean-forward="true" selection-start-line="202" selection-start-column="16" selection-end-line="202" selection-end-column="16" />
+          <folding>
+            <element signature="e#66#131#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
+        <state relative-caret-position="123">
+          <caret line="32" column="15" lean-forward="true" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
+          <folding>
+            <element signature="e#22#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="276" column="30" selection-start-line="276" selection-start-column="30" selection-end-line="276" selection-end-column="30" />
+          <folding>
+            <element signature="e#47#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_cell_group.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
           <folding>
             <element signature="e#22#35#0" expanded="true" />
           </folding>
