@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/cells/electronics.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/electronics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/sallen_key.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/sallen_key.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,14 +13,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6980634">
+    <splitter split-orientation="horizontal" split-proportion="0.7275495">
       <split-first>
         <leaf>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2619">
-                  <caret line="226" lean-forward="true" selection-start-line="226" selection-end-line="226" />
+                <state relative-caret-position="-738">
+                  <caret line="112" selection-start-line="112" selection-end-line="112" />
                   <folding>
                     <element signature="e#22#39#0" expanded="true" />
                   </folding>
@@ -26,11 +28,20 @@
               </provider>
             </entry>
           </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/relational.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="248">
+                  <caret line="465" selection-start-line="465" selection-end-line="465" />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="209">
-                  <caret line="144" column="40" selection-start-line="144" selection-start-column="40" selection-end-line="144" selection-end-column="40" />
+                <state relative-caret-position="63">
+                  <caret line="27" column="50" selection-start-line="27" selection-start-column="50" selection-end-line="27" selection-end-column="50" />
                   <folding>
                     <element signature="e#22#41#0" expanded="true" />
                   </folding>
@@ -54,8 +65,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-27">
-                  <caret line="91" column="12" selection-start-line="91" selection-start-column="12" selection-end-line="91" selection-end-column="12" />
+                <state relative-caret-position="-1059">
+                  <caret line="48" column="19" selection-start-line="48" selection-start-column="18" selection-end-line="48" selection-end-column="19" />
                   <folding>
                     <element signature="e#22#35#0" expanded="true" />
                   </folding>
@@ -154,12 +165,6 @@
             <path>
               <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
               <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="cells" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -187,27 +192,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Python tests.pytest for test_cells.test_design">
-    <configuration name="sallen_key" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="filters-tool" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app/cells" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/cells/sallen_key.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="Unnamed" type="Tox" factoryName="Tox" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -300,6 +284,21 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest for test_cells.test_group_design" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="filters-tool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_cells.test_group_design&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="pytest for test_cells.test_parameters" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -335,19 +334,19 @@
       <item itemvalue="Python tests.pytest for test_approximator.test_by_template_denorm" />
       <item itemvalue="Python tests.pytest for test_approximator.test_by_max_q" />
       <item itemvalue="Tox.Unnamed" />
-      <item itemvalue="Python.sallen_key" />
       <item itemvalue="Python tests.pytest for test_cells.test_description" />
       <item itemvalue="Python tests.pytest for test_cells.test_parameters" />
       <item itemvalue="Python tests.pytest for test_cells.test_sensitivities" />
       <item itemvalue="Python tests.pytest for test_cells.test_design" />
+      <item itemvalue="Python tests.pytest for test_cells.test_group_design" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python tests.pytest for test_cells.test_design" />
+        <item itemvalue="Python tests.pytest for test_cells.test_group_design" />
         <item itemvalue="Python tests.pytest for test_cells.test_sensitivities" />
         <item itemvalue="Python tests.pytest for test_cells.test_parameters" />
         <item itemvalue="Python tests.pytest for test_cells.test_description" />
-        <item itemvalue="Python.sallen_key" />
       </list>
     </recent_temporary>
   </component>
@@ -365,34 +364,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 14m 50s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 21m 21s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 15m 52s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 28m 24s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 16m 10s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 29m 52s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 17m 37s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 31m 01s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 17m 58s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 31m 47s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 18m 46s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 32m 44s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 18m 51s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 33m 36s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 19m 12s.xml">
+    <history-entry file="pytest_for_test_cells_test_group_design - 2019.10.31 at 12h 33m 47s.xml">
+      <configuration name="pytest for test_cells.test_group_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 34m 08s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 19m 24s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 21m 05s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 41m 18s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
   </component>
@@ -400,13 +399,13 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15476191" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.02232143" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.83630955" weight="0.4680851" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" visible="true" weight="0.41080198" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.83630955" weight="0.40261865" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" visible="true" weight="0.5057283" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -447,6 +446,11 @@
           <url>file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/decorators.py</url>
           <line>79</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/cells/electronics.py</url>
+          <line>128</line>
+          <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -689,16 +693,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2619">
-          <caret line="226" lean-forward="true" selection-start-line="226" selection-end-line="226" />
-          <folding>
-            <element signature="e#22#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-409">
@@ -709,10 +703,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/relational.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="465" selection-start-line="465" selection-end-line="465" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-738">
+          <caret line="112" selection-start-line="112" selection-end-line="112" />
+          <folding>
+            <element signature="e#22#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-27">
-          <caret line="91" column="12" selection-start-line="91" selection-start-column="12" selection-end-line="91" selection-end-column="12" />
+        <state relative-caret-position="-1059">
+          <caret line="48" column="19" selection-start-line="48" selection-start-column="18" selection-end-line="48" selection-end-column="19" />
           <folding>
             <element signature="e#22#35#0" expanded="true" />
           </folding>
@@ -721,8 +732,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="144" column="40" selection-start-line="144" selection-start-column="40" selection-end-line="144" selection-end-column="40" />
+        <state relative-caret-position="63">
+          <caret line="27" column="50" selection-start-line="27" selection-start-column="50" selection-end-line="27" selection-end-column="50" />
           <folding>
             <element signature="e#22#41#0" expanded="true" />
           </folding>

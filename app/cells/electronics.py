@@ -25,7 +25,7 @@ COMMERCIAL_RESISTORS = [
     5.6, 6.2, 6.8, 7.5, 8.2, 9.1
 ]
 
-MULTIPLIER_RESISTORS = [10e0, 10e1, 10e2, 10e3, 10e4, 10e5]
+MULTIPLIER_RESISTORS = [1e0, 1e1, 1e2, 1e3, 1e4, 1e5]
 
 COMMERCIAL_CAPACITORS = [
     1, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2
@@ -103,12 +103,55 @@ def expand_component_list(current: list, new_options: list, label_one: str, labe
     return current
 
 
+def matches_commercial_values(component_type: ComponentType, component_value: float, error: float) -> tuple:
+    """ Returns a tuple -> (bool, commercial_value). Verifying if it matches with some error with any
+        of the commercial values of components. """
+    def logarithmic_interpolation(x: float) -> int:
+        """ Approximates the initial searching of values """
+        return int(9.9584 * ln(x) - 0.85)
+
+    def scale_element(element: float) -> tuple:
+        """ Scales the element to the non multiplied values.
+            Returns -> (multiplier, nominal)"""
+        exponent = round(np.log10(float(element)))
+        return 10 ** exponent, element / (10 ** exponent)
+
+    # Prevent stupid errors
+    if (component_type is not ComponentType.Resistor and component_type is not ComponentType.Capacitor) or component_value < 0:
+        return False, None
+
+    # We scale the given value to the interval of nominal components given by [1, 9.1]
+    # then we calculate using an approximation to interpole the searching list
+    multiplier, nominal = scale_element(component_value)
+    initial_interpolation = logarithmic_interpolation(nominal)
+
+    # Prevent overdimension of components
+    if multiplier < min(get_multiplier_by_type(component_type)) or multiplier > max(get_multiplier_by_type(component_type)):
+        return False, None
+
+    for commercial_value in get_commercial_by_type(component_type)[initial_interpolation:]:
+        if math.isclose(nominal, commercial_value, rel_tol=error):
+            return True, commercial_value * multiplier
+        elif commercial_value > nominal:
+            return False, None
+
+
 def get_commercial_by_type(component_type: ComponentType) -> list:
     """ Returns the list of commercial unity values of the component by its type. """
     if component_type is ComponentType.Resistor:
         return COMMERCIAL_RESISTORS
     elif component_type is ComponentType.Capacitor:
         return COMMERCIAL_CAPACITORS
+    else:
+        return None
+
+
+def get_multiplier_by_type(component_type: ComponentType) -> list:
+    """ Returns the list of multiplier values of the component by its type. """
+    if component_type is ComponentType.Resistor:
+        return MULTIPLIER_RESISTORS
+    elif component_type is ComponentType.Capacitor:
+        return MULTIPLER_CAPACITORS
     else:
         return None
 
@@ -140,16 +183,6 @@ def compute_commercial_by_iteration(
     that verify the expression element_one = callback(element_two), with a relative decimal expressed error.
     Fixed list of values can be used to process the iteration.
     """
-    def logarithmic_interpolation(x: float) -> int:
-        """ Approximates the initial searching of values """
-        return int(9.9584 * ln(x) - 0.85)
-
-    def scale_element(element: float) -> tuple:
-        """ Scales the element to the non multiplied values.
-            Returns -> (multiplier, nominal)"""
-        exponent = round(np.log10(float(element)))
-        return 10 ** exponent, element / (10 ** exponent)
-
     # Loading possible choices for each element, setting up the result list
     element_two_values = compute_commercial_values(element_two) if fixed_two_values is None else fixed_two_values
     results = []
@@ -158,14 +191,9 @@ def compute_commercial_by_iteration(
     # if matches with a commercial value with the given error tolerance
     for element_two_value in element_two_values:
         element_one_target = callback(element_two_value)
-        multiplier, nominal = scale_element(element_one_target)
-        initial_interpolation = logarithmic_interpolation(nominal)
-
-        for element_one_value in get_commercial_by_type(element_one)[initial_interpolation:]:
-            if math.isclose(nominal, element_one_value, rel_tol=error):
-                results.append((element_one_value * multiplier, element_two_value))
-            elif element_one_value > nominal:
-                break
+        matches, commercial = matches_commercial_values(element_one, element_one_target, error)
+        if matches:
+            results.append((commercial, element_two_value))
 
     # Returning the results... empty or not
     return results

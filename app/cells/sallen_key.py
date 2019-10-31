@@ -5,6 +5,7 @@ from sympy import *
 
 # Project modules
 from app.cells.electronics import compute_commercial_by_iteration
+from app.cells.electronics import matches_commercial_values
 from app.cells.electronics import build_expression_callback
 from app.cells.electronics import nexpand_component_list
 from app.cells.electronics import ComponentType
@@ -109,9 +110,12 @@ class SallenKeyLowPass(Cell):
             # Finally, calculates with the previous C1, C2 values, options for R = R1 = R2
             r1_r2_c1_c2_options = []
             for c1_option, c2_option in c1_c2_options[:20]:
-                expression = solve([Eq(R1, R2), Eq(wp, self.wp())], [R2, R1, wp])[0][0]
-                r1_option = r2_option = expression.evalf(subs={C1: c1_option, C2: c2_option, wp: poles["wp"]})
-                r1_r2_c1_c2_options.append((r1_option, r2_option, c1_option, c2_option))
+                expression = solve([Eq(R1, R2), Eq(wp, self.wp())], [R2, R1, wp])[1][0]
+                r1_option = expression.evalf(subs={C1: c1_option, C2: c2_option, wp: poles["wp"]})
+
+                matches, commercial = matches_commercial_values(ComponentType.Resistor, r1_option, self.error)
+                if matches:
+                    r1_r2_c1_c2_options.append((commercial, commercial, c1_option, c2_option))
 
             # Cross selection of possible values of components
             self.results = nexpand_component_list(self.results, ra_rb_options, "Ra", "Rb")
