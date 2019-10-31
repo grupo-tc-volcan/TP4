@@ -43,6 +43,12 @@ class CompensatedDerivator(Cell):
             "app/images/compensated_derivator.png"
         )
 
+        self.options = {
+            "canGain": True,
+            "canUnityGain": True,
+            "canAttenuate": True
+        }
+
         self.components = {
             "R1": None,
             "R2": None,
@@ -128,6 +134,12 @@ class CompensatedIntegrator(Cell):
             CellType.LOW_PASS.value,
             "app/images/compensated_integrator.png"
         )
+
+        self.options = {
+            "canGain": True,
+            "canUnityGain": True,
+            "canAttenuate": True
+        }
 
         self.components = {
             "R1": None,

@@ -47,21 +47,32 @@ class Cell:
         # Description of the cell, its name and the available type of transfer function
         # that can be implemented, should be always filled by the children class.
         # Example, type="low-pass", name = "Sallen Key"
+        self.circuit = circuit
+        self.type = cell_type
         self.name = name
         self.error = 0.1
-        self.type = cell_type
-        self.circuit = circuit
 
-    # -------------- #
-    # Public Methods #
-    # -------------- #
-    def set_error(self, error: float):
-        """ Sets the relative tolerance used to calculate all components """
-        self.error = error
+        # Additional internal options of any cell
+        self.options = {
+            "canGain": None,
+            "canUnityGain": None,
+            "canAttenuate": None
+        }
 
-    def set_components(self, components: dict):
-        """ Sets the current dictionary of components """
-        self.components = components
+    # -------------------- #
+    # Public Query Methods #
+    # -------------------- #
+    def can_gain(self) -> bool:
+        """ Returns whether the cell can have gain in the band pass """
+        return self.options["canGain"]
+
+    def can_unity_gain(self) -> bool:
+        """ Returns whether the cell can have unity gain in the band pass """
+        return self.options["canUnityGain"]
+
+    def can_attenuate(self) -> bool:
+        """ Returns whether the cell can have attenuation in the band pass """
+        return self.options["canAttenuate"]
 
     def get_name(self) -> str:
         """ Returns the name of the cell. """
@@ -82,6 +93,17 @@ class Cell:
     def get_circuit(self) -> str:
         """ Returns the file path of the circuit's image for the given cell type. """
         raise self.circuit
+
+    # -------------- #
+    # Public Methods #
+    # -------------- #
+    def set_error(self, error: float):
+        """ Sets the relative tolerance used to calculate all components """
+        self.error = error
+
+    def set_components(self, components: dict):
+        """ Sets the current dictionary of components """
+        self.components = components
 
     def get_parameters(self) -> tuple:
         """ Returns (zeros, poles, gain) in the same format as described in get_components(...),
@@ -149,16 +171,20 @@ class CellGroup:
         self.mapping_types = mapping_types
         self.name = name
 
-    # -------------- #
-    # Public Methods #
-    # -------------- #
-    def set_error(self, cell_type: str, error: float):
-        """ Sets the error or relative tolerance used to calculate components. """
-        self._switch_cell_method_by_type(cell_type, "set_error", error)
+    # -------------------- #
+    # Public Query Methods #
+    # -------------------- #
+    def can_gain(self, cell_type: str) -> bool:
+        """ Returns whether the cell can have gain in the band pass """
+        return self._switch_cell_method_by_type(cell_type, "can_gain")
 
-    def set_components(self, cell_type: str, components: dict):
-        """ Sets the current dictionary of components """
-        self._switch_cell_method_by_type(cell_type, "set_components", components)
+    def can_unity_gain(self, cell_type: str) -> bool:
+        """ Returns whether the cell can have unity gain in the band pass """
+        return self._switch_cell_method_by_type(cell_type, "can_unity_gain")
+
+    def can_attenuate(self, cell_type: str) -> bool:
+        """ Returns whether the cell can have attenuation in the band pass """
+        return self._switch_cell_method_by_type(cell_type, "can_attenuate")
 
     def get_name(self) -> str:
         """ Returns the name of the group of cells. """
@@ -179,6 +205,17 @@ class CellGroup:
     def get_components(self, cell_type: str) -> dict:
         """ Returns a dictionary of components by reference to allow external changes. """
         return self._switch_cell_method_by_type(cell_type, "get_components")
+
+    # -------------- #
+    # Public Methods #
+    # -------------- #
+    def set_error(self, cell_type: str, error: float):
+        """ Sets the error or relative tolerance used to calculate components. """
+        self._switch_cell_method_by_type(cell_type, "set_error", error)
+
+    def set_components(self, cell_type: str, components: dict):
+        """ Sets the current dictionary of components """
+        self._switch_cell_method_by_type(cell_type, "set_components", components)
 
     def get_parameters(self, cell_type: str) -> tuple:
         """ Returns (zeros, poles, gain) in the same format as described in get_components(...),
