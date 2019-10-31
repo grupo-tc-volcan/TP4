@@ -9,6 +9,7 @@ from app.cells.active_first_order import CompensatedDerivator
 from app.cells.active_first_order import ActiveFirstOrder
 
 from app.cells.sallen_key import SallenKeyLowPass
+from app.cells.sallen_key import SallenKeyHighPass
 
 from app.cells.cell import CellErrorCodes
 
@@ -16,7 +17,7 @@ from app.cells.cell import CellErrorCodes
 @pytest.fixture
 def cell():
     # Change the returning cell to test it!
-    return SallenKeyLowPass()
+    return SallenKeyHighPass()
 
 
 def test_group_description(cell):

@@ -119,41 +119,6 @@ class SallenKeyLowPass(Cell):
             self.flush_results()
             self.choose_random_result()
 
-    # -------------- #
-    # Static Methods #
-    # -------------- #
-    @staticmethod
-    def declare_parameters(for_equation=False):
-        if for_equation:
-            return symbols("wp qp k", real=True, positive=True)
-        else:
-            return symbols("wp qp k")
-
-    @staticmethod
-    def declare_symbols(for_equation=False):
-        if for_equation:
-            return symbols("R1 R2 C1 C2 Ra Rb", positive=True, real=True)
-        else:
-            return symbols("R1 R2 C1 C2 Ra Rb")
-
-    @staticmethod
-    def k():
-        R1, R2, C1, C2, Ra, Rb = SallenKeyLowPass.declare_symbols()
-        wp, qp, k = SallenKeyLowPass.declare_parameters()
-        return 1 + Rb / Ra
-
-    @staticmethod
-    def wp():
-        R1, R2, C1, C2, Ra, Rb = SallenKeyLowPass.declare_symbols()
-        wp, qp, k = SallenKeyLowPass.declare_parameters()
-        return 1 / sqrt(R1 * R2 * C1 * C2)
-
-    @staticmethod
-    def qp():
-        R1, R2, C1, C2, Ra, Rb = SallenKeyLowPass.declare_symbols()
-        wp, qp, k = SallenKeyLowPass.declare_parameters()
-        return (1 / sqrt(R1 * R2 * C1 * C2)) / (1 / (C1 * R1) + 1 / (C1 * R2) + (1 - k) / (R2 * C2))
-
     @staticmethod
     def sens_k_rb():
         R1, R2, C1, C2, Ra, Rb = SallenKeyLowPass.declare_symbols()
@@ -203,3 +168,59 @@ class SallenKeyLowPass(Cell):
     @staticmethod
     def sens_q_ra():
         return (-1) * SallenKeyLowPass.sens_k_rb()
+
+    # -------------- #
+    # Static Methods #
+    # -------------- #
+    @staticmethod
+    def declare_parameters():
+        return symbols("wp qp k")
+
+    @staticmethod
+    def declare_symbols():
+        return symbols("R1 R2 C1 C2 Ra Rb")
+
+    @staticmethod
+    def k():
+        R1, R2, C1, C2, Ra, Rb = SallenKeyLowPass.declare_symbols()
+        wp, qp, k = SallenKeyLowPass.declare_parameters()
+        return 1 + Rb / Ra
+
+    @staticmethod
+    def wp():
+        R1, R2, C1, C2, Ra, Rb = SallenKeyLowPass.declare_symbols()
+        wp, qp, k = SallenKeyLowPass.declare_parameters()
+        return 1 / sqrt(R1 * R2 * C1 * C2)
+
+    @staticmethod
+    def qp():
+        R1, R2, C1, C2, Ra, Rb = SallenKeyLowPass.declare_symbols()
+        wp, qp, k = SallenKeyLowPass.declare_parameters()
+        return (1 / sqrt(R1 * R2 * C1 * C2)) / (1 / (C1 * R1) + 1 / (C1 * R2) + (1 - k) / (R2 * C2))
+
+
+class SallenKeyHighPass(SallenKeyLowPass):
+
+    def __init__(self):
+        super(SallenKeyHighPass, self).__init__()
+
+        self.circuit = "app/image/sallen_key_high_pass.png"
+        self.name = "Sallen Key High Pass"
+        self.type = CellType.HIGH_PASS.value
+
+    # -------------- #
+    # Public Methods #
+    # -------------- #
+    def get_parameters(self) -> tuple:
+        _, poles, gain = super(SallenKeyHighPass, self).get_parameters()
+        zeros = {"wz": 0, "nz": 2}
+        return zeros, poles, gain
+
+    # -------------- #
+    # Static Methods #
+    # -------------- #
+    @staticmethod
+    def qp():
+        R1, R2, C1, C2, Ra, Rb = SallenKeyHighPass.declare_symbols()
+        wp, qp, k = SallenKeyHighPass.declare_parameters()
+        return (1 / sqrt(R1 * R2 * C1 * C2)) / (1 / (C2 * R2) + 1 / (C1 * R2) + (1 - k) / (R1 * C1))

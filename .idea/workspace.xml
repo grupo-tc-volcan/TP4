@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/cells/active_first_order.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/active_first_order.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/cells/sallen_key.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/sallen_key.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_cells.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_cells.py" afterDir="false" />
     </list>
@@ -13,14 +12,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.42372882">
+    <splitter split-orientation="horizontal" split-proportion="0.61985475">
       <split-first>
         <leaf>
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="280">
-                  <caret line="110" column="56" selection-start-line="110" selection-start-column="56" selection-end-line="110" selection-end-column="56" />
+                <state relative-caret-position="139">
+                  <caret line="213" selection-start-line="213" selection-end-line="213" />
                   <folding>
                     <element signature="e#22#39#0" expanded="true" />
                   </folding>
@@ -56,8 +55,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="93">
-                  <caret line="98" selection-start-line="98" selection-end-line="98" />
+                <state relative-caret-position="135">
+                  <caret line="99" selection-start-line="99" selection-end-line="99" />
                   <folding>
                     <element signature="e#22#35#0" expanded="true" />
                   </folding>
@@ -176,7 +175,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_cells.test_description">
+  <component name="RunManager" selected="Python tests.pytest for test_cells.test_design">
     <configuration name="sallen_key" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -333,10 +332,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.pytest for test_cells.test_description" />
-        <item itemvalue="Python tests.pytest for test_cells.test_parameters" />
-        <item itemvalue="Python tests.pytest for test_cells.test_sensitivities" />
         <item itemvalue="Python tests.pytest for test_cells.test_design" />
+        <item itemvalue="Python tests.pytest for test_cells.test_sensitivities" />
+        <item itemvalue="Python tests.pytest for test_cells.test_parameters" />
+        <item itemvalue="Python tests.pytest for test_cells.test_description" />
         <item itemvalue="Python.sallen_key" />
       </list>
     </recent_temporary>
@@ -355,34 +354,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 04h 32m 14s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 04h 41m 23s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 04h 41m 52s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 04h 43m 37s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 04h 44m 14s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 04h 45m 24s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 04h 46m 08s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 04h 46m 52s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 04h 47m 26s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
     <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 04h 47m 32s.xml">
+      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_sensitivities - 2019.10.31 at 04h 48m 03s.xml">
+      <configuration name="pytest for test_cells.test_sensitivities" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_parameters - 2019.10.31 at 04h 48m 12s.xml">
+      <configuration name="pytest for test_cells.test_parameters" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_description - 2019.10.31 at 04h 48m 20s.xml">
+      <configuration name="pytest for test_cells.test_description" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_description - 2019.10.31 at 11h 34m 42s.xml">
+      <configuration name="pytest for test_cells.test_description" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_parameters - 2019.10.31 at 11h 35m 00s.xml">
+      <configuration name="pytest for test_cells.test_parameters" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_sensitivities - 2019.10.31 at 11h 35m 09s.xml">
+      <configuration name="pytest for test_cells.test_sensitivities" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 11h 35m 24s.xml">
+      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 11h 35m 48s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
   </component>
@@ -395,16 +394,16 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.83630955" visible="true" weight="0.3633388" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.83630955" visible="true" weight="0.049099836" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" weight="0.41080198" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Floobits" order="7" />
+      <window_info anchor="bottom" id="Floobits" order="7" weight="0.3289689" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.1235119" side_tool="true" weight="0.22422259" />
-      <window_info anchor="bottom" id="Python Console" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="11" weight="0.3289689" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -701,8 +700,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="98" selection-start-line="98" selection-end-line="98" />
+        <state relative-caret-position="135">
+          <caret line="99" selection-start-line="99" selection-end-line="99" />
           <folding>
             <element signature="e#22#35#0" expanded="true" />
           </folding>
@@ -711,8 +710,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="110" column="56" selection-start-line="110" selection-start-column="56" selection-end-line="110" selection-end-column="56" />
+        <state relative-caret-position="139">
+          <caret line="213" selection-start-line="213" selection-end-line="213" />
           <folding>
             <element signature="e#22#39#0" expanded="true" />
           </folding>
