@@ -102,7 +102,7 @@ class Cell:
             """
         raise NotImplementedError
 
-    def design_components(self, zeros: dict, poles: dict, gain: float) -> dict:
+    def design_components(self, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
         """ Returns the components needed after designing the cell for the given parameters.
             [Expected format of parameters]
                 zeros = {
@@ -187,9 +187,9 @@ class CellGroup:
         self._verify_components(cell_type)
         return self._switch_cell_method_by_type(cell_type, "get_sensitivities")
 
-    def design_components(self, cell_type: str, zeros: dict, poles: dict, gain: float) -> dict:
+    def design_components(self, cell_type: str, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
         """ Returns the components needed after designing the cell for the given parameters. """
-        return self._switch_cell_method_by_type(cell_type, "design_components", zeros, poles, gain)
+        return self._switch_cell_method_by_type(cell_type, "design_components", zeros, poles, gain, stop_at_first)
 
     # ------------------------ #
     # Internal Private Methods #
