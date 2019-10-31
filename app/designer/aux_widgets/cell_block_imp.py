@@ -21,27 +21,29 @@ class CellBlock(QtWid.QWidget, Ui_CellBlock):
         self.update_gain_action = self.ignore_data_action
 
         # Signal and slot connections
-        self.v_min.valueChanged.connect(self.update_dynamic_range)
-        self.v_max.valueChanged.connect(self.update_dynamic_range)
-        self.gain.valueChanged.connect(self.update_dynamic_range)
+        self.v_min.editingFinished.connect(self.update_dynamic_range)
+        self.v_max.editingFinished.connect(self.update_dynamic_range)
+        self.gain.editingFinished.connect(self.update_dynamic_range)
+
+        self.on_start()
 
 
     def update_dynamic_range(self):
-        v_min = self.v_min.value()
-        v_max = self.v_max.value()
+        self.cell_data['v_min_data'] = self.v_min.value()
+        self.cell_data['v_max_data'] = self.v_max.value()
 
-        if v_max and v_min:
+        if self.cell_data['v_max_data'] and self.cell_data['v_min_data']:
             gain_in_db = self.gain.value()
             gain = 10**(gain_in_db/20)
 
             if gain_in_db > 0:
-                dr = 20 * np.log10((v_max / gain) / v_min)
+                dr = 20 * np.log10((self.cell_data['v_max_data'] / gain) / self.cell_data['v_min_data'])
             else:
-                dr = 20 * np.log10(v_max / (v_min / gain))
+                dr = 20 * np.log10(self.cell_data['v_max_data'] / (self.cell_data['v_min_data'] / gain))
 
             self.dynamic_range.setText('{:.3f}'.format(dr))
 
-        self.cell_data['gain'] = self.gain.value()
+        self.cell_data['gain_data'] = self.gain.value()
 
         self.update_gain_action(self)
 
@@ -85,3 +87,7 @@ class CellBlock(QtWid.QWidget, Ui_CellBlock):
                         self.cell_data['type'] = 'high-pass'
 
         self.type.setText(self.cell_data['type'])
+
+
+    def on_start(self):
+        pass

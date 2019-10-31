@@ -21,10 +21,9 @@ from app.designer.aux_widgets.cell_block_imp import CellBlock
 from app.designer.aux_widgets.cells_settings_imp import CellsSettings
 
 from app.approximators.approximator import ApproximationErrorCode
-
 from app.plotter.plotter import FilterPlotter
-
 from app.auxiliary_calculators.wp_w0_q import SecondOrderAuxCalc
+from app.cascader.cascader import AutomaticCascader
 
 FILTER_INDEX_TO_NAME = ['low-pass', 'high-pass', 'band-pass', 'band-stop', 'group-delay']
 
@@ -42,6 +41,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         # Creating auxiliary calculators
         self.second_order_calc = SecondOrderAuxCalc()
+        self.cascader = AutomaticCascader()
 
         # Signal and slot connections
         self.filter_selector.currentIndexChanged.connect(self.filter_selected)
@@ -52,6 +52,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.accumulative_plot.stateChanged.connect(self.plot_stage)
         self.v_min.valueChanged.connect(self.update_dynamic_range)
         self.v_max.valueChanged.connect(self.update_dynamic_range)
+        self.automatic_cascade.released.connect(self.calculate_automatic_cascade)
 
         # Loading callbacks
         self.stages_list.drag_action = self.pass_data_from_stages
@@ -174,7 +175,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             poles = [pole * 2*np.pi for pole in widget.cell_data['pole']['poles']]
             poles_list += poles
 
-            gain = 10**(widget.cell_data['gain']/20)
+            gain = 10**(widget.cell_data['gain_data']/20)
             gain_needed_to_plot = self.adjust_function_gain(zeros, poles, gain)
             total_gain *= gain_needed_to_plot
 
@@ -221,6 +222,27 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         # Now plotting with new gain.
         self.plot_stage()
+
+
+    def calculate_automatic_cascade(self):
+        self.stages_list.clear()
+
+        # Loading transfer_function into plotter and setting filter type
+        filter_index = self.filter_selector.currentIndex()
+
+        zero_blocks = self.second_order_calc.zero_blocks
+        pole_blocks = self.second_order_calc.pole_blocks
+        gain = self.filter_data_widgets[filter_index].gain.value()
+        self.cascader.set_zeros_poles_gain(zero_blocks, pole_blocks, gain)
+
+        self.cascader.separate_in_stages()
+        self.cascader.sort_stages()
+        self.cascader.assign_gains()
+
+        for i in range(len(self.cascader.stages)):
+            self.stages_list.add_stage_with_data(i, self.cascader.stages[i])
+
+        self.fill_poles_and_zeros_lists()
 
 
 ############# METHODS FOR PLOTTING #############
@@ -623,7 +645,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.poles_list.setDisabled(True)
         self.zeros_list.setDisabled(True)
         self.stages_list.setDisabled(True)
-        self.input_selector.setDisabled(True)
         self.automatic_cascade.setDisabled(True)
         self.accumulative_plot.setDisabled(True)
         self.v_min.setDisabled(True)
@@ -636,7 +657,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.poles_list.setEnabled(True)
         self.zeros_list.setDisabled(True)
         self.stages_list.setEnabled(True)
-        self.input_selector.setEnabled(True)
         self.automatic_cascade.setEnabled(True)
         self.accumulative_plot.setEnabled(True)
         self.v_min.setEnabled(True)

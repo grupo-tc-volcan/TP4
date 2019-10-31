@@ -8,6 +8,15 @@ def test_recursion():
     # assert(cascader.recursive_shortest_sum_of_distances([4, 2, 1], [None, 5, None]), 1)
     # assert(cascader.recursive_shortest_sum_of_distances([4, 2, 1], [None, None, None]), 0)
 
-    cascader.poles = [{'fp': 3}, {'fp': 2}, {'fp': 1}, {'fp': 10}, {'fp': 15}]
-    cascader.zeros = [{'f0': 3}, {'f0': 5}, {'f0': 12.5}]
+    poles = [{'fp': 3, 'q': 7, 'n': 2}, 
+    {'fp': 2, 'q': 0.5, 'n': 2}, 
+    {'fp': 1, 'q': 12, 'n': 'low-pass'}, 
+    {'fp': 10, 'q': 1, 'n': 'band-pass'}, 
+    {'fp': 15, 'q': 2, 'n': 'high-pass'}]
+    zeros = [{'f0': 3, 'q': 0.1}, 
+    {'f0': 5, 'q': 13}, 
+    {'f0': 12.5, 'q': 4}]
+
+    cascader.set_zeros_poles_gain(zeros, poles, 0)
     cascader.separate_in_stages()
+    cascader.sort_stages()
