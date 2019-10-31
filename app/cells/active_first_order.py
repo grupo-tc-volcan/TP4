@@ -38,7 +38,7 @@ class CompensatedDerivator(Cell):
     def __init__(self):
         super(CompensatedDerivator, self).__init__(
             "Compensated Derivator",
-            CellType.HIGH_PASS,
+            CellType.HIGH_PASS.value,
             "app/images/compensated_derivator.png"
         )
 
@@ -55,7 +55,8 @@ class CompensatedDerivator(Cell):
         if "wp" not in poles.keys() or "wz" not in zeros.keys() or gain >= 0 or poles["wp"] <= 0 or zeros["wz"] != 0:
             raise CellError(CellErrorCodes.INVALID_PARAMETERS)
         else:
-            R1, R2 = self.k().free_symbols
+            # Declaring and cleaning
+            R1, R2, C1, C2, wp, k = CompensatedDerivator.declare_symbols()
             self.results = []
 
             # First, compute possible R2 values based on C1 targetting the Wp value
@@ -113,13 +114,17 @@ class CompensatedDerivator(Cell):
     # Static Methods #
     # -------------- #
     @staticmethod
+    def declare_symbols():
+        return symbols("R1 R2 C1 C2 wp k", positive=True, real=True)
+
+    @staticmethod
     def wp():
-        R1, C1 = symbols("R1 C1")
+        R1, R2, C1, C2, wp, k = CompensatedDerivator.declare_symbols()
         return 1 / (R1 * C1)
 
     @staticmethod
     def k():
-        R1, R2 = symbols("R1 R2")
+        R1, R2, C1, C2, wp, k = CompensatedDerivator.declare_symbols()
         return - R2 / R1
 
 
@@ -146,7 +151,8 @@ class CompensatedIntegrator(Cell):
         if "wp" not in poles.keys() or gain >= 0 or poles["wp"] <= 0:
             raise CellError(CellErrorCodes.INVALID_PARAMETERS)
         else:
-            R1, R2 = self.k().free_symbols
+            # Declaring and cleaning
+            R1, R2, C1, C2, wp, k = CompensatedIntegrator.declare_symbols()
             self.results = []
 
             # First, compute possible R2 values based on C1 targetting the Wp value
@@ -203,11 +209,15 @@ class CompensatedIntegrator(Cell):
     # Static Methods #
     # -------------- #
     @staticmethod
+    def declare_symbols():
+        return symbols("R1 R2 C1 C2 wp k")
+
+    @staticmethod
     def wp():
-        R2, C1 = symbols("R2 C1")
+        R1, R2, C1, C2, wp, k = CompensatedIntegrator.declare_symbols()
         return 1 / (R2 * C1)
 
     @staticmethod
     def k():
-        R1, R2 = symbols("R1 R2")
+        R1, R2, C1, C2, wp, k = CompensatedIntegrator.declare_symbols()
         return - R2 / R1
