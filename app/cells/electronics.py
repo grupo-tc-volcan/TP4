@@ -1,6 +1,8 @@
 # Third-party modules
 from sympy import *
 
+import numpy as np
+
 # Python native modules
 from enum import Enum
 
@@ -101,6 +103,16 @@ def expand_component_list(current: list, new_options: list, label_one: str, labe
     return current
 
 
+def get_commercial_by_type(component_type: ComponentType) -> list:
+    """ Returns the list of commercial unity values of the component by its type. """
+    if component_type is ComponentType.Resistor:
+        return COMMERCIAL_RESISTORS
+    elif component_type is ComponentType.Capacitor:
+        return COMMERCIAL_CAPACITORS
+    else:
+        return None
+
+
 def compute_commercial_values(component_type: ComponentType) -> list:
     """ Returns a list of possible commercial values for the given component type.
     Returns None if non-identified component type. """
@@ -123,14 +135,22 @@ def compute_commercial_values(component_type: ComponentType) -> list:
 def compute_commercial_by_iteration(
         element_one: ComponentType, element_two: ComponentType,
         callback: callable, error: float,
-        fixed_one_values=None,
         fixed_two_values=None) -> list:
     """ Returns [(element_one_value, element_two_value)], list of 2-tuple with possible values
     that verify the expression element_one = callback(element_two), with a relative decimal expressed error.
     Fixed list of values can be used to process the iteration.
     """
+    def logarithmic_interpolation(x: float) -> int:
+        """ Approximates the initial searching of values """
+        return int(9.9584 * ln(x) - 0.85)
+
+    def scale_element(element: float) -> tuple:
+        """ Scales the element to the non multiplied values.
+            Returns -> (multiplier, nominal)"""
+        exponent = round(np.log10(float(element)))
+        return 10 ** exponent, element / (10 ** exponent)
+
     # Loading possible choices for each element, setting up the result list
-    element_one_values = compute_commercial_values(element_one) if fixed_one_values is None else fixed_one_values
     element_two_values = compute_commercial_values(element_two) if fixed_two_values is None else fixed_two_values
     results = []
 
@@ -138,10 +158,14 @@ def compute_commercial_by_iteration(
     # if matches with a commercial value with the given error tolerance
     for element_two_value in element_two_values:
         element_one_target = callback(element_two_value)
+        multiplier, nominal = scale_element(element_one_target)
+        initial_interpolation = logarithmic_interpolation(nominal)
 
-        for element_one_value in element_one_values:
-            if math.isclose(element_one_target, element_one_value, rel_tol=error):
-                results.append((element_one_value, element_two_value))
+        for element_one_value in get_commercial_by_type(element_one)[initial_interpolation:]:
+            if math.isclose(nominal, element_one_value, rel_tol=error):
+                results.append((element_one_value * multiplier, element_two_value))
+            elif element_one_value > nominal:
+                break
 
     # Returning the results... empty or not
     return results
