@@ -8,13 +8,15 @@ from app.cells.active_first_order import CompensatedIntegrator
 from app.cells.active_first_order import CompensatedDerivator
 from app.cells.active_first_order import ActiveFirstOrder
 
+from app.cells.sallen_key import SallenKeyLowPass
+
 from app.cells.cell import CellErrorCodes
 
 
 @pytest.fixture
 def cell():
     # Change the returning cell to test it!
-    return ActiveFirstOrder()
+    return SallenKeyLowPass()
 
 
 def test_group_description(cell):
@@ -74,7 +76,10 @@ def test_parameters(cell):
     cell.components = {
         "R1": 1000,
         "R2": 2200,
-        "C1": 100e-9
+        "C1": 100e-9,
+        "C2": 10e-9,
+        "Ra": 1000,
+        "Rb": 100
     }
     print(cell.get_parameters())
 
@@ -83,18 +88,21 @@ def test_sensitivities(cell):
     cell.components = {
         "R1": 1000,
         "R2": 2200,
-        "C1": 100e-9
+        "C1": 100e-9,
+        "C2": 10e-9,
+        "Ra": 1000,
+        "Rb": 100
     }
     print(cell.get_sensitivities())
 
 
 def test_design(cell):
-    cell.set_error(0.01)
+    cell.set_error(0.1)
 
     cell.design_components(
         {},
-        {"wp": 10000},
-        -10
+        {"wp": 10000, "qp": 0.89},
+        2
     )
 
     print(cell.get_components())

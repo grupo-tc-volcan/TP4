@@ -57,7 +57,7 @@ class CompensatedDerivator(Cell):
             raise CellError(CellErrorCodes.INVALID_PARAMETERS)
         else:
             # Declaring and cleaning
-            R1, R2, C1, C2, wp, k = CompensatedDerivator.declare_symbols()
+            R1, R2, C1, wp, k = CompensatedDerivator.declare_symbols()
             self.results = []
 
             # First, compute possible R2 values based on C1 targetting the Wp value
@@ -106,16 +106,16 @@ class CompensatedDerivator(Cell):
     # -------------- #
     @staticmethod
     def declare_symbols():
-        return symbols("R1 R2 C1 C2 wp k", positive=True, real=True)
+        return symbols("R1 R2 C1 wp k", positive=True, real=True)
 
     @staticmethod
     def wp():
-        R1, R2, C1, C2, wp, k = CompensatedDerivator.declare_symbols()
+        R1, R2, C1, wp, k = CompensatedDerivator.declare_symbols()
         return 1 / (R1 * C1)
 
     @staticmethod
     def k():
-        R1, R2, C1, C2, wp, k = CompensatedDerivator.declare_symbols()
+        R1, R2, C1, wp, k = CompensatedDerivator.declare_symbols()
         return - R2 / R1
 
 
@@ -143,7 +143,7 @@ class CompensatedIntegrator(Cell):
             raise CellError(CellErrorCodes.INVALID_PARAMETERS)
         else:
             # Declaring and cleaning
-            R1, R2, C1, C2, wp, k = CompensatedIntegrator.declare_symbols()
+            R1, R2, C1, wp, k = CompensatedIntegrator.declare_symbols()
             self.results = []
 
             # First, compute possible R2 values based on C1 targetting the Wp value
@@ -191,14 +191,14 @@ class CompensatedIntegrator(Cell):
     # -------------- #
     @staticmethod
     def declare_symbols():
-        return symbols("R1 R2 C1 C2 wp k")
+        return symbols("R1 R2 C1 wp k")
 
     @staticmethod
     def wp():
-        R1, R2, C1, C2, wp, k = CompensatedIntegrator.declare_symbols()
+        R1, R2, C1, wp, k = CompensatedIntegrator.declare_symbols()
         return 1 / (R2 * C1)
 
     @staticmethod
     def k():
-        R1, R2, C1, C2, wp, k = CompensatedIntegrator.declare_symbols()
+        R1, R2, C1, wp, k = CompensatedIntegrator.declare_symbols()
         return - R2 / R1
