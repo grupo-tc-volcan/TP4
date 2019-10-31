@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cells/electronics.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/electronics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cells/sallen_key.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/sallen_key.py" afterDir="false" />
-    </list>
+    <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,47 +9,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.7275495">
+    <splitter split-orientation="horizontal" split-proportion="0.6887367">
       <split-first>
         <leaf>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-738">
-                  <caret line="112" selection-start-line="112" selection-end-line="112" />
+                <state relative-caret-position="2760">
+                  <caret line="159" column="17" lean-forward="true" selection-start-line="159" selection-start-column="17" selection-end-line="159" selection-end-column="17" />
                   <folding>
                     <element signature="e#22#39#0" expanded="true" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/relational.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="248">
-                  <caret line="465" selection-start-line="465" selection-end-line="465" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="63">
-                  <caret line="27" column="50" selection-start-line="27" selection-start-column="50" selection-end-line="27" selection-end-column="50" />
-                  <folding>
-                    <element signature="e#22#41#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/decorators.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="245">
-                  <caret line="90" selection-start-line="90" selection-end-line="90" />
                 </state>
               </provider>
             </entry>
@@ -62,10 +28,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1059">
+                <state relative-caret-position="-792">
                   <caret line="48" column="19" selection-start-line="48" selection-start-column="18" selection-end-line="48" selection-end-column="19" />
                   <folding>
                     <element signature="e#22#35#0" expanded="true" />
@@ -74,11 +40,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-409">
-                  <caret line="172" selection-start-line="172" selection-end-line="172" />
+                <state relative-caret-position="508">
+                  <caret line="230" lean-forward="true" selection-start-line="230" selection-end-line="230" />
                   <folding>
                     <element signature="e#22#41#0" expanded="true" />
                   </folding>
@@ -165,6 +131,12 @@
             <path>
               <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
               <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="cells" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
+              <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -191,7 +163,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_cells.test_design">
+  <component name="RunManager" selected="Python tests.pytest for test_cells.test_sensitivities">
     <configuration name="Unnamed" type="Tox" factoryName="Tox" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -342,9 +314,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for test_cells.test_sensitivities" />
         <item itemvalue="Python tests.pytest for test_cells.test_design" />
         <item itemvalue="Python tests.pytest for test_cells.test_group_design" />
-        <item itemvalue="Python tests.pytest for test_cells.test_sensitivities" />
         <item itemvalue="Python tests.pytest for test_cells.test_parameters" />
         <item itemvalue="Python tests.pytest for test_cells.test_description" />
       </list>
@@ -364,15 +336,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 21m 21s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 28m 24s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 29m 52s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 31m 01s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
@@ -394,18 +357,27 @@
     <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 41m 18s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 44m 31s.xml">
+      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 12h 44m 37s.xml">
+      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_sensitivities - 2019.10.31 at 12h 46m 20s.xml">
+      <configuration name="pytest for test_cells.test_sensitivities" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.02232143" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16443452" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.83630955" weight="0.40261865" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" visible="true" weight="0.5057283" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.83630955" visible="true" weight="0.049099836" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" weight="0.5057283" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -446,11 +418,6 @@
           <url>file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/decorators.py</url>
           <line>79</line>
           <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/cells/electronics.py</url>
-          <line>128</line>
-          <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -665,13 +632,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/decorators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="90" selection-start-line="90" selection-end-line="90" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/compatibility.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
@@ -703,26 +663,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/relational.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="465" selection-start-line="465" selection-end-line="465" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-738">
-          <caret line="112" selection-start-line="112" selection-end-line="112" />
-          <folding>
-            <element signature="e#22#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1059">
+        <state relative-caret-position="-792">
           <caret line="48" column="19" selection-start-line="48" selection-start-column="18" selection-end-line="48" selection-end-column="19" />
           <folding>
             <element signature="e#22#35#0" expanded="true" />
@@ -730,12 +673,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/relational.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="457" column="13" lean-forward="true" selection-start-line="457" selection-start-column="13" selection-end-line="457" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/decorators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="90" selection-start-line="90" selection-end-line="90" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="27" column="50" selection-start-line="27" selection-start-column="50" selection-end-line="27" selection-end-column="50" />
+        <state relative-caret-position="508">
+          <caret line="230" lean-forward="true" selection-start-line="230" selection-end-line="230" />
           <folding>
             <element signature="e#22#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2760">
+          <caret line="159" column="17" lean-forward="true" selection-start-line="159" selection-start-column="17" selection-end-line="159" selection-end-column="17" />
+          <folding>
+            <element signature="e#22#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
