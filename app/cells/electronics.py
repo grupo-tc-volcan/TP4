@@ -44,14 +44,18 @@ def expand_component_list(current: list, label_one: str, label_two: str, new_opt
             + label_one: How first component is labeled in dictionaries
             + label_two: How second component is labeled in dictionaries
         """
-    if current:
+    if not current:
         current = [{label_one: component_one, label_two: component_two} for component_one, component_two in new_options]
     else:
         for component_one, component_two in new_options:
             for current_option in current:
-                target_label = label_one if label_two in current_option.keys() else label_two
-                target_component = component_one if label_two in current_option.keys() else component_two
-                current_option[target_label] = target_component
+                target_label = label_two if label_two in current_option.keys() else label_one
+                target_component = component_two if label_two in current_option.keys() else component_one
+                option_label = label_one if target_label == label_two else label_two
+                option_component = component_one if target_component == component_two else component_two
+                if current_option[target_label] == target_component:
+                    current_option[option_label] = option_component
+    return current
 
 
 def compute_commercial_values(component_type: ComponentType) -> list:

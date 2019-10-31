@@ -6,6 +6,7 @@ from sympy import *
 # Project modules
 from app.cells.electronics import compute_commercial_by_iteration
 from app.cells.electronics import build_expression_callback
+from app.cells.electronics import expand_component_list
 from app.cells.electronics import ComponentType
 
 from app.cells.cell import CellErrorCodes
@@ -51,7 +52,7 @@ class CompensatedDerivator(Cell):
     # -------------- #
     # Public Methods #
     # -------------- #
-    def design_components(self, zeros: dict, poles: dict, gain: float) -> dict:
+    def design_components(self, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
         if "wp" not in poles.keys() or "wz" not in zeros.keys() or gain >= 0 or poles["wp"] <= 0 or zeros["wz"] != 0:
             raise CellError(CellErrorCodes.INVALID_PARAMETERS)
         else:
@@ -74,20 +75,10 @@ class CompensatedDerivator(Cell):
                 fixed_two_values=[r2_option for r2_option, _ in r1_c1_options]
             )
 
-            # Cross selection of possible values of components
-            for r2_option, r1_option in r2_r1_options:
-                for r1_option_match, c1_option in r1_c1_options:
-                    if r1_option == r1_option_match:
-                        self.results.append(
-                            {
-                                "R1": r1_option,
-                                "R2": r2_option,
-                                "C1": c1_option
-                            }
-                        )
-                        break
-
-            # Choosing one to be updated
+            # Collecting results!
+            self.results = expand_component_list(self.results, "R2", "R1", r2_r1_options)
+            self.results = expand_component_list(self.results, "R1", "C1", r1_c1_options)
+            self.flush_results()
             self.choose_random_result()
 
     def get_parameters(self) -> tuple:
@@ -171,19 +162,9 @@ class CompensatedIntegrator(Cell):
             )
 
             # Cross selection of possible values of components
-            for r1_option, r2_option in r1_r2_options:
-                for r2_option_match, c1_option in r2_c1_options:
-                    if r2_option == r2_option_match:
-                        self.results.append(
-                            {
-                                "R1": r1_option,
-                                "R2": r2_option,
-                                "C1": c1_option
-                            }
-                        )
-                        break
-
-            # Choosing one to be updated
+            self.results = expand_component_list(self.results, "R1", "R2", r1_r2_options)
+            self.results = expand_component_list(self.results, "R2", "C1", r2_c1_options)
+            self.flush_results()
             self.choose_random_result()
 
     def get_parameters(self) -> tuple:
