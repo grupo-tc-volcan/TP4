@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/cells/active_first_order.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/active_first_order.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/cells/cell.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/cell.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/cells/sallen_key.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/sallen_key.py" afterDir="false" />
     </list>
@@ -13,14 +12,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.75612146">
+    <splitter split-orientation="horizontal" split-proportion="0.1">
       <split-first>
         <leaf>
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="132">
-                  <caret line="33" column="9" lean-forward="true" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+                <state relative-caret-position="-630">
+                  <caret line="39" column="9" lean-forward="true" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
+                  <folding>
+                    <element signature="e#22#41#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -29,35 +31,11 @@
       </split-first>
       <split-second>
         <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-792">
-                  <caret line="48" column="19" selection-start-line="48" selection-start-column="18" selection-end-line="48" selection-end-column="19" />
-                  <folding>
-                    <element signature="e#22#35#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="100">
-                  <caret line="213" column="13" selection-start-line="213" selection-start-column="13" selection-end-line="213" selection-end-column="13" />
-                  <folding>
-                    <element signature="e#22#41#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="508">
-                  <caret line="193" column="42" selection-start-line="193" selection-start-column="42" selection-end-line="193" selection-end-column="42" />
+                <state relative-caret-position="83">
+                  <caret line="277" selection-start-line="277" selection-end-line="277" />
                   <folding>
                     <element signature="e#47#68#0" expanded="true" />
                   </folding>
@@ -112,9 +90,9 @@
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/tests/test_cells.py" />
         <option value="$PROJECT_DIR$/app/cells/electronics.py" />
-        <option value="$PROJECT_DIR$/app/cells/cell.py" />
         <option value="$PROJECT_DIR$/app/cells/active_first_order.py" />
         <option value="$PROJECT_DIR$/app/cells/sallen_key.py" />
+        <option value="$PROJECT_DIR$/app/cells/cell.py" />
       </list>
     </option>
   </component>
@@ -146,6 +124,13 @@
               <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="cells" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
+              <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="cells" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
@@ -384,12 +369,12 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13169643" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.02232143" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.83630955" visible="true" weight="0.049099836" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.83630955" weight="0.049099836" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" weight="0.5057283" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -690,16 +675,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="193" column="42" selection-start-line="193" selection-start-column="42" selection-end-line="193" selection-end-column="42" />
-          <folding>
-            <element signature="e#47#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3192">
@@ -712,8 +687,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="33" column="9" lean-forward="true" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+        <state relative-caret-position="-630">
+          <caret line="39" column="9" lean-forward="true" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
+          <folding>
+            <element signature="e#22#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="277" selection-start-line="277" selection-end-line="277" />
+          <folding>
+            <element signature="e#47#68#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
