@@ -35,7 +35,47 @@ MULTIPLER_CAPACITORS = [1e-12, 10e-12, 100e-12, 1e-9, 10e-9, 100e-9, 1e-6]
 # ---------------- #
 # Public Functions #
 # ---------------- #
-def expand_component_list(current: list, label_one: str, label_two: str, new_options: list):
+def nexpand_component_list(current: list, new_options: list, *args):
+    """ Expands a list of dictionaries describing a set of components, by matching the new options
+        with already registered ones, and appending new component labels and values.
+        [Parameters]
+            + current: List of components [ {...} ]
+            + new_options: List of n-tuple [ (...) ]
+            + args: List of labels
+        """
+    if not current:
+        for new_option in new_options:
+            new_pack = {}
+            for index, component in enumerate(new_option):
+                new_pack[args[index]] = component
+            current.append(new_pack)
+    else:
+        for new_option in new_options:
+            for current_option in current:
+                contained = False
+                matches = True
+
+                for index, component in enumerate(new_option):
+                    if not contained and args[index] in current_option.keys():
+                        contained = True
+
+                    if contained and args[index] in current_option.keys():
+                        if current_option[args[index]] != component:
+                            matches = False
+                            break
+
+                if contained:
+                    if matches:
+                        for index, component in enumerate(new_option):
+                            if args[index] not in current_option.keys():
+                                current_option[args[index]] = component
+                else:
+                    for index, component in enumerate(new_option):
+                        current_option[args[index]] = component
+    return current
+
+
+def expand_component_list(current: list, new_options: list, label_one: str, label_two: str):
     """ Expands a list of dictionaries describing a set of components, by matching the new options
         with already registered ones, and appending new component labels and values.
         [Parameters]
@@ -49,12 +89,15 @@ def expand_component_list(current: list, label_one: str, label_two: str, new_opt
     else:
         for component_one, component_two in new_options:
             for current_option in current:
-                target_label = label_two if label_two in current_option.keys() else label_one
-                target_component = component_two if label_two in current_option.keys() else component_one
-                option_label = label_one if target_label == label_two else label_two
-                option_component = component_one if target_component == component_two else component_two
-                if current_option[target_label] == target_component:
-                    current_option[option_label] = option_component
+                if label_one in current_option.keys():
+                    if current_option[label_one] == component_one:
+                        current_option[label_two] = component_two
+                elif label_two in current_option.keys():
+                    if current_option[label_two] == component_two:
+                        current_option[label_one] = component_one
+                else:
+                    current_option[label_one] = component_one
+                    current_option[label_two] = component_two
     return current
 
 
@@ -125,3 +168,11 @@ def build_proportional_callback(k: float):
     def callback(element_two_value: float):
         return element_two_value * k
     return callback
+
+
+if __name__ == "__main__":
+    test = []
+    test = nexpand_component_list(test, [(1, 2, 3), (4, 5, 6)], "R1", "R2", "R3")
+    test = nexpand_component_list(test, [(1, 2, 10), (4, 5, 20)], "R1", "R2", "C1")
+    test = nexpand_component_list(test, [(3.15, 1.6)], "Ra", "Rb")
+    print(test)

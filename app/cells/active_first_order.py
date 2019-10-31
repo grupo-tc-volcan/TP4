@@ -6,7 +6,7 @@ from sympy import *
 # Project modules
 from app.cells.electronics import compute_commercial_by_iteration
 from app.cells.electronics import build_expression_callback
-from app.cells.electronics import expand_component_list
+from app.cells.electronics import nexpand_component_list
 from app.cells.electronics import ComponentType
 
 from app.cells.cell import CellErrorCodes
@@ -76,8 +76,8 @@ class CompensatedDerivator(Cell):
             )
 
             # Collecting results!
-            self.results = expand_component_list(self.results, "R2", "R1", r2_r1_options)
-            self.results = expand_component_list(self.results, "R1", "C1", r1_c1_options)
+            self.results = nexpand_component_list(self.results, r2_r1_options, "R2", "R1")
+            self.results = nexpand_component_list(self.results, r1_c1_options, "R1", "C1")
             self.flush_results()
             self.choose_random_result()
 
@@ -162,8 +162,8 @@ class CompensatedIntegrator(Cell):
             )
 
             # Cross selection of possible values of components
-            self.results = expand_component_list(self.results, "R1", "R2", r1_r2_options)
-            self.results = expand_component_list(self.results, "R2", "C1", r2_c1_options)
+            self.results = nexpand_component_list(self.results, r1_r2_options, "R1", "R2")
+            self.results = nexpand_component_list(self.results, r2_c1_options, "R2", "C1")
             self.flush_results()
             self.choose_random_result()
 
