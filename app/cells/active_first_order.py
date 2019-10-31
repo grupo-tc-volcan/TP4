@@ -89,8 +89,8 @@ class CompensatedDerivator(Cell):
 
     def get_parameters(self) -> tuple:
         zeros = {"wz": 0, "nz": 1}
-        poles = {"wp": self.wp().evalf(subs=self.components)}
-        gain = self.k().evalf(subs=self.components)
+        poles = {"wp": self.calculate_with_components(self.wp())}
+        gain = self.calculate_with_components(self.k())
         return zeros, poles, gain
 
     def get_sensitivities(self) -> dict:
@@ -112,7 +112,7 @@ class CompensatedDerivator(Cell):
     # -------------- #
     @staticmethod
     def declare_symbols():
-        return symbols("R1 R2 C1 wp k", positive=True, real=True)
+        return symbols("R1 R2 C1 wp k")
 
     @staticmethod
     def wp():
@@ -180,8 +180,8 @@ class CompensatedIntegrator(Cell):
             self.choose_random_result()
 
     def get_parameters(self) -> tuple:
-        poles = {"wp": self.wp().evalf(subs=self.components)}
-        gain = self.k().evalf(subs=self.components)
+        poles = {"wp": self.calculate_with_components(self.wp())}
+        gain = self.calculate_with_components(self.k())
         return {}, poles, gain
 
     def get_sensitivities(self) -> dict:

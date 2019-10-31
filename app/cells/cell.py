@@ -35,6 +35,7 @@ class CellMode(Enum):
 
     @staticmethod
     def float_to_cell_mode(value: float):
+        value = abs(value)
         if value < 1:
             return CellMode.ATTENUATION
         elif value == 1:
@@ -108,7 +109,7 @@ class Cell:
 
     def get_circuit(self) -> str:
         """ Returns the file path of the circuit's image for the given cell type. """
-        raise self.circuit
+        return self.circuit
 
     # -------------- #
     # Public Methods #
@@ -156,6 +157,13 @@ class Cell:
     # ---------------- #
     # Internal Methods #
     # ---------------- #
+    def calculate_with_components(self, expression, **kwargs):
+        """ Returns the evaluation of the given expression using components """
+        if type(expression) is int or type(expression) is float:
+            return expression
+        else:
+            return expression.evalf(subs={**self.components, **kwargs})
+
     def flush_results(self):
         """ Clean the non-complete results, when not all components are defined in every result """
         targets = [result for result in self.results if len(result.keys()) < len(self.components.keys())]
