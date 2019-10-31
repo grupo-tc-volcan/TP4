@@ -35,6 +35,25 @@ MULTIPLER_CAPACITORS = [1e-12, 10e-12, 100e-12, 1e-9, 10e-9, 100e-9, 1e-6]
 # ---------------- #
 # Public Functions #
 # ---------------- #
+def expand_component_list(current: list, label_one: str, label_two: str, new_options: list):
+    """ Expands a list of dictionaries describing a set of components, by matching the new options
+        with already registered ones, and appending new component labels and values.
+        [Parameters]
+            + current: List of components [ {...} ]
+            + new_options: List of 2-tuple with both new components. Example: [ (R1, C1) ]
+            + label_one: How first component is labeled in dictionaries
+            + label_two: How second component is labeled in dictionaries
+        """
+    if current:
+        current = [{label_one: component_one, label_two: component_two} for component_one, component_two in new_options]
+    else:
+        for component_one, component_two in new_options:
+            for current_option in current:
+                target_label = label_one if label_two in current_option.keys() else label_two
+                target_component = component_one if label_two in current_option.keys() else component_two
+                current_option[target_label] = target_component
+
+
 def compute_commercial_values(component_type: ComponentType) -> list:
     """ Returns a list of possible commercial values for the given component type.
     Returns None if non-identified component type. """
@@ -60,7 +79,7 @@ def compute_commercial_by_iteration(
         fixed_one_values=None,
         fixed_two_values=None) -> list:
     """ Returns [(element_one_value, element_two_value)], list of 2-tuple with possible values
-    that verify the expression element_one = element_two * k, with a relative decimal expressed error.
+    that verify the expression element_one = callback(element_two), with a relative decimal expressed error.
     Fixed list of values can be used to process the iteration.
     """
     # Loading possible choices for each element, setting up the result list

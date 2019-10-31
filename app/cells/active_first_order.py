@@ -147,7 +147,7 @@ class CompensatedIntegrator(Cell):
     # -------------- #
     # Public Methods #
     # -------------- #
-    def design_components(self, zeros: dict, poles: dict, gain: float) -> dict:
+    def design_components(self, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
         if "wp" not in poles.keys() or gain >= 0 or poles["wp"] <= 0:
             raise CellError(CellErrorCodes.INVALID_PARAMETERS)
         else:
