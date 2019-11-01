@@ -1,6 +1,7 @@
 # Third-party modules
 
 # Python native modules
+from math import *
 
 # Project modules
 from app.cells.cell import CellType
@@ -48,7 +49,10 @@ class FleischerTowBandStop(Cell):
     # Public Methods #
     # -------------- #
     def get_parameters(self) -> tuple:
-        pass
+        zeros = {"wz": self.wz(), "nz": 2}
+        poles = {"wp": self.wp(), "qp": self.qp()}
+        gain = self.k()
+        return zeros, poles, gain
 
     def get_sensitivities(self) -> dict:
         pass
@@ -72,6 +76,22 @@ class FleischerTowBandStop(Cell):
             self.components["C1"],
             self.components["C2"]
         )
+
+    def k(self):
+        R1, R2, R3, R4, R5, R6, R7, R8, C1, C2 = self.load_variables()
+        return -R2 / R5
+
+    def wz(self):
+        R1, R2, R3, R4, R5, R6, R7, R8, C1, C2 = self.load_variables()
+        return sqrt(R6 / (R3 * R5 * R7 * C1 * C2))
+
+    def wp(self):
+        R1, R2, R3, R4, R5, R6, R7, R8, C1, C2 = self.load_variables()
+        return sqrt(R8 / (R2 * R3 * R7 * C1 * C2))
+
+    def qp(self):
+        R1, R2, R3, R4, R5, R6, R7, R8, C1, C2 = self.load_variables()
+        return R1 * C1 * self.wp()
 
 
 class FleischerTowBandPass(Cell):
@@ -105,7 +125,10 @@ class FleischerTowBandPass(Cell):
     # Public Methods #
     # -------------- #
     def get_parameters(self) -> tuple:
-        pass
+        zeros = {}
+        poles = {"wp": self.wp(), "qp": self.qp()}
+        gain = self.k()
+        return zeros, poles, gain
 
     def get_sensitivities(self) -> dict:
         pass
@@ -127,6 +150,18 @@ class FleischerTowBandPass(Cell):
             self.components["C1"],
             self.components["C2"]
         )
+
+    def k(self):
+        R1, R2, R3, R4, R7, R8, C1, C2 = self.load_variables()
+        return (R1 * R8) / (R4 * R7)
+
+    def wp(self):
+        R1, R2, R3, R4, R7, R8, C1, C2 = self.load_variables()
+        return sqrt(R8 / (R2 * R3 * R7 * C1 * C2))
+
+    def qp(self):
+        R1, R2, R3, R4, R7, R8, C1, C2 = self.load_variables()
+        return R1 * C1 * self.wp()
 
 
 class FleischerTowHighPass(Cell):
@@ -161,7 +196,10 @@ class FleischerTowHighPass(Cell):
     # Public Methods #
     # -------------- #
     def get_parameters(self) -> tuple:
-        pass
+        zeros = {}
+        poles = {"wp": self.wp(), "qp": self.qp()}
+        gain = self.k()
+        return zeros, poles, gain
 
     def get_sensitivities(self) -> dict:
         pass
@@ -184,6 +222,18 @@ class FleischerTowHighPass(Cell):
             self.components["C1"],
             self.components["C2"]
         )
+
+    def k(self):
+        R1, R2, R3, R4, R6, R7, R8, C1, C2 = self.load_variables()
+        return -R8 / R6
+
+    def wp(self):
+        R1, R2, R3, R4, R6, R7, R8, C1, C2 = self.load_variables()
+        return sqrt(R8 / (R2 * R3 * R7 * C1 * C2))
+
+    def qp(self):
+        R1, R2, R3, R4, R6, R7, R8, C1, C2 = self.load_variables()
+        return R1 * C1 * self.wp()
 
 
 class FleischerTowLowPass(Cell):
@@ -217,7 +267,10 @@ class FleischerTowLowPass(Cell):
     # Public Methods #
     # -------------- #
     def get_parameters(self) -> tuple:
-        pass
+        zeros = {}
+        poles = {"wp": self.wp(), "qp": self.qp()}
+        gain = self.k()
+        return zeros, poles, gain
 
     def get_sensitivities(self) -> dict:
         pass
@@ -239,3 +292,15 @@ class FleischerTowLowPass(Cell):
             self.components["C1"],
             self.components["C2"]
         )
+
+    def k(self):
+        R1, R2, R3, R5, R7, R8, C1, C2 = self.load_variables()
+        return -R2 / R5
+
+    def wp(self):
+        R1, R2, R3, R5, R7, R8, C1, C2 = self.load_variables()
+        return sqrt(R8 / (R2 * R3 * R7 * C1 * C2))
+
+    def qp(self):
+        R1, R2, R3, R5, R7, R8, C1, C2 = self.load_variables()
+        return R1 * C1 * self.wp()
