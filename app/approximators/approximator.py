@@ -176,7 +176,7 @@ class AttFilterApproximator:
                 self.fpl = (self.fal * self.far) / self.fpr
 
     def adjust_function_gain(self, gain, target=None):
-        """ Adjusts the normalised transfer function to have a unity gain """
+        """ Adjusts the normalised transfer function to have a given gain """
         transfer = self.h_aux if target is None else target
 
         if transfer is not None:
