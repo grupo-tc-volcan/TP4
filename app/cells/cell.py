@@ -83,20 +83,19 @@ class Cell:
     # -------------------- #
     # Public Query Methods #
     # -------------------- #
-    def is_valid_gain_mode(self, gain=None, mode=None):
+    def is_valid_gain_mode(self, gain):
         """ Returns whether this cell can be used with the given gain """
-        if gain is None and mode is None:
+        if gain is None:
             raise CellError(CellErrorCodes.NOT_DEFINED_CELL)
         else:
             if gain < 0 and not self.options["inverter"]:
                 return False
 
-            target_mode = CellMode.float_to_cell_mode(abs(gain)) if gain is not None else mode
-            if target_mode is CellMode.GAIN:
+            if abs(gain) > 1:
                 return self.options["canGain"]
-            elif target_mode is CellMode.UNITY_GAIN:
+            elif abs(gain) == 1:
                 return self.options["canUnityGain"]
-            elif target_mode is CellMode.ATTENUATION:
+            elif abs(gain) < 1:
                 return self.options["canAttenuate"]
 
     def get_name(self) -> str:
@@ -199,23 +198,22 @@ class CellGroup:
     # -------------------- #
     # Public Query Methods #
     # -------------------- #
-    def is_valid_gain_mode(self, cell_type: str, gain=None, mode=None) -> bool:
+    def is_valid_gain_mode(self, cell_type: str, gain) -> bool:
         """ Returns whether the given cell type can implement the gain or not """
-        if gain is None and mode is None:
+        if gain is None:
             raise CellError(CellErrorCodes.NOT_DEFINED_CELL)
         else:
             if cell_type not in self.get_available_types():
                 return False
             else:
-                target_mode = mode if mode is not None else CellMode.float_to_cell_mode(gain)
                 if type(self.mapping_types[cell_type]) is list:
                     for option in self.mapping_types[cell_type]:
-                        if option.is_valid_gain_mode(mode=target_mode):
+                        if option.is_valid_gain_mode(gain):
                             return True
-                    else:
-                        return False
+                        else:
+                            return False
                 else:
-                    return self.mapping_types[cell_type].is_valid_gain_mode(mode=target_mode)
+                    return self.mapping_types[cell_type].is_valid_gain_mode(gain)
 
     def get_name(self) -> str:
         """ Returns the name of the group of cells. """
@@ -243,15 +241,15 @@ class CellGroup:
     # -------------- #
     # Public Methods #
     # -------------- #
-    def set_cell(self, cell_type: str, gain=None, mode=None):
+    
+    def set_cell(self, cell_type: str, gain):
         """ Sets the current working cell that will be used.
             Either gain or mode can be used to define which cell is used, but at least one is needed. """
-        target_mode = mode if mode is not None else CellMode.float_to_cell_mode(gain)
-        if self.is_valid_gain_mode(cell_type, mode=target_mode):
+        if self.is_valid_gain_mode(cell_type, gain):
             target_cells = self.mapping_types[cell_type]
             if type(target_cells) is list:
                 for target_cell in target_cells:
-                    if target_cell.is_valid_gain_mode(mode=target_mode):
+                    if target_cell.is_valid_gain_mode(gain):
                         self.current_cell = target_cell
                         break
             else:
