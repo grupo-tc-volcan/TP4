@@ -53,6 +53,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.v_min.editingFinished.connect(self.update_dynamic_range)
         self.v_max.editingFinished.connect(self.update_dynamic_range)
         self.automatic_cascade.released.connect(self.calculate_automatic_cascade)
+        self.proceed_to_design.released.connect(self.set_up_cells_tab)
 
         # Loading callbacks
         self.stages_list.drag_action = self.pass_data_from_stages
@@ -236,6 +237,10 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.v_max.setValue(15)
         self.v_min.setValue(0.01)
         self.update_dynamic_range()
+
+
+    def set_up_cells_tab(self):
+        self.copy_stage_list()
 
 
 ############# METHODS FOR PLOTTING #############
@@ -654,6 +659,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.accumulative_plot.setEnabled(True)
         self.v_min.setEnabled(True)
         self.v_max.setEnabled(True)
+
+
+    def copy_stage_list(self):
+        self.stages_list_cells.clear()
+
+        for index in range(self.stages_list.count()):
+            data = self.stages_list.itemWidget(self.stages_list.item(index)).cell_data
+            self.stages_list_cells.add_stage_with_data(index, data)
 
 
     @staticmethod

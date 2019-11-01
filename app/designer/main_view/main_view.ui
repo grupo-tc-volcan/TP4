@@ -634,6 +634,29 @@
           <widget class="QWidget" name="page_13"/>
          </widget>
         </item>
+        <item row="6" column="9">
+         <widget class="QLabel" name="label_80">
+          <property name="maximumSize">
+           <size>
+            <width>93</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-size:10pt; vertical-align:sub;&quot;&gt;min&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0" colspan="2">
+         <widget class="QPushButton" name="automatic_cascade">
+          <property name="text">
+           <string>Automatic Cascade</string>
+          </property>
+         </widget>
+        </item>
         <item row="6" column="13">
          <widget class="QLabel" name="label_81">
           <property name="text">
@@ -702,23 +725,7 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="9">
-         <widget class="QLabel" name="label_80">
-          <property name="maximumSize">
-           <size>
-            <width>93</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-size:10pt; vertical-align:sub;&quot;&gt;min&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="2" colspan="7">
+        <item row="6" column="4" colspan="5">
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -731,10 +738,10 @@
           </property>
          </spacer>
         </item>
-        <item row="6" column="0" colspan="2">
-         <widget class="QPushButton" name="automatic_cascade">
+        <item row="6" column="2" colspan="2">
+         <widget class="QPushButton" name="proceed_to_design">
           <property name="text">
-           <string>Automatic Cascade</string>
+           <string>Accept and proceed to desgin</string>
           </property>
          </widget>
         </item>
@@ -745,8 +752,20 @@
         <string>Cells</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_17">
-        <item row="2" column="0" colspan="2">
-         <widget class="QColumnView" name="stages_list_cells">
+        <item row="0" column="1">
+         <widget class="QStackedWidget" name="cells_settings">
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <widget class="QWidget" name="page_14"/>
+          <widget class="QWidget" name="page_15"/>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <widget class="QListWidget" name="stages_list_cells">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -762,31 +781,28 @@
           <property name="dragDropMode">
            <enum>QAbstractItemView::InternalMove</enum>
           </property>
-         </widget>
-        </item>
-        <item row="0" column="0" rowspan="2">
-         <widget class="QColumnView" name="circuits_list">
-          <property name="dragEnabled">
-           <bool>true</bool>
+          <property name="defaultDropAction">
+           <enum>Qt::MoveAction</enum>
           </property>
-          <property name="dragDropOverwriteMode">
-           <bool>true</bool>
-          </property>
-          <property name="dragDropMode">
-           <enum>QAbstractItemView::InternalMove</enum>
+          <property name="flow">
+           <enum>QListView::LeftToRight</enum>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QStackedWidget" name="cells_settings">
-          <property name="maximumSize">
-           <size>
-            <width>300</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <widget class="QWidget" name="page_14"/>
-          <widget class="QWidget" name="page_15"/>
+        <item row="0" column="0">
+         <widget class="QStackedWidget" name="stackedWidget">
+          <widget class="QWidget" name="page_38">
+           <layout class="QGridLayout" name="gridLayout_18">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_39"/>
          </widget>
         </item>
        </layout>
