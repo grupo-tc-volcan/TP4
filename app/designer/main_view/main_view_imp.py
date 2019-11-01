@@ -50,8 +50,8 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.plot_template_1.stateChanged.connect(self.plot_template_toggle)
         self.stages_list.itemSelectionChanged.connect(self.plot_stage)
         self.accumulative_plot.stateChanged.connect(self.plot_stage)
-        self.v_min.valueChanged.connect(self.update_dynamic_range)
-        self.v_max.valueChanged.connect(self.update_dynamic_range)
+        self.v_min.editingFinished.connect(self.update_dynamic_range)
+        self.v_max.editingFinished.connect(self.update_dynamic_range)
         self.automatic_cascade.released.connect(self.calculate_automatic_cascade)
 
         # Loading callbacks
@@ -190,19 +190,8 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
 
     def update_dynamic_range(self):
-        v_min = self.v_min.value()
-        v_max = self.v_max.value()
-
-        filter_index = self.filter_selector.currentIndex()
-        gain_in_db = self.filter_data_widgets[filter_index].gain.value()
-        gain = 10**(gain_in_db/20)
-
-        if gain_in_db > 0:
-            dr = 20 * np.log10((v_max / gain) / v_min)
-        else:
-            dr = 20 * np.log10(v_max / (v_min / gain))
-
-        self.dynamic_range.setText('{:.3f}'.format(dr))
+        self.cascader.calculate_total_dynamic_range(v_max=self.v_max.value(), v_min=self.v_min.value())
+        self.dynamic_range.setText('{:.3f}'.format(self.cascader.total_dynamic_range))
 
 
     def update_gain_in_stage(self, stage_block_changed : QtWid.QWidget):
@@ -243,6 +232,10 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             self.stages_list.add_stage_with_data(i, self.cascader.stages[i])
 
         self.fill_poles_and_zeros_lists()
+
+        self.v_max.setValue(15)
+        self.v_min.setValue(0.01)
+        self.update_dynamic_range()
 
 
 ############# METHODS FOR PLOTTING #############

@@ -17,6 +17,7 @@ class AutomaticCascader():
         self.total_dynamic_range = 0
 
         self.stages = []
+        self.best_way = []
 
 
     def set_zeros_poles_gain(self, z, p, g):
@@ -137,20 +138,29 @@ class AutomaticCascader():
         if len(ways) > 20:
             ways = ways[math.floor(len(ways) / 2) - 10 : math.floor(len(ways) / 2) + 10]
 
-        for way in ways:
+        for i in range(len(ways)):
+            ways[i] = [gain - MIN_GAIN_PER_STAGE for gain in ways[i]]
             aux_stages = list(self.stages)
-            dynamic_ranges.append(self.calculate_total_dynamic_range(aux_stages, way))
+            dynamic_ranges.append(self.calculate_total_dynamic_range(aux_stages, ways[i]))
 
         best_way = ways[dynamic_ranges.index(max(dynamic_ranges))]
-        best_way = [way - MIN_GAIN_PER_STAGE for way in best_way]
+
+        aux_stages = list(self.stages)
+        self.total_dynamic_range = self.calculate_total_dynamic_range(aux_stages, best_way)
 
         for i in range(len(self.stages)):
             self.stages[i]['gain_data'] = best_way[i]
 
 
-    def calculate_total_dynamic_range(self, stages, gains):
-        v_max = stages[-1]['v_max_data']
-        v_min = stages[-1]['v_min_data']
+    def calculate_total_dynamic_range(self, stages=None, gains=None, v_min=None, v_max=None):
+        if v_min is None or v_max is None:
+            v_max = stages[-1]['v_max_data']
+            v_min = stages[-1]['v_min_data']
+
+        if stages is None:
+            stages = list(self.stages)
+        if gains is None:
+            gains = [stage['gain_data'] for stage in self.stages]
 
         rev_stages = list(stages)
         # This way, the cells with higher Q are going to be looked at first
@@ -160,13 +170,13 @@ class AutomaticCascader():
             aux_stage['gain_data'] = gains[-i-1]
             aux_stage['v_max_data'] = v_max
             aux_stage['v_min_data'] = v_min
-            v_max, v_min = self.calculate_v_min_v_max(aux_stage, self.max_gain_for_stage(aux_stage))
+            v_max, v_min = self.calculate_v_max_v_min(aux_stage, self.max_gain_for_stage(aux_stage))
 
         dr = 20 * np.log10(v_max / v_min)
         return dr
 
 
-    def calculate_v_min_v_max(self, stage, max_gain_in_db):
+    def calculate_v_max_v_min(self, stage, max_gain_in_db):
         if stage['v_max_data'] and stage['v_min_data']:
             gain = 10**(max_gain_in_db/20)
 
@@ -186,7 +196,8 @@ class AutomaticCascader():
         else:
             zeros = stage['zero']['zeros']
         poles = stage['pole']['poles']
-        transfer_function = ss.ZerosPolesGain(zeros, poles, stage['gain_data'])
+        gain = 10**(stage['gain_data']/20)
+        transfer_function = ss.ZerosPolesGain(zeros, poles, gain)
         w, mag, phase = ss.bode(transfer_function, n=1000)
 
         dmag = np.diff(mag)/np.diff(w)
@@ -203,10 +214,11 @@ class AutomaticCascader():
                 frequency_to_evaluate = math.floor(i + frequencies_to_check/2)
                 useless_1, gain_in_passband, useless_2 = ss.bode(transfer_function, [w[frequency_to_evaluate]])
                 gain_in_passband = 10**(gain_in_passband/20)
-                gain_needed = stage['gain_data']**2/gain_in_passband
+                gain_needed = gain**2/gain_in_passband
+                break
 
-        transfer_function == ss.ZerosPolesGain(zeros, poles, gain_needed)
-        w, mag, phase = ss.bode(transfer_function, n=1000)
+        transfer_function = ss.ZerosPolesGain(zeros, poles, gain_needed)
+        w, mag, phase = ss.bode(transfer_function)
         return max(mag)
 
 
