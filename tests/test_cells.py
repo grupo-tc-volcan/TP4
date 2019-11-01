@@ -78,7 +78,6 @@ def test_sensitivities(cell):
 
 def test_design(cell):
     cell.set_error(0.1)
-
     cell.design_components(
         {"wz": 2 * pi * 10000},
         {"wp": 2 * pi * 10000, "qp": 4.5},
@@ -86,3 +85,23 @@ def test_design(cell):
     )
 
     print(cell.components)
+
+
+def test_stages_html():
+    cell_one = FleischerTowBandStop()
+    cell_one.set_error(0.1)
+    cell_one.design_components(
+        {"wz": 2 * pi * 10000},
+        {"wp": 2 * pi * 10000, "qp": 4.5},
+        -1
+    )
+
+    cell_two = SallenKeyLowPassUnityGain()
+    cell_two.set_error(0.1)
+    cell_two.design_components(
+        {},
+        {"wp": 2 * pi * 10000, "qp": 4.5},
+        1
+    )
+
+    generate_by_stages([cell_one, cell_two], "test")

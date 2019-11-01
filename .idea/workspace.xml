@@ -2,7 +2,42 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/images/compensated_derivator.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/images/compensated_integrator.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/images/fleischer_tow_band_pass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/images/fleischer_tow_band_stop.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/images/fleischer_tow_high_pass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/images/fleischer_tow_low_pass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/images/sallen_key_high_pass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/images/sallen_key_high_pass_unity.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/images/sallen_key_low_pass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/images/sallen_key_low_pass_attenuation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/images/sallen_key_low_pass_unity.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/cells/cell.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/cell.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/compensated_derivator.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/compensated_integrator.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/compensated_derivator" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/draw.io/compensated_derivator" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/compensated_integrator" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/draw.io/compensated_integrator" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/fleischer_tow_band_pass" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/draw.io/fleischer_tow_band_pass" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/fleischer_tow_band_stop" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/draw.io/fleischer_tow_band_stop" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/fleischer_tow_high_pass" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/draw.io/fleischer_tow_high_pass" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/fleischer_tow_low_pass" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/draw.io/fleischer_tow_low_pass" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/sallen_key_high_pass" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/draw.io/sallen_key_high_pass" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/sallen_key_high_pass_unity" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/draw.io/sallen_key_high_pass_unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/sallen_key_low_pass" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/draw.io/sallen_key_low_pass" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/sallen_key_low_pass_attenuation" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/draw.io/sallen_key_low_pass_attenuation" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/draw.io/sallen_key_low_pass_unity" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/draw.io/sallen_key_low_pass_unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/fleischer_tow_band_pass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/fleischer_tow_band_stop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/fleischer_tow_high_pass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/fleischer_tow_low_pass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/sallen_key_high_pass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/sallen_key_high_pass_unity.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/sallen_key_low_pass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/sallen_key_low_pass_attenuation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/images/sallen_key_low_pass_unity.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/cells/sallen_key.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/sallen_key.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_cells.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_cells.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -12,29 +47,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.7123288">
+    <splitter split-orientation="horizontal" split-proportion="0.21793722">
       <split-first>
         <leaf>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1123">
-                  <caret line="25" column="55" selection-start-line="25" selection-start-column="55" selection-end-line="25" selection-end-column="55" />
-                  <folding>
-                    <element signature="e#22#35#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2967">
-                  <caret line="208" column="43" selection-start-line="208" selection-start-column="43" selection-end-line="208" selection-end-column="43" />
-                  <folding>
-                    <element signature="e#47#68#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="24">
+                  <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
                 </state>
               </provider>
             </entry>
@@ -42,8 +62,20 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/cells/html_generator.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="399">
-                  <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
+                <state relative-caret-position="375">
+                  <caret line="113" selection-start-line="113" selection-end-line="113" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="264">
+                  <caret line="170" selection-start-line="170" selection-end-line="170" />
+                  <folding>
+                    <element signature="e#47#68#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -52,14 +84,23 @@
       </split-first>
       <split-second>
         <leaf>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3969">
-                  <caret line="201" column="18" selection-start-line="201" selection-start-column="18" selection-end-line="201" selection-end-column="18" />
+                <state relative-caret-position="79">
+                  <caret line="544" column="35" selection-start-line="544" selection-start-column="35" selection-end-line="544" selection-end-column="35" />
                   <folding>
                     <element signature="e#24#45#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/cells/fleischer_tow.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="107">
+                  <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
                 </state>
               </provider>
             </entry>
@@ -71,6 +112,18 @@
                   <caret line="57" column="2" selection-start-line="57" selection-start-column="2" selection-end-line="57" selection-end-column="2" />
                   <folding>
                     <element signature="e#22#41#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="105">
+                  <caret line="189" column="25" lean-forward="true" selection-start-line="189" selection-start-column="25" selection-end-line="189" selection-end-column="25" />
+                  <folding>
+                    <element signature="e#66#131#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -102,10 +155,12 @@
       <find>shu</find>
       <find>matches</find>
       <find>CellMode</find>
+      <find>image/</find>
     </findStrings>
     <replaceStrings>
       <replace>plot_bode_results</replace>
       <replace>h_aux</replace>
+      <replace>images/</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -127,12 +182,12 @@
         <option value="$PROJECT_DIR$/app/approximators/approximator.py" />
         <option value="$PROJECT_DIR$/tests/test_cell_group.py" />
         <option value="$PROJECT_DIR$/app/cells/active_first_order.py" />
-        <option value="$PROJECT_DIR$/app/cells/sallen_key.py" />
         <option value="$PROJECT_DIR$/app/cells/electronics.py" />
         <option value="$PROJECT_DIR$/app/cells/fleischer_tow.py" />
-        <option value="$PROJECT_DIR$/tests/test_cells.py" />
         <option value="$PROJECT_DIR$/app/cells/html_generator.py" />
         <option value="$PROJECT_DIR$/app/cells/cell.py" />
+        <option value="$PROJECT_DIR$/tests/test_cells.py" />
+        <option value="$PROJECT_DIR$/app/cells/sallen_key.py" />
       </list>
     </option>
   </component>
@@ -168,13 +223,6 @@
             <path>
               <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
               <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="cells" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -189,6 +237,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/tests/test_approximator.py" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lucas\source\repos\filters-tool\app" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -201,7 +254,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_cells.test_design">
+  <component name="RunManager" selected="Python tests.pytest for test_cells.test_stages_html">
     <configuration name="Unnamed" type="Tox" factoryName="Tox" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -264,21 +317,6 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_cells.test_description" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="filters-tool" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cells.test_description&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="pytest for test_cells.test_design" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -324,6 +362,21 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest for test_cells.test_stages_html" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="filters-tool" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_cells.test_stages_html&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="pytest for test_cells.test_validation" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -340,23 +393,23 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Tox.Unnamed" />
-      <item itemvalue="Python tests.pytest for test_approximator.test_by_max_q" />
-      <item itemvalue="Python tests.pytest for test_approximator.test_by_template_denorm" />
       <item itemvalue="Python tests.pytest for test_approximator.test_low_pass_template" />
-      <item itemvalue="Python tests.pytest for test_cells.test_description" />
+      <item itemvalue="Python tests.pytest for test_approximator.test_by_template_denorm" />
+      <item itemvalue="Python tests.pytest for test_approximator.test_by_max_q" />
       <item itemvalue="Python tests.pytest for test_cells.test_design" />
+      <item itemvalue="Python tests.pytest for test_cells.test_validation" />
       <item itemvalue="Python tests.pytest for test_cells.test_parameters" />
       <item itemvalue="Python tests.pytest for test_cells.test_sensitivities" />
-      <item itemvalue="Python tests.pytest for test_cells.test_validation" />
+      <item itemvalue="Tox.Unnamed" />
+      <item itemvalue="Python tests.pytest for test_cells.test_stages_html" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for test_cells.test_stages_html" />
         <item itemvalue="Python tests.pytest for test_cells.test_design" />
         <item itemvalue="Python tests.pytest for test_cells.test_parameters" />
         <item itemvalue="Python tests.pytest for test_cells.test_sensitivities" />
         <item itemvalue="Python tests.pytest for test_cells.test_validation" />
-        <item itemvalue="Python tests.pytest for test_cells.test_description" />
       </list>
     </recent_temporary>
   </component>
@@ -374,35 +427,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 03h 58m 31s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 03h 58m 43s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 03h 58m 51s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 04h 02m 31s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 04h 04m 50s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 04h 05m 13s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 04h 06m 16s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 04h 06m 47s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 04h 06m 56s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
     <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 04h 10m 38s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 06h 06m 35s.xml">
+      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 06h 07m 32s.xml">
+      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 06h 10m 51s.xml">
+      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 06h 12m 45s.xml">
+      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_stages_html - 2019.11.01 at 06h 15m 25s.xml">
+      <configuration name="pytest for test_cells.test_stages_html" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_stages_html - 2019.11.01 at 06h 15m 40s.xml">
+      <configuration name="pytest for test_cells.test_stages_html" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_stages_html - 2019.11.01 at 06h 15m 43s.xml">
+      <configuration name="pytest for test_cells.test_stages_html" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_stages_html - 2019.11.01 at 06h 15m 49s.xml">
+      <configuration name="pytest for test_cells.test_stages_html" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -414,8 +467,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.83630955" weight="0.049099836" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" visible="true" weight="0.049099836" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.83630955" visible="true" weight="0.43371522" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" weight="0.049099836" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -466,13 +519,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/requirements">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-1623898337/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -717,41 +763,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3494">
-          <caret line="196" column="21" selection-start-line="196" selection-start-column="21" selection-end-line="196" selection-end-column="21" />
-          <folding>
-            <element signature="e#66#131#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/images/sallen_key_high_pass.png">
+    <entry file="file://$PROJECT_DIR$/app/images/sallen_key_high_pass.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/images/sallen_key_low_pass.png">
+    <entry file="file://$PROJECT_DIR$/app/images/sallen_key_low_pass.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/images/sallen_key_low_pass_attenuation.png">
+    <entry file="file://$PROJECT_DIR$/app/images/sallen_key_low_pass_attenuation.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/images/sallen_key_low_pass_unity.png">
+    <entry file="file://$PROJECT_DIR$/app/images/sallen_key_low_pass_unity.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/images/sallen_key_high_pass_unity.png">
+    <entry file="file://$PROJECT_DIR$/app/images/sallen_key_high_pass_unity.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/images/fleischer_tow_high_pass.png">
+    <entry file="file://$PROJECT_DIR$/app/images/fleischer_tow_high_pass.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/images/fleischer_tow_band_stop.png">
+    <entry file="file://$PROJECT_DIR$/app/images/fleischer_tow_band_stop.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/images/fleischer_tow_band_pass.png">
+    <entry file="file://$PROJECT_DIR$/app/images/fleischer_tow_band_pass.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/images/fleischer_tow_low_pass.png">
+    <entry file="file://$PROJECT_DIR$/app/images/fleischer_tow_low_pass.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
@@ -764,10 +800,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/cells/html_generator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="113" selection-start-line="113" selection-end-line="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="170" selection-start-line="170" selection-end-line="170" />
+          <folding>
+            <element signature="e#47#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3969">
-          <caret line="201" column="18" selection-start-line="201" selection-start-column="18" selection-end-line="201" selection-end-column="18" />
+        <state relative-caret-position="79">
+          <caret line="544" column="35" selection-start-line="544" selection-start-column="35" selection-end-line="544" selection-end-column="35" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
           </folding>
@@ -776,37 +839,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/fleischer_tow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
-          <folding>
-            <element signature="e#47#51#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="107">
+          <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/html_generator.py">
+    <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1123">
-          <caret line="25" column="55" selection-start-line="25" selection-start-column="55" selection-end-line="25" selection-end-column="55" />
+        <state relative-caret-position="105">
+          <caret line="189" column="25" lean-forward="true" selection-start-line="189" selection-start-column="25" selection-end-line="189" selection-end-column="25" />
           <folding>
-            <element signature="e#22#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2967">
-          <caret line="208" column="43" selection-start-line="208" selection-start-column="43" selection-end-line="208" selection-end-column="43" />
-          <folding>
-            <element signature="e#47#68#0" expanded="true" />
+            <element signature="e#66#131#0" expanded="true" />
           </folding>
         </state>
       </provider>

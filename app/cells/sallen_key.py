@@ -203,7 +203,7 @@ class SallenKeyLowPassUnityGain(Cell):
         super(SallenKeyLowPassUnityGain, self).__init__(
             "Sallen Key Low Pass",
             CellType.LOW_PASS.value,
-            "app/image/sallen_key_low_pass_unity.png"
+            "app/images/sallen_key_low_pass_unity.png"
         )
 
         self.options = {
@@ -329,7 +329,7 @@ class SallenKeyLowPassAttenuation(Cell):
         super(SallenKeyLowPassAttenuation, self).__init__(
             "Sallen Key Low Pass",
             CellType.LOW_PASS.value,
-            "app/image/sallen_key_low_pass_attenuation.png"
+            "app/images/sallen_key_low_pass_attenuation.png"
         )
 
         self.options = {
@@ -477,7 +477,7 @@ class SallenKeyHighPassGain(SallenKeyLowPassGain):
     def __init__(self):
         super(SallenKeyHighPassGain, self).__init__()
 
-        self.circuit = "app/image/sallen_key_high_pass.png"
+        self.circuit = "app/images/sallen_key_high_pass.png"
         self.name = "Sallen Key High Pass"
         self.type = CellType.HIGH_PASS.value
 
@@ -542,7 +542,7 @@ class SallenKeyHighPassUnityGain(SallenKeyLowPassUnityGain):
     def __init__(self):
         super(SallenKeyHighPassUnityGain, self).__init__()
 
-        self.circuit = "app/image/sallen_key_high_pass_unity.png"
+        self.circuit = "app/images/sallen_key_high_pass_unity.png"
         self.name = "Sallen Key High Pass"
         self.type = CellType.HIGH_PASS.value
 

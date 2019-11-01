@@ -90,6 +90,10 @@ class Cell:
         """ Returns the type of transfer function that can be implemented with this cell. """
         return self.type
 
+    def get_components(self) -> dict:
+        """ Returns the dictionary of components """
+        return self.components
+
     def get_results(self) -> list:
         """ Returns the list of possible results of components. """
         return self.results
