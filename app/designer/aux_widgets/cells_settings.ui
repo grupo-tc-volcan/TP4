@@ -38,6 +38,12 @@
      <property name="dragDropMode">
       <enum>QAbstractItemView::InternalMove</enum>
      </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
     </widget>
    </item>
    <item row="5" column="0">
@@ -70,6 +76,12 @@
      <property name="dragDropMode">
       <enum>QAbstractItemView::InternalMove</enum>
      </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
     </widget>
    </item>
    <item row="0" column="0">
@@ -88,6 +100,11 @@
      <item>
       <property name="text">
        <string>Sallen-Key</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Fleischer-Tow</string>
       </property>
      </item>
      <item>
@@ -113,11 +130,6 @@
      <item>
       <property name="text">
        <string>Ackerberg-Mossber</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Fleischer-Tow</string>
       </property>
      </item>
     </widget>

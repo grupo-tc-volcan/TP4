@@ -53,6 +53,7 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
             else:
                 self.stop_freq.setDisabled(True)
 
+            self.tol.setDisabled(True)
             self.order.setEnabled(True)
             self.q_fixed.setDisabled(True)
 

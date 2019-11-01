@@ -54,6 +54,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.v_max.editingFinished.connect(self.update_dynamic_range)
         self.automatic_cascade.released.connect(self.calculate_automatic_cascade)
         self.proceed_to_design.released.connect(self.set_up_cells_tab)
+        self.stages_list_cells.itemSelectionChanged.connect(self.stage_selected)
 
         # Loading callbacks
         self.stages_list.drag_action = self.pass_data_from_stages
@@ -241,6 +242,9 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
 
     def set_up_cells_tab(self):
+        # Switching to Cells tab
+        self.process_tabs.setCurrentIndex(2)
+
         # Adding stages
         self.copy_stage_list()
 
@@ -250,6 +254,11 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             cell_data = self.stages_list_cells.itemWidget(self.stages_list_cells.item(i)).cell_data
             new_cell_setting = CellsSettings(cell_data)
             self.cells_settings.setCurrentIndex(self.cells_settings.addWidget(new_cell_setting))
+
+
+    def stage_selected(self):
+        index = self.stages_list_cells.currentRow()
+        self.cells_settings.setCurrentIndex(index + 2)
 
 
 ############# METHODS FOR PLOTTING #############
