@@ -96,3 +96,8 @@ class GaussApprox(GroupDelayFilterApproximator):
             p.real < -1e-10)]  # me quedo con los polos del semiplano izquierdo. -1e-10 xq sino n=7 me quedaba inestable, problema: queda de un orden menos para n impar!!!!!
         k = np.prod(abs(p))  # para que la ganancia sea 1
         return [], p, k
+
+
+
+"""This code was written by Nicol\'as Trozzo, Santiago Arribere and Pablo Scheinfeld but adapted to work on our scheme.
+If it wasn't by this code, our lives would be filled with pain. Thank you very much (We love you)"""
