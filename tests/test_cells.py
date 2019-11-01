@@ -23,6 +23,8 @@ from app.cells.fleischer_tow import FleischerTowHighPass
 
 from app.cells.cell import CellErrorCodes
 
+from app.cells.html_generator import generate_by_stages
+
 
 @pytest.fixture
 def cell():

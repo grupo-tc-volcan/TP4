@@ -73,6 +73,8 @@ class Cell:
         else:
             if gain < 0 and not self.options["inverter"]:
                 return False
+            elif gain > 0 and self.options["inverter"]:
+                return False
             if abs(gain) > 1:
                 return self.options["canGain"]
             elif abs(gain) == 1:
@@ -200,6 +202,11 @@ class CellGroup:
     def get_name(self) -> str:
         """ Returns the name of the group of cells. """
         return self.name
+
+    def get_type(self) -> str:
+        """ Returns the current target type. """
+        self._verify_cell()
+        return self.current_cell.get_type()
 
     def get_available_types(self) -> list:
         """ Returns a list of the available types of cells in this group. """
