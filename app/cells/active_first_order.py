@@ -130,9 +130,9 @@ class CompensatedIntegrator(Cell):
 
     def __init__(self):
         super(CompensatedIntegrator, self).__init__(
-            "Compensated Integrator",
-            CellType.LOW_PASS.value,
-            "app/images/compensated_integrator.png"
+            "Compensated Integrator",   # Name
+            CellType.LOW_PASS.value,    # Type
+            "app/images/compensated_integrator.png"     # Circuit path
         )
 
         self.options = {
@@ -173,7 +173,7 @@ class CompensatedIntegrator(Cell):
                 fixed_two_values=[r2_option for r2_option, _ in r2_c1_options]
             )
 
-            # Cross selection of possible values of components
+            # Cross selection of possible values of components [ (R1, R2), (R1, R2) ] [(R2, C1), (R2, C1)]
             self.results = nexpand_component_list(self.results, r1_r2_options, "R1", "R2")
             self.results = nexpand_component_list(self.results, r2_c1_options, "R2", "C1")
             self.flush_results()

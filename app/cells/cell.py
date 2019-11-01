@@ -27,23 +27,6 @@ class CellError(Exception):
         self.error_code = error_code
 
 
-class CellMode(Enum):
-    """ If it is needed, a general definition is provided for those cells that may need
-    change internally some computing process when is gain or attenuation... """
-    GAIN = "gain"
-    UNITY_GAIN = "unity-gain"
-    ATTENUATION = "attenuation"
-
-    @staticmethod
-    def float_to_cell_mode(value: float):
-        if value < 1:
-            return CellMode.ATTENUATION
-        elif value == 1:
-            return CellMode.UNITY_GAIN
-        else:
-            return CellMode.GAIN
-
-
 class CellType(Enum):
     """ Internal mapping of filter types, strings are expected and are matched
     with these enumerated values. """
@@ -90,7 +73,6 @@ class Cell:
         else:
             if gain < 0 and not self.options["inverter"]:
                 return False
-
             if abs(gain) > 1:
                 return self.options["canGain"]
             elif abs(gain) == 1:
@@ -241,7 +223,6 @@ class CellGroup:
     # -------------- #
     # Public Methods #
     # -------------- #
-    
     def set_cell(self, cell_type: str, gain):
         """ Sets the current working cell that will be used.
             Either gain or mode can be used to define which cell is used, but at least one is needed. """

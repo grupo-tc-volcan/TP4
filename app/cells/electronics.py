@@ -5,6 +5,8 @@ import numpy as np
 
 # Python native modules
 from enum import Enum
+from random import *
+from time import *
 
 import math
 
@@ -137,6 +139,14 @@ def matches_commercial_values(component_type: ComponentType, component_value: fl
             return True, commercial_value * multiplier
         elif commercial_value > nominal:
             return False, None
+
+
+def random_commercial(component_type: ComponentType) -> float:
+    """ Returns a random commercial value for the given ComponentType """
+    seed(time())
+    multiplier = choice(get_multiplier_by_type(component_type))
+    nominal = choice(get_commercial_by_type(component_type))
+    return nominal * multiplier
 
 
 def get_commercial_by_type(component_type: ComponentType) -> list:
