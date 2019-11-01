@@ -4,6 +4,14 @@
 from math import *
 
 # Project modules
+from app.cells.electronics import compute_commercial_by_iteration
+from app.cells.electronics import matches_commercial_values
+from app.cells.electronics import nexpand_component_list
+from app.cells.electronics import random_commercial
+from app.cells.electronics import ComponentType
+
+from app.cells.cell import CellErrorCodes
+from app.cells.cell import CellError
 from app.cells.cell import CellType
 from app.cells.cell import Cell
 
@@ -282,7 +290,7 @@ class FleischerTowHighPass(Cell):
     # Public Methods #
     # -------------- #
     def get_parameters(self) -> tuple:
-        zeros = {}
+        zeros = {"wz": 0, "nz": 2}
         poles = {"wp": self.wp(), "qp": self.qp()}
         gain = self.k()
         return zeros, poles, gain
@@ -328,7 +336,48 @@ class FleischerTowHighPass(Cell):
         }
 
     def design_components(self, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
-        pass
+        if "wp" not in poles.keys() or "qp" not in poles.keys() or gain >= 0:
+            raise CellError(CellErrorCodes.INVALID_PARAMETERS)
+        else:
+            self.results = []
+
+            # Using the gain, we calculate R6, R7 and R8, using that R7 = R8
+            r8_r6 = compute_commercial_by_iteration(
+                ComponentType.Resistor, ComponentType.Resistor,
+                lambda r6: gain * (- r6),
+                self.error
+            )
+            r8_r7_r6 = [(r8, r8, r6) for r8, r6 in r8_r6]
+
+            # Using R = R2 = R3 and C = C1 = C2 to calculate values
+            r_c = compute_commercial_by_iteration(
+                ComponentType.Resistor, ComponentType.Capacitor,
+                lambda c: 1 / (poles["wp"] * c),
+                self.error
+            )
+            r2_r3_c1_c2 = [(r, r, c, c) for r, c in r_c]
+
+            # Calculate R1 and R4
+            r1_r2 = compute_commercial_by_iteration(
+                ComponentType.Resistor, ComponentType.Resistor,
+                lambda r2: r2 * poles["qp"],
+                self.error,
+                fixed_two_values=[r2 for r2, r3, c1, c2 in r2_r3_c1_c2]
+            )
+
+            r4_r1 = compute_commercial_by_iteration(
+                ComponentType.Resistor, ComponentType.Resistor,
+                lambda r1: -r1 / gain,
+                self.error,
+                fixed_two_values=[r1 for r1, r2 in r1_r2]
+            )
+
+            self.results = nexpand_component_list(self.results, r4_r1, "R4", "R1")
+            self.results = nexpand_component_list(self.results, r1_r2, "R1", "R2")
+            self.results = nexpand_component_list(self.results, r2_r3_c1_c2, "R2", "R3", "C1", "C2")
+            self.results = nexpand_component_list(self.results, r8_r7_r6, "R8", "R7", "R6")
+            self.flush_results()
+            self.choose_random_result()
 
     # --------------- #
     # Private Methods #
@@ -436,7 +485,41 @@ class FleischerTowLowPass(Cell):
         }
 
     def design_components(self, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
-        pass
+        if "wp" not in poles.keys() or "qp" not in poles.keys() or gain >= 0:
+            raise CellError(CellErrorCodes.INVALID_PARAMETERS)
+        else:
+            self.results = []
+
+            # Using the gain calculates posible values for R2 and R5
+            r2_r5 = compute_commercial_by_iteration(
+                ComponentType.Resistor, ComponentType.Resistor,
+                lambda r5: gain * (-r5),
+                self.error
+            )
+
+            # Random values for R7 and R8
+            r7 = r8 = random_commercial(ComponentType.Resistor)
+
+            # Using R2 values, get possible values for R3 and C=C1=C2
+            r3_c1_c2_r2_r1 = []
+            for r2, r5 in r2_r5:
+                r3_c = compute_commercial_by_iteration(
+                    ComponentType.Resistor, ComponentType.Capacitor,
+                    lambda c: 1 / ((poles["wp"] ** 2) * (c ** 2) * r2),
+                    self.error
+                )
+                for r3, c in r3_c:
+                    r1 = poles["qp"] * sqrt(r2 * r3)
+                    matches, commercial = matches_commercial_values(ComponentType.Resistor, r1, self.error)
+                    if matches:
+                        r3_c1_c2_r2_r1.append((r3, c, c, r2, commercial))
+
+            # Cross selection
+            self.results = nexpand_component_list(self.results, r3_c1_c2_r2_r1, "R3", "C1", "C2", "R2", "R1")
+            self.results = nexpand_component_list(self.results, r2_r5, "R2", "R5")
+            self.results = nexpand_component_list(self.results, [(r7, r8)], "R7", "R8")
+            self.flush_results()
+            self.choose_random_result()
 
     # --------------- #
     # Private Methods #
