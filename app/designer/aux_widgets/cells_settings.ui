@@ -14,6 +14,64 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Components&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QListWidget" name="cell_components">
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>true</bool>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::InternalMove</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QPushButton" name="report_button">
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>HTML Report</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QListWidget" name="cell_sensitivities">
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>true</bool>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::InternalMove</enum>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QComboBox" name="cell_selector">
      <property name="maximumSize">
@@ -70,53 +128,9 @@
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QPushButton" name="report_button">
-     <property name="maximumSize">
-      <size>
-       <width>300</width>
-       <height>16777215</height>
-      </size>
-     </property>
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>HTML Report</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QListWidget" name="cell_components">
-     <property name="maximumSize">
-      <size>
-       <width>300</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="dragEnabled">
-      <bool>true</bool>
-     </property>
-     <property name="dragDropOverwriteMode">
-      <bool>true</bool>
-     </property>
-     <property name="dragDropMode">
-      <enum>QAbstractItemView::InternalMove</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QListWidget" name="cell_sensitivities">
-     <property name="maximumSize">
-      <size>
-       <width>300</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="dragEnabled">
-      <bool>true</bool>
-     </property>
-     <property name="dragDropOverwriteMode">
-      <bool>true</bool>
-     </property>
-     <property name="dragDropMode">
-      <enum>QAbstractItemView::InternalMove</enum>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Parameters&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>

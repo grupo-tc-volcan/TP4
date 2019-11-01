@@ -242,7 +242,11 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
     def set_up_cells_tab(self):
         self.copy_stage_list()
 
-        
+        for i in range(self.stages_list_cells.count()):
+            # Adding stage settings
+            cell_data = self.stages_list_cells.itemWidget(self.stages_list_cells.item(i)).cell_data
+            new_cell_setting = CellsSettings(cell_data)
+            self.cells_settings.setCurrentIndex(self.cells_settings.addWidget(self.plotters[6].canvas))
 
 
 ############# METHODS FOR PLOTTING #############

@@ -752,7 +752,7 @@
         <string>Cells</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_17">
-        <item row="0" column="1">
+        <item row="0" column="2">
          <widget class="QStackedWidget" name="cells_settings">
           <property name="maximumSize">
            <size>
@@ -764,7 +764,7 @@
           <widget class="QWidget" name="page_15"/>
          </widget>
         </item>
-        <item row="1" column="0" colspan="2">
+        <item row="1" column="0" colspan="3">
          <widget class="QListWidget" name="stages_list_cells">
           <property name="maximumSize">
            <size>
@@ -789,20 +789,11 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QStackedWidget" name="stackedWidget">
-          <widget class="QWidget" name="page_38">
-           <layout class="QGridLayout" name="gridLayout_18">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>TextLabel</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="page_39"/>
+        <item row="0" column="0" colspan="2">
+         <widget class="QLabel" name="stage_circuit">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Stage circuit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
          </widget>
         </item>
        </layout>
