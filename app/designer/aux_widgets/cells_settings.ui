@@ -38,6 +38,12 @@
      <property name="dragDropMode">
       <enum>QAbstractItemView::InternalMove</enum>
      </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
     </widget>
    </item>
    <item row="5" column="0">
@@ -69,6 +75,12 @@
      </property>
      <property name="dragDropMode">
       <enum>QAbstractItemView::InternalMove</enum>
+     </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
      </property>
     </widget>
    </item>

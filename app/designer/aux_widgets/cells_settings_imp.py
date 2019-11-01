@@ -17,9 +17,10 @@ class CellsSettings(QtWid.QWidget, Ui_CellsSettings):
         self.setupUi(self)
 
         self.cell_data = cell_data
-        self.cell_designers = [ActiveFirstOrder(), ActiveFirstOrder(), SallenKey(), None, None, None, None, None, None]
+        self.cell_designers = [ActiveFirstOrder(), SallenKey(), None, None, None, None, None, None]
 
         self.check_available_cells()
+        self.design_cell()
 
 
     def check_available_cells(self):
@@ -70,15 +71,21 @@ class CellsSettings(QtWid.QWidget, Ui_CellsSettings):
             # Designing cell
             cell_selected = self.cell_selector.currentIndex()
             cell_type = self.cell_data['type']
-            gain = self.cell_data['gain_data']
-            zeros = {
-                'wz': self.cell_data['zero']['f0'] * 2*np.pi,
-                'nz': self.cell_data['zero']['n'] 
-            }
+            gain = 10**(self.cell_data['gain_data']/20)
+            if self.cell_data['pole']['n'] == 1:
+                gain = -gain
+            if self.cell_data['zero'] is not None:
+                zeros = {
+                    'wz': self.cell_data['zero']['f0'] * 2*np.pi,
+                    'nz': self.cell_data['zero']['n'] 
+                }
+            else:
+                zeros = None
             poles = {
                 'wp': self.cell_data['pole']['fp'] * 2*np.pi,
                 'qp': self.cell_data['pole']['q'] 
             }
+
 
             self.cell_designers[cell_selected].set_cell(cell_type, gain)
             self.cell_designers[cell_selected].design_components(zeros, poles, gain)
@@ -112,39 +119,41 @@ class CellsSettings(QtWid.QWidget, Ui_CellsSettings):
     def add_parameters_and_sensitivies(self, zeros, poles, gain, sensitivities):
         self.cell_sensitivities.clear()
         
-        new_parameter_block = CompParBlock()
-        new_parameter_block.comp.setText('f0:')
-        new_parameter_block.val.setValue(zeros['wz'] / 2*np.pi)
-        new_item = QtWid.QListWidgetItem()
-        new_item.setSizeHint(new_parameter_block.sizeHint())
-        self.insertItem(0, new_item)
-        self.setItemWidget(new_item, new_parameter_block)
+        if self.cell_data['zero'] is not None:
+            new_parameter_block = CompParBlock()
+            new_parameter_block.comp.setText('f0:')
+            new_parameter_block.val.setValue(zeros['wz'] / 2*np.pi)
+            new_item = QtWid.QListWidgetItem()
+            new_item.setSizeHint(new_parameter_block.sizeHint())
+            self.cell_sensitivities.insertItem(0, new_item)
+            self.cell_sensitivities.setItemWidget(new_item, new_parameter_block)
 
         new_parameter_block = CompParBlock()
         new_parameter_block.comp.setText('fp:')
         new_parameter_block.val.setValue(poles['wp'] / 2*np.pi)
         new_item = QtWid.QListWidgetItem()
         new_item.setSizeHint(new_parameter_block.sizeHint())
-        self.insertItem(1, new_item)
-        self.setItemWidget(new_item, new_parameter_block)
+        self.cell_sensitivities.insertItem(1, new_item)
+        self.cell_sensitivities.setItemWidget(new_item, new_parameter_block)
 
-        new_parameter_block = CompParBlock()
-        new_parameter_block.comp.setText('Q:')
-        new_parameter_block.val.setValue(poles['qp'])
-        new_item = QtWid.QListWidgetItem()
-        new_item.setSizeHint(new_parameter_block.sizeHint())
-        self.insertItem(2, new_item)
-        self.setItemWidget(new_item, new_parameter_block)
+        if self.cell_data['pole']['n'] == 2:
+            new_parameter_block = CompParBlock()
+            new_parameter_block.comp.setText('Q:')
+            new_parameter_block.val.setValue(poles['qp'])
+            new_item = QtWid.QListWidgetItem()
+            new_item.setSizeHint(new_parameter_block.sizeHint())
+            self.cell_sensitivities.insertItem(2, new_item)
+            self.cell_sensitivities.setItemWidget(new_item, new_parameter_block)
 
         for sensitivity in sensitivities.keys():
             for parameter in sensitivities[sensitivity]:
                 new_component_block = CompParBlock()
-                new_component_block.comp.setText(sensitivity + '->' + parameter + ':')
+                new_component_block.comp.setText('S' + sensitivity + '->' + parameter + ':')
                 new_component_block.val.setValue(sensitivities[sensitivity][parameter])
 
-                index = self.cell_components.count()
+                index = self.cell_sensitivities.count()
 
                 new_item = QtWid.QListWidgetItem()
                 new_item.setSizeHint(new_component_block.sizeHint())
-                self.cell_components.insertItem(index, new_item)
-                self.cell_components.setItemWidget(new_item, new_component_block)
+                self.cell_sensitivities.insertItem(index, new_item)
+                self.cell_sensitivities.setItemWidget(new_item, new_component_block)

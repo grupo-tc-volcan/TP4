@@ -210,8 +210,8 @@ class CellGroup:
                     for option in self.mapping_types[cell_type]:
                         if option.is_valid_gain_mode(gain):
                             return True
-                        else:
-                            return False
+                    else:
+                        return False
                 else:
                     return self.mapping_types[cell_type].is_valid_gain_mode(gain)
 
