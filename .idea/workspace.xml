@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/approximators/gauss.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/approximators/gauss.py" afterDir="false" />
-    </list>
+    <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,11 +10,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1130">
-              <caret line="726" column="41" selection-start-line="726" selection-start-column="39" selection-end-line="726" selection-end-column="41" />
+            <state relative-caret-position="83">
+              <caret line="547" column="54" lean-forward="true" selection-start-line="547" selection-start-column="54" selection-end-line="547" selection-end-column="54" />
               <folding>
                 <element signature="e#22#47#0" expanded="true" />
               </folding>
@@ -63,7 +61,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/approximators/gauss.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="321">
@@ -135,8 +133,8 @@
       <find>shu</find>
       <find>prod</find>
       <find>h_aux</find>
-      <find>signal</find>
       <find>us</find>
+      <find>signal</find>
     </findStrings>
     <replaceStrings>
       <replace>plot_bode_results</replace>
@@ -454,14 +452,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1988111" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.832893" visible="true" weight="0.3281471" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.832893" weight="0.3281471" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8718626" weight="0.38189533" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -816,22 +813,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1130">
-          <caret line="726" column="41" selection-start-line="726" selection-start-column="39" selection-end-line="726" selection-end-column="41" />
-          <folding>
-            <element signature="e#22#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/approximators/gauss.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="321">
           <caret line="102" column="96" selection-start-line="102" selection-start-column="96" selection-end-line="102" selection-end-column="96" />
           <folding>
             <element signature="e#22#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/approximators/approximator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="547" column="54" lean-forward="true" selection-start-line="547" selection-start-column="54" selection-end-line="547" selection-end-column="54" />
+          <folding>
+            <element signature="e#22#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
