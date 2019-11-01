@@ -43,6 +43,7 @@ class SallenKeyLowPassGain(Cell):
         )
 
         self.options = {
+            "inverter": False,
             "canGain": True,
             "canUnityGain": False,
             "canAttenuate": False
@@ -206,6 +207,7 @@ class SallenKeyLowPassUnityGain(Cell):
         )
 
         self.options = {
+            "inverter": False,
             "canGain": False,
             "canUnityGain": True,
             "canAttenuate": False
@@ -331,6 +333,7 @@ class SallenKeyLowPassAttenuation(Cell):
         )
 
         self.options = {
+            "inverter": False,
             "canGain": False,
             "canUnityGain": False,
             "canAttenuate": True

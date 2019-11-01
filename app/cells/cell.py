@@ -36,7 +36,6 @@ class CellMode(Enum):
 
     @staticmethod
     def float_to_cell_mode(value: float):
-        value = abs(value)
         if value < 1:
             return CellMode.ATTENUATION
         elif value == 1:
@@ -75,6 +74,7 @@ class Cell:
 
         # Additional internal options of any cell
         self.options = {
+            "inverter": None,
             "canGain": None,
             "canUnityGain": None,
             "canAttenuate": None
@@ -88,7 +88,10 @@ class Cell:
         if gain is None and mode is None:
             raise CellError(CellErrorCodes.NOT_DEFINED_CELL)
         else:
-            target_mode = CellMode.float_to_cell_mode(gain) if gain is not None else mode
+            if gain < 0 and not self.options["inverter"]:
+                return False
+
+            target_mode = CellMode.float_to_cell_mode(abs(gain)) if gain is not None else mode
             if target_mode is CellMode.GAIN:
                 return self.options["canGain"]
             elif target_mode is CellMode.UNITY_GAIN:

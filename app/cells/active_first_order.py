@@ -43,6 +43,7 @@ class CompensatedDerivator(Cell):
         )
 
         self.options = {
+            "inverter": True,
             "canGain": True,
             "canUnityGain": True,
             "canAttenuate": True
@@ -135,6 +136,7 @@ class CompensatedIntegrator(Cell):
         )
 
         self.options = {
+            "inverter": True,
             "canGain": True,
             "canUnityGain": True,
             "canAttenuate": True
