@@ -15,6 +15,7 @@ from app.cells.sallen_key import SallenKeyLowPassAttenuation
 from app.cells.sallen_key import SallenKeyHighPassGain
 from app.cells.sallen_key import SallenKeyHighPassUnityGain
 
+from app.cells.fleischer_tow import FleischerTowBandPass
 from app.cells.fleischer_tow import FleischerTowLowPass
 from app.cells.fleischer_tow import FleischerTowHighPass
 
@@ -24,7 +25,7 @@ from app.cells.cell import CellErrorCodes
 @pytest.fixture
 def cell():
     # Change the returning cell to test it!
-    return FleischerTowHighPass()
+    return FleischerTowBandPass()
 
 
 def test_description(cell):
@@ -72,12 +73,12 @@ def test_sensitivities(cell):
 
 
 def test_design(cell):
-    cell.set_error(0.01)
+    cell.set_error(0.05)
 
     cell.design_components(
         {"wz": 0},
-        {"wp": 10000, "qp": 0.8},
-        -2
+        {"wp": 10000, "qp": 2},
+        2
     )
 
     print(cell.components)

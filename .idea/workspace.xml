@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/cells/cell.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/cell.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cells/electronics.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/electronics.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/cells/fleischer_tow.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/fleischer_tow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_cells.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_cells.py" afterDir="false" />
     </list>
@@ -14,14 +12,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.68324405">
+    <splitter split-orientation="horizontal" split-proportion="0.6103501">
       <split-first>
         <leaf>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/cells/fleischer_tow.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1221">
-                  <caret line="377" column="91" lean-forward="true" selection-start-line="377" selection-start-column="91" selection-end-line="377" selection-end-column="91" />
+                <state relative-caret-position="418">
+                  <caret line="263" selection-start-line="263" selection-end-line="263" />
                   <folding>
                     <element signature="e#47#51#0" expanded="true" />
                   </folding>
@@ -32,8 +30,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="96">
-                  <caret line="74" column="23" selection-start-line="74" selection-start-column="23" selection-end-line="74" selection-end-column="23" />
+                <state relative-caret-position="155">
+                  <caret line="79" column="29" selection-start-line="79" selection-start-column="29" selection-end-line="79" selection-end-column="29" />
                   <folding>
                     <element signature="e#22#35#0" expanded="true" />
                   </folding>
@@ -60,8 +58,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="53">
-                  <caret line="199" column="36" selection-start-line="199" selection-start-column="36" selection-end-line="199" selection-end-column="36" />
+                <state relative-caret-position="126">
+                  <caret line="201" column="18" lean-forward="true" selection-start-line="201" selection-start-column="18" selection-end-line="201" selection-end-column="18" />
                   <folding>
                     <element signature="e#24#45#0" expanded="true" />
                   </folding>
@@ -378,34 +376,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 01h 45m 28s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 01h 45m 54s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_cells_test_description - 2019.11.01 at 02h 29m 44s.xml">
+    <history-entry file="pytest_for_test_cells_test_description - 2019.11.01 at 02h 50m 17s.xml">
       <configuration name="pytest for test_cells.test_description" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_validation - 2019.11.01 at 02h 30m 38s.xml">
+    <history-entry file="pytest_for_test_cells_test_description - 2019.11.01 at 02h 50m 23s.xml">
+      <configuration name="pytest for test_cells.test_description" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_validation - 2019.11.01 at 02h 50m 30s.xml">
       <configuration name="pytest for test_cells.test_validation" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_parameters - 2019.11.01 at 02h 30m 46s.xml">
+    <history-entry file="pytest_for_test_cells_test_parameters - 2019.11.01 at 02h 50m 37s.xml">
       <configuration name="pytest for test_cells.test_parameters" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_sensitivities - 2019.11.01 at 02h 30m 53s.xml">
+    <history-entry file="pytest_for_test_cells_test_sensitivities - 2019.11.01 at 02h 50m 43s.xml">
       <configuration name="pytest for test_cells.test_sensitivities" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 02h 31m 25s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 02h 50m 50s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 02h 31m 32s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 02h 51m 10s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 02h 32m 49s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 02h 51m 18s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 02h 32m 55s.xml">
+    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 02h 52m 37s.xml">
+      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 02h 52m 40s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
   </component>
@@ -418,7 +416,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.83630955" visible="true" weight="0.56792146" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.83630955" visible="true" weight="0.3846154" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" weight="0.049099836" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -460,6 +458,11 @@
           <url>file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/core/decorators.py</url>
           <line>79</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/cells/fleischer_tow.py</url>
+          <line>263</line>
+          <option name="timeStamp" value="126" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -772,8 +775,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="53">
-          <caret line="199" column="36" selection-start-line="199" selection-start-column="36" selection-end-line="199" selection-end-column="36" />
+        <state relative-caret-position="126">
+          <caret line="201" column="18" lean-forward="true" selection-start-line="201" selection-start-column="18" selection-end-line="201" selection-end-column="18" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
           </folding>
@@ -792,8 +795,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/fleischer_tow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1221">
-          <caret line="377" column="91" lean-forward="true" selection-start-line="377" selection-start-column="91" selection-end-line="377" selection-end-column="91" />
+        <state relative-caret-position="418">
+          <caret line="263" selection-start-line="263" selection-end-line="263" />
           <folding>
             <element signature="e#47#51#0" expanded="true" />
           </folding>
@@ -802,8 +805,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="74" column="23" selection-start-line="74" selection-start-column="23" selection-end-line="74" selection-end-column="23" />
+        <state relative-caret-position="155">
+          <caret line="79" column="29" selection-start-line="79" selection-start-column="29" selection-end-line="79" selection-end-column="29" />
           <folding>
             <element signature="e#22#35#0" expanded="true" />
           </folding>

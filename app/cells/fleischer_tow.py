@@ -228,7 +228,45 @@ class FleischerTowBandPass(Cell):
         }
 
     def design_components(self, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
-        pass
+        if "wp" not in poles.keys() or "qp" not in poles.keys() or gain <= 0:
+            raise CellError(CellErrorCodes.INVALID_PARAMETERS)
+        else:
+            self.results = []
+
+            # Random values... why not?
+            r7 = r8 = random_commercial(ComponentType.Resistor)
+
+            # Calculate R1 and R4 to verify the gain of the filter
+            r1_r4 = compute_commercial_by_iteration(
+                ComponentType.Resistor, ComponentType.Resistor,
+                lambda r4: gain * r4,
+                self.error
+            )
+
+            # Using the previous R1 values, get the R = R2 = R3 values
+            r_r1 = compute_commercial_by_iteration(
+                ComponentType.Resistor, ComponentType.Resistor,
+                lambda r1: r1 / poles["qp"],
+                self.error,
+                fixed_two_values=[r1 for r1, r4 in r1_r4]
+            )
+            r1_r2_r3 = [(r1, r, r) for r, r1 in r_r1]
+
+            # Using that C=C1=C2 then calculate with the previous values of R
+            c_r = compute_commercial_by_iteration(
+                ComponentType.Capacitor, ComponentType.Resistor,
+                lambda r: 1 / (poles["wp"] * r),
+                self.error,
+                fixed_two_values=[r for r, r1 in r_r1]
+            )
+            c1_c2_r2 = [(c, c, r) for c, r in c_r]
+
+            self.results = nexpand_component_list(self.results, c1_c2_r2, "C1", "C2", "R2")
+            self.results = nexpand_component_list(self.results, r1_r2_r3, "R1", "R2", "R3")
+            self.results = nexpand_component_list(self.results, r1_r4, "R1", "R4")
+            self.results = nexpand_component_list(self.results, [(r7, r8)], "R7", "R8")
+            self.flush_results()
+            self.choose_random_result()
 
     # --------------- #
     # Private Methods #
