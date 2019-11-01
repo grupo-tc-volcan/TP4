@@ -496,10 +496,14 @@ class AttFilterApproximator:
         return True
 
 
-class GroupDelayFilterApproximator:
+class GroupDelayFilterApproximator():
     def __init__(self):
         # Data to perform approximation
         self.reset_parameters()
+
+    # ----------------#
+    # Public Methods #
+    # ----------------#
 
     def reset_parameters(self):
         """ Resets the parameters of the approximation to
@@ -514,9 +518,218 @@ class GroupDelayFilterApproximator:
         self.tol = 0
         self.ord = 0
         self.q = 0
-    
+
+        self.h_norm = None
+        self.h_denorm = None
+        self.error_code = None
+        self.denorm_order = 0
+
     def compute(self):
         """ Computes the transfer function with the filled parameters
         of the approximation. Any error will be returned as an error code.
         """
-        pass
+        error_code = self._validate()
+
+        # if data isa valid, calculate approximation
+        # When using a maximum Q value, iterates with fixed orders
+        # and verifies if matches...
+        begin_order = 1 if self.q > 0 else self.ord
+        end_order = MAXIMUM_ORDER if self.q > 0 else self.ord
+        for order in range(end_order, begin_order - 1, -1):
+            self.ord = order
+
+            # Normalising the filter template, choosing design mode between fixed order or
+            # a template based design, trying to match the given parameters
+            wan, aa, wfn, gdn, tolerance = self.get_norm_template()
+            if self.ord > 0:
+                try:
+                    error_code = self.compute_normalised_by_order(gdn, wfn, tolerance, self.ord)
+                    self.denorm_order = self.ord
+                except NotImplementedError:
+                    error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
+            else:
+                error_code = self.compute_normalised_by_template(gdn, wfn, aa, wan, tolerance)
+
+            # If maxima
+
+            # Denormalisation process, first we need to pass every transfer function
+            # to a TrasnferFunction object, using that apply the denormalisation
+            # algorithm of scipy.signal... finally translating ir to a ZeroPolesGain object!
+            if error_code is ApproximationErrorCode.OK:
+                error_code = self._denormalised_transfer_function()
+
+                # If using the Q maximum value mode of design, check if valid h_denorm
+                if error_code is ApproximationErrorCode.OK:
+                    if self.q > 0:
+                        if self.matches_selectivity(self.q, self.h_denorm):
+                            break
+                else:
+                    break
+
+        # if data is not valid, return error code
+        else:
+            self.error_code = error_code
+            return error_code
+
+    def get_norm_template(self) -> tuple:
+        """ Returns a 4-element tuple containing the normalised
+        parameters of the template.
+        Returns -> (wan, aa, wfn, gdn, tolerance)
+        """
+        return self._normalised_template()
+
+    def get_normalised_zpk(self):
+        """ Returns a tuple of three elements containing Zeros, Poles and Gain,
+        of the normalised transfer function.
+        Return -> (zeros, poles, gain) or None if not computed!
+        """
+        if self.h_norm is None:
+            return None
+        else:
+            return self.h_norm
+
+    def get_zpk(self):
+        """ Returns a tuple of three elements containing Zeros, Poles and Gain,
+        of the denormalised transfer function.
+        Return -> (zeros, poles, gain) or None if not computed!
+        """
+        if self.h_denorm is None:
+            return None
+        else:
+            return self.h_denorm
+
+    # -------------------------#
+    # Internal Public Methods #
+    # -------------------------#
+
+    def compute_normalised_by_template(self, gdn, wfn, aa, wan, tolerance) -> ApproximationErrorCode:
+        """ Generates normalised transfer function prioritising the normalised template and group delay """
+        return self._compute_normalised_by_match(gdn, wfn, tolerance, partial(self.matches_normalised_gd_temp, aa, wan, wfn, tolerance))
+
+    def compute_normalised_by_order(self, gdn, wfn, order) -> ApproximationErrorCode:
+        """ Generates normalised transfer function prioritising the fixed order """
+        raise NotImplementedError
+
+    # -----------------#
+    # Private Methods #
+    # -----------------#
+
+    def _validate(self) -> ApproximationErrorCode:
+        """ Returns if general parameters are valid """
+        if self.gain < 0:
+            return ApproximationErrorCode.INVALID_GAIN
+        elif self.group_delay < 0:
+            return ApproximationErrorCode.INVALID_GROUP_DELAY
+        elif self.ord < 0:
+            return ApproximationErrorCode.INVALID_ORDER
+        elif self.q < 0:
+            return ApproximationErrorCode.INVALID_Q
+        elif self.tol < 0 or self.tol > 100:
+            return ApproximationErrorCode.INVALID_TOLERANCE
+        elif self.ft <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.ord == 0 and self.q == 0:
+            if self.fa <= 0:
+                return ApproximationErrorCode.INVALID_FREQ
+            elif self.Aa <= 0:
+                return ApproximationErrorCode.INVALID_ATTE
+
+    def _compute_normalised_by_match(self, gdn, wfn, tolerance, callback) -> ApproximationErrorCode:
+        """ Generates normalised transfer function for each order until the callbacks
+        verifies it matches the requierements.
+        The callback should expect a ZerosPoleGain object from Scipy.Signal,
+        returning whether it verifies or not the requirements. """
+        for order in range(1, MAXIMUM_ORDER + 1):
+            try:
+                error_code = self.compute_normalised_by_order(gdn, wfn, tolerance, order)
+            except NotImplementedError:
+                error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
+
+            if error_code is ApproximationErrorCode.OK:
+                if callback(self.h_norm):
+                    self.denorm_order = order
+                    return ApproximationErrorCode.OK
+                else:
+                    self.h_norm = None
+            else:
+                return error_code
+        else:
+            return ApproximationErrorCode.MAXIMUM_ORDER_REACHED
+
+    def _denormalised_transfer_function(self):
+        raise NotImplementedError
+
+    # ----------------#
+    # Static Methods #
+    # ----------------#
+
+    @staticmethod
+    def calculate_xi(root):
+        k = (root.imag / root.real) ** 2
+        return np.sqrt(1 / (1 + k))
+
+    @staticmethod
+    def calculate_frequency(root):
+        xi = GroupDelayFilterApproximator.calculate_xi(root)
+        return root.real / (xi * 2 * np.pi)
+
+    @staticmethod
+    def calculate_selectivity(root):
+        xi = GroupDelayFilterApproximator.calculate_xi(root)
+        return 1 / (2 * xi)
+
+    @staticmethod
+    def adjust_function_gain(transfer_function, gain):
+        if transfer_function is not None:
+            current_gain = transfer_function.gain
+            for zero in transfer_function.zeros:
+                current_gain *= abs(zero)
+            for pole in transfer_function.poles:
+                current_gain /= abs(pole)
+
+            transfer_function.gain = (transfer_function.gain / current_gain) * gain
+
+    @staticmethod
+    def matches_normalised_gd_temp(aa,wa,wf,tolerance, zpk) -> bool:
+        """ Returns whether the ZeroPolesGain object verifies the normalised
+        template given by the aa, wa values. Also checks if  """
+        if zpk is None:
+            return False
+
+        w, mag, phase = ss.bode(zpk, w=[wa])
+        template_cond = mag[0] <= -aa
+        aux = zpk.to_tf()
+        w, h = ss.freqs(aux.num, aux.den)
+        gd = -np.diff(np.unwrap(np.angle(h))) / np.diff(w)
+        gd = np.divide(gd, gd[0])
+        index = 0
+        for i in gd:
+            if i < tolerance:
+                index = np.where(gd == i)
+                break
+        gd_cond = w[index] <= wf
+        return template_cond and gd_cond
+
+
+
+    @staticmethod
+    def matches_selectivity(max_q, zpk) -> bool:
+        """ Returns whether the ZeroPolesGain object does not exceed the maximum
+        selectivity value given by the user. """
+        if zpk is None:
+            return False
+
+        for pole in zpk.poles:
+            if pole.imag:
+                q = GroupDelayFilterApproximator.calculate_selectivity(pole)
+                if q > max_q:
+                    return False
+        return True
+
+    def _normalised_template(self) -> tuple:
+        """ Given the filter type and its parameters, it returns
+        a tuple containing the normalised parameters of the template.
+        Returns -> (wan, aa, wfn, gdn, tolerance)
+        """
+
+        return np.prod(np.prod(self.fa, np.pi), self.group_delay), self.Aa, np.prod(np.prod(self.ft, np.pi), self.group_delay), 1, self.tol
