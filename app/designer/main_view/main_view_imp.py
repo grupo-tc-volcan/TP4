@@ -1,6 +1,7 @@
 # Third-party modules
 import PyQt5.QtWidgets as QtWid
 import PyQt5.QtCore as QtCore
+import PyQt5.QtGui as QtGui
 
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
 
@@ -217,6 +218,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
 
     def calculate_automatic_cascade(self):
+        self.calculate_approx()
         self.stages_list.clear()
 
         # Loading transfer_function into plotter and setting filter type
@@ -252,13 +254,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         for i in range(self.stages_list_cells.count()):
             # Adding stage settings
             cell_data = self.stages_list_cells.itemWidget(self.stages_list_cells.item(i)).cell_data
-            new_cell_setting = CellsSettings(cell_data)
+            new_cell_setting = CellsSettings(cell_data, self.display_cell)
             self.cells_settings.setCurrentIndex(self.cells_settings.addWidget(new_cell_setting))
 
 
     def stage_selected(self):
         index = self.stages_list_cells.currentRow()
         self.cells_settings.setCurrentIndex(index + 2)
+        self.cells_settings.currentWidget().design_cell()
 
 
 ############# METHODS FOR PLOTTING #############
@@ -653,6 +656,11 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         # Cleaning data from drags of other lists
         self.stages_list.dropped_data = {}
+
+
+    def display_cell(self, path):
+        pixmap = QtGui.QPixmap(path)
+        self.stage_circuit.setPixmap(pixmap)
 
 
 ############# AUXILIARY METHODS #############

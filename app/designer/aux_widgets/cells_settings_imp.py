@@ -13,18 +13,28 @@ from app.cells.active_first_order import ActiveFirstOrder
 
 class CellsSettings(QtWid.QWidget, Ui_CellsSettings):
 
-    def __init__(self, cell_data, *args, **kwargs):
+    def __init__(self, cell_data, display_action=None, *args, **kwargs):
         super(CellsSettings, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
         self.cell_data = cell_data
         self.cell_designers = [ActiveFirstOrder(), SallenKey(), FleischerTow(), None, None, None, None, None]
 
+        # Callback for displaying circuit
+        if display_action is None:
+            self.display_circuit_action = self.ignore_data_action
+        else:
+            self.display_circuit_action = display_action
+
         self.check_available_cells()
         self.design_cell()
 
         # Signal and slot connections
         self.cell_selector.currentIndexChanged.connect(self.design_cell)
+
+
+    def ignore_data_action(self, *args, **kwargs):
+        pass
 
 
     def check_available_cells(self):
@@ -102,12 +112,16 @@ class CellsSettings(QtWid.QWidget, Ui_CellsSettings):
         sensitivities = self.cell_designers[cell_selected].get_sensitivities()
         self.add_parameters_and_sensitivies(zeros, poles, gain, sensitivities)
 
+        # Displaying circuit
+        path_to_circuit = self.cell_designers[cell_selected].get_circuit()
+        self.display_circuit_action(path_to_circuit)
+
         
     def add_components(self, components):
         self.cell_components.clear()
 
         for component in components.keys():
-            new_component_block = CompParBlock()
+            new_component_block = CompParBlock(self.update_components)
             new_component_block.comp.setText(component + ':')
             new_component_block.val.setValue(components[component])
 
@@ -123,26 +137,29 @@ class CellsSettings(QtWid.QWidget, Ui_CellsSettings):
         self.cell_sensitivities.clear()
         
         if self.cell_data['zero'] is not None:
-            new_parameter_block = CompParBlock()
+            new_parameter_block = CompParBlock(self.update_components)
             new_parameter_block.comp.setText('f0:')
             new_parameter_block.val.setValue(zeros['wz'] / 2*np.pi)
+            new_parameter_block.val.setReadOnly(True)
             new_item = QtWid.QListWidgetItem()
             new_item.setSizeHint(new_parameter_block.sizeHint())
             self.cell_sensitivities.insertItem(0, new_item)
             self.cell_sensitivities.setItemWidget(new_item, new_parameter_block)
 
-        new_parameter_block = CompParBlock()
+        new_parameter_block = CompParBlock(self.update_components)
         new_parameter_block.comp.setText('fp:')
         new_parameter_block.val.setValue(poles['wp'] / 2*np.pi)
+        new_parameter_block.val.setReadOnly(True)
         new_item = QtWid.QListWidgetItem()
         new_item.setSizeHint(new_parameter_block.sizeHint())
         self.cell_sensitivities.insertItem(1, new_item)
         self.cell_sensitivities.setItemWidget(new_item, new_parameter_block)
 
         if self.cell_data['pole']['n'] == 2:
-            new_parameter_block = CompParBlock()
+            new_parameter_block = CompParBlock(self.update_components)
             new_parameter_block.comp.setText('Q:')
             new_parameter_block.val.setValue(poles['qp'])
+            new_parameter_block.val.setReadOnly(True)
             new_item = QtWid.QListWidgetItem()
             new_item.setSizeHint(new_parameter_block.sizeHint())
             self.cell_sensitivities.insertItem(2, new_item)
@@ -150,9 +167,10 @@ class CellsSettings(QtWid.QWidget, Ui_CellsSettings):
 
         for sensitivity in sensitivities.keys():
             for parameter in sensitivities[sensitivity]:
-                new_component_block = CompParBlock()
+                new_component_block = CompParBlock(self.update_components)
                 new_component_block.comp.setText('S' + sensitivity + '->' + parameter + ':')
                 new_component_block.val.setValue(sensitivities[sensitivity][parameter])
+                new_component_block.val.setReadOnly(True)
 
                 index = self.cell_sensitivities.count()
 
@@ -160,3 +178,19 @@ class CellsSettings(QtWid.QWidget, Ui_CellsSettings):
                 new_item.setSizeHint(new_component_block.sizeHint())
                 self.cell_sensitivities.insertItem(index, new_item)
                 self.cell_sensitivities.setItemWidget(new_item, new_component_block)
+
+
+    def update_components(self, component, value):
+        cell_selected = self.cell_selector.currentIndex()
+
+        components = self.cell_designers[cell_selected].get_components()
+        components[component.split(':')[0]] = value
+
+        # Adding parameters and sensitivities
+        zeros, poles, gain = self.cell_designers[cell_selected].get_parameters()
+        sensitivities = self.cell_designers[cell_selected].get_sensitivities()
+        self.add_parameters_and_sensitivies(zeros, poles, gain, sensitivities)
+
+        # Displaying circuit
+        path_to_circuit = self.cell_designers[cell_selected].get_circuit()
+        self.display_circuit_action(path_to_circuit)

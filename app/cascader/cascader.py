@@ -70,10 +70,14 @@ class AutomaticCascader():
                             if len(pair[1]) == 1:
                                 for zero in self.zeros:
                                     if zero['f0'] == pair[1][0]  and not zero['used']:
-                                        #Finding matching zero
-                                        new_stage_data['zero'] = zero
-                                        new_stage_data['zero']['used'] = True
-                                        break
+                                        if pole['n'] >= zero['n']:
+                                            #Finding matching zero
+                                            new_stage_data['zero'] = zero
+                                            new_stage_data['zero']['used'] = True
+                                            break
+                                        else:
+                                            new_stage_data['zero'] = None
+                                            break
 
                             elif len(pair[1]) == 2:
                                 for zero in self.zeros:
@@ -172,7 +176,7 @@ class AutomaticCascader():
             aux_stage['v_min_data'] = v_min
             v_max, v_min = self.calculate_v_max_v_min(aux_stage, self.max_gain_for_stage(aux_stage))
 
-        dr = 20 * np.log10(v_max / v_min)
+        dr = abs(20 * np.log10(v_max / v_min))
         return dr
 
 
