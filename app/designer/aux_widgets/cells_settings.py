@@ -67,12 +67,12 @@ class Ui_CellsSettings(object):
         self.report_button.setText(_translate("CellsSettings", "HTML Report"))
         self.cell_selector.setItemText(0, _translate("CellsSettings", "Compensated Integrator/Derivator"))
         self.cell_selector.setItemText(1, _translate("CellsSettings", "Sallen-Key"))
-        self.cell_selector.setItemText(2, _translate("CellsSettings", "Rauch"))
-        self.cell_selector.setItemText(3, _translate("CellsSettings", "Sedra-Ghorab-Martin"))
-        self.cell_selector.setItemText(4, _translate("CellsSettings", "Kerwin-Huelsman-Newcom"))
-        self.cell_selector.setItemText(5, _translate("CellsSettings", "Tow-Thomas"))
-        self.cell_selector.setItemText(6, _translate("CellsSettings", "Ackerberg-Mossber"))
-        self.cell_selector.setItemText(7, _translate("CellsSettings", "Fleischer-Tow"))
+        self.cell_selector.setItemText(2, _translate("CellsSettings", "Fleischer-Tow"))
+        self.cell_selector.setItemText(3, _translate("CellsSettings", "Rauch"))
+        self.cell_selector.setItemText(4, _translate("CellsSettings", "Sedra-Ghorab-Martin"))
+        self.cell_selector.setItemText(5, _translate("CellsSettings", "Kerwin-Huelsman-Newcom"))
+        self.cell_selector.setItemText(6, _translate("CellsSettings", "Tow-Thomas"))
+        self.cell_selector.setItemText(7, _translate("CellsSettings", "Ackerberg-Mossber"))
         self.label_2.setText(_translate("CellsSettings", "<html><head/><body><p><span style=\" font-weight:600;\">Parameters and Sensitivities</span></p></body></html>"))
 
 

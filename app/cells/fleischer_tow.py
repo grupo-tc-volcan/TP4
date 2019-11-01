@@ -26,10 +26,10 @@ class FleischerTow(CellGroup):
         super(FleischerTow, self).__init__(
             "Fleischer Tow",
             {
-                CellType.LOW_PASS.value: FleischerTowLowPass,
-                CellType.HIGH_PASS.value: FleischerTowHighPass,
-                CellType.BAND_PASS.value: FleischerTowBandPass,
-                CellType.BAND_STOP.value: FleischerTowBandStop
+                CellType.LOW_PASS.value: FleischerTowLowPass(),
+                CellType.HIGH_PASS.value: FleischerTowHighPass(),
+                CellType.BAND_PASS.value: FleischerTowBandPass(),
+                CellType.BAND_STOP.value: FleischerTowBandStop()
             }
         )
 

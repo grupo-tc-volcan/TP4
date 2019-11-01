@@ -104,6 +104,11 @@
      </item>
      <item>
       <property name="text">
+       <string>Fleischer-Tow</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Rauch</string>
       </property>
      </item>
@@ -125,11 +130,6 @@
      <item>
       <property name="text">
        <string>Ackerberg-Mossber</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Fleischer-Tow</string>
       </property>
      </item>
     </widget>

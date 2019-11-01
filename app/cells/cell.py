@@ -73,6 +73,8 @@ class Cell:
         else:
             if gain < 0 and not self.options["inverter"]:
                 return False
+            elif gain > 0 and self.options["inverter"]:
+                return False
             if abs(gain) > 1:
                 return self.options["canGain"]
             elif abs(gain) == 1:
