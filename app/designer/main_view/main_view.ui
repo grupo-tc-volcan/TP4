@@ -810,5 +810,22 @@
   <include location="../resources/LP_template.qrc"/>
   <include location="../resources/BS_template.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>stages_list_cells</sender>
+   <signal>currentRowChanged(int)</signal>
+   <receiver>cells_settings</receiver>
+   <slot>setCurrentIndex(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>981</x>
+     <y>544</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>996</x>
+     <y>428</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

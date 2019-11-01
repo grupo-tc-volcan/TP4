@@ -454,7 +454,7 @@ class Ui_MainView(object):
         self.page_15.setObjectName("page_15")
         self.cells_settings.addWidget(self.page_15)
         self.gridLayout_17.addWidget(self.cells_settings, 0, 2, 1, 1)
-        self.stages_list_cells = QtWidgets.QListWidget(self.tab_cells)
+        self.stages_list_cells = StagesList(self.tab_cells)
         self.stages_list_cells.setMaximumSize(QtCore.QSize(16777215, 233))
         self.stages_list_cells.setDragEnabled(True)
         self.stages_list_cells.setDragDropOverwriteMode(True)
