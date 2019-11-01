@@ -21,6 +21,7 @@ from app.designer.aux_widgets.zero_block_imp import ZeroBlock
 from app.designer.aux_widgets.cell_block_imp import CellBlock
 from app.designer.aux_widgets.cells_settings_imp import CellsSettings
 
+from app.cells.html_generator import generate_by_stages
 from app.approximators.approximator import ApproximationErrorCode
 from app.plotter.plotter import FilterPlotter
 from app.auxiliary_calculators.wp_w0_q import SecondOrderAuxCalc
@@ -254,7 +255,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         for i in range(self.stages_list_cells.count()):
             # Adding stage settings
             cell_data = self.stages_list_cells.itemWidget(self.stages_list_cells.item(i)).cell_data
-            new_cell_setting = CellsSettings(cell_data, self.display_cell)
+            new_cell_setting = CellsSettings(cell_data, self.display_cell, self.report)
             self.cells_settings.setCurrentIndex(self.cells_settings.addWidget(new_cell_setting))
 
 
@@ -661,6 +662,17 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
     def display_cell(self, path):
         pixmap = QtGui.QPixmap(path)
         self.stage_circuit.setPixmap(pixmap)
+
+
+    def report(self):
+        cells_list = []
+        for i in range(self.cells_settings.count() - 2):
+            widget = self.cells_settings.widget(i + 2)
+            cell_index = widget.cell_selector.currentIndex()
+            cell = widget.cell_designers[cell_index]
+            cells_list.append(cell)
+
+        generate_by_stages(cells_list, "report.html")
 
 
 ############# AUXILIARY METHODS #############

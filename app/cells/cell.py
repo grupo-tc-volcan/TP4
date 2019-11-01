@@ -53,7 +53,7 @@ class Cell:
         self.circuit = circuit
         self.type = cell_type
         self.name = name
-        self.error = 0.1
+        self.error = 0.2
 
         # Additional internal options of any cell
         self.options = {
@@ -89,6 +89,10 @@ class Cell:
     def get_type(self) -> str:
         """ Returns the type of transfer function that can be implemented with this cell. """
         return self.type
+
+    def get_components(self) -> dict:
+        """ Returns the dictionary of components """
+        return self.components
 
     def get_results(self) -> list:
         """ Returns the list of possible results of components. """
@@ -202,6 +206,11 @@ class CellGroup:
     def get_name(self) -> str:
         """ Returns the name of the group of cells. """
         return self.name
+
+    def get_type(self) -> str:
+        """ Returns the current target type. """
+        self._verify_cell()
+        return self.current_cell.get_type()
 
     def get_available_types(self) -> list:
         """ Returns a list of the available types of cells in this group. """

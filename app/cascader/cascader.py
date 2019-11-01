@@ -55,7 +55,7 @@ class AutomaticCascader():
                 # Creating cell block
                 new_stage_data = {
                     'pole': {},
-                    'zero': {},
+                    'zero': None,
                     'gain_data': 0,
                     'type': '',
                     'v_min_data': 0.01,
@@ -247,7 +247,7 @@ class AutomaticCascader():
 
                 combinations[new_distance] = new_combinations
             
-        else:
+        elif len(poles) == 2:
             if zeros[0] is None:
                 dist_0_0 = dist_1_0 = np.inf
             else:
@@ -259,9 +259,13 @@ class AutomaticCascader():
             else:
                 dist_0_1 = abs(poles[0] - zeros[1])
                 dist_1_1 = abs(poles[1] - zeros[1])
+
                 
             combinations[dist_0_0 + dist_1_1] = [[poles[0], [zeros[0]]], [poles[1], [zeros[1]]]]
             combinations[dist_0_1 + dist_1_0] = [[poles[0], [zeros[1]]], [poles[1], [zeros[0]]]]
+
+        else:
+            combinations[0] = [[poles[0], [zeros[0]]]]
 
         min_distance = min(combinations.keys())
 
