@@ -21,7 +21,7 @@ from app.cells.cell import CellErrorCodes
 @pytest.fixture
 def cell():
     # Change the returning cell to test it!
-    return CompensatedDerivator()
+    return CompensatedIntegrator()
 
 
 def test_description(cell):

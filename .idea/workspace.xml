@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/app/cells/active_first_order.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/active_first_order.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cells/cell.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/cell.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/cells/sallen_key.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/sallen_key.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_cells.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_cells.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,76 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.13640313">
-      <split-first>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="123">
-                  <caret line="32" column="15" lean-forward="true" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
-                  <folding>
-                    <element signature="e#22#35#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/tests/test_cell_group.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1104">
-                  <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
-                  <folding>
-                    <element signature="e#22#35#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="72">
-                  <caret line="86" selection-start-line="84" selection-end-line="86" />
-                  <folding>
-                    <element signature="e#47#68#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="328">
-                  <caret line="138" column="29" selection-start-line="138" selection-start-column="29" selection-end-line="138" selection-end-column="29" />
-                  <folding>
-                    <element signature="e#66#131#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-5144">
-                  <caret line="335" column="30" selection-start-line="335" selection-start-column="30" selection-end-line="335" selection-end-column="30" />
-                  <folding>
-                    <element signature="e#24#45#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -128,9 +58,9 @@
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/app/approximators/approximator.py" />
         <option value="$PROJECT_DIR$/app/cells/electronics.py" />
-        <option value="$PROJECT_DIR$/tests/test_cells.py" />
         <option value="$PROJECT_DIR$/tests/test_cell_group.py" />
         <option value="$PROJECT_DIR$/app/cells/cell.py" />
+        <option value="$PROJECT_DIR$/tests/test_cells.py" />
         <option value="$PROJECT_DIR$/app/cells/active_first_order.py" />
         <option value="$PROJECT_DIR$/app/cells/sallen_key.py" />
       </list>
@@ -165,18 +95,6 @@
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="cells" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="cells" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="filters-tool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="filters-tool" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -187,7 +105,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/tests/test_approximator.py" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -201,7 +119,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_cell_group.test_design">
+  <component name="RunManager" selected="Python tests.pytest for test_cells.test_design">
     <configuration name="Unnamed" type="Tox" factoryName="Tox" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -324,7 +242,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_cell_group.test_validation" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_cells.test_design" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="filters-tool" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -335,7 +253,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_cell_group.test_validation&quot;" />
+      <option name="_new_target" value="&quot;test_cells.test_design&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -344,19 +262,19 @@
       <item itemvalue="Python tests.pytest for test_approximator.test_by_template_denorm" />
       <item itemvalue="Python tests.pytest for test_approximator.test_by_max_q" />
       <item itemvalue="Tox.Unnamed" />
-      <item itemvalue="Python tests.pytest for test_cell_group.test_validation" />
       <item itemvalue="Python tests.pytest for test_cell_group.test_set" />
       <item itemvalue="Python tests.pytest for test_cell_group.test_parameters" />
       <item itemvalue="Python tests.pytest for test_cell_group.test_sensitivities" />
       <item itemvalue="Python tests.pytest for test_cell_group.test_design" />
+      <item itemvalue="Python tests.pytest for test_cells.test_design" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for test_cells.test_design" />
         <item itemvalue="Python tests.pytest for test_cell_group.test_design" />
         <item itemvalue="Python tests.pytest for test_cell_group.test_sensitivities" />
         <item itemvalue="Python tests.pytest for test_cell_group.test_parameters" />
         <item itemvalue="Python tests.pytest for test_cell_group.test_set" />
-        <item itemvalue="Python tests.pytest for test_cell_group.test_validation" />
       </list>
     </recent_temporary>
   </component>
@@ -374,9 +292,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_cell_group_test_sensitivities - 2019.10.31 at 20h 57m 20s.xml">
-      <configuration name="pytest for test_cell_group.test_sensitivities" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_test_cell_group_test_design - 2019.10.31 at 20h 57m 26s.xml">
       <configuration name="pytest for test_cell_group.test_design" configurationId="tests" />
     </history-entry>
@@ -404,18 +319,20 @@
     <history-entry file="pytest_for_test_cell_group_test_design - 2019.10.31 at 20h 58m 42s.xml">
       <configuration name="pytest for test_cell_group.test_design" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.10.31 at 22h 14m 44s.xml">
+      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28869048" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17708333" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.83630955" visible="true" weight="0.16530278" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" weight="0.049099836" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.83630955" weight="0.049099836" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8764881" visible="true" weight="0.049099836" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -716,65 +633,62 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
-          <folding>
-            <element signature="e#22#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/sympy/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="32" column="15" lean-forward="true" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
-          <folding>
-            <element signature="e#22#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_cell_group.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1104">
-          <caret line="73" column="9" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
-          <folding>
-            <element signature="e#22#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="138" column="29" selection-start-line="138" selection-start-column="29" selection-end-line="138" selection-end-column="29" />
-          <folding>
-            <element signature="e#66#131#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="48">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/cell.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="86" selection-start-line="84" selection-end-line="86" />
+        <state relative-caret-position="397">
+          <caret line="154" lean-forward="true" selection-start-line="154" selection-end-line="154" />
           <folding>
             <element signature="e#47#68#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/cells/active_first_order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3494">
+          <caret line="196" column="21" selection-start-line="196" selection-start-column="21" selection-end-line="196" selection-end-column="21" />
+          <folding>
+            <element signature="e#66#131#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_cells.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="744">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="e#22#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5144">
-          <caret line="335" column="30" selection-start-line="335" selection-start-column="30" selection-end-line="335" selection-end-column="30" />
+        <state relative-caret-position="160">
+          <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3297">
+          <caret line="193" lean-forward="true" selection-start-line="193" selection-end-line="193" />
+          <folding>
+            <element signature="e#22#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
