@@ -1,6 +1,0 @@
-\babel@toc {spanish}{}
-\contentsline {section}{Introducci\'on y generalidades}{3}{section*.2}% 
-\contentsline {section}{Selecci\'on de filtro y plantilla}{3}{section*.4}% 
-\contentsline {section}{Divisi\'on del sistema por etapas de primer y segundo orden}{4}{section*.7}% 
-\contentsline {section}{Implementaci\'on del circuito}{4}{section*.8}% 
-\contentsline {section}{Dise\~no de un filtro paso a paso}{4}{section*.9}% 
