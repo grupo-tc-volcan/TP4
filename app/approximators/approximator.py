@@ -23,6 +23,8 @@ class ApproximationErrorCode(Enum):
     INVALID_DENORM = "INVALID_DENORM"               # Invalid range of denormalisation factor
     MAXIMUM_ORDER_REACHED = "MAXIMUM_ORDER_REACHED"         # Iterative approximation reached maximum order
     UNDEFINED_APPROXIMATION = "UNDEFINED_APPROXIMATION"     # Using the base class not an specific one
+    INVALID_GROUP_DELAY = "INVALID_GROUP_DELAY"             # Group delay is 0 or negative
+    INVALID_TOLERANCE = "INVALID_TOLERANCE"
 
 
 class FilterType(Enum):
@@ -543,7 +545,7 @@ class GroupDelayFilterApproximator():
             wan, aa, wfn, gdn, tolerance = self.get_norm_template()
             if self.ord > 0:
                 try:
-                    error_code = self.compute_normalised_by_order(gdn, wfn, tolerance, self.ord)
+                    error_code = self.compute_normalised_by_order(gdn, wfn, self.ord)
                     self.denorm_order = self.ord
                 except NotImplementedError:
                     error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
@@ -641,7 +643,7 @@ class GroupDelayFilterApproximator():
         returning whether it verifies or not the requirements. """
         for order in range(1, MAXIMUM_ORDER + 1):
             try:
-                error_code = self.compute_normalised_by_order(gdn, wfn, tolerance, order)
+                error_code = self.compute_normalised_by_order(gdn, wfn, order)
             except NotImplementedError:
                 error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
 
@@ -732,4 +734,4 @@ class GroupDelayFilterApproximator():
         Returns -> (wan, aa, wfn, gdn, tolerance)
         """
 
-        return np.prod(np.prod(self.fa, np.pi), self.group_delay), self.Aa, np.prod(np.prod(self.ft, np.pi), self.group_delay), 1, self.tol
+        return self.fa * 2 * np.pi * self.group_delay, self.Aa, self.ft * 2 * np.pi * self.group_delay, 1, self.tol/100

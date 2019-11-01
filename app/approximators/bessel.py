@@ -4,7 +4,7 @@ import scipy.signal as ss
 import numpy as np
 
 # filters-tool project modules
-from app.approximators.GDapprox import GroupDelayFilterApproximator
+from app.approximators.approximator import GroupDelayFilterApproximator
 from app.approximators.approximator import ApproximationErrorCode
 
 

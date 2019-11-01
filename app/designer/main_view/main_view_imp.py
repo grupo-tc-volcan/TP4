@@ -259,12 +259,18 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.plotters[0].set_filter_type(FILTER_INDEX_TO_NAME[filter_index])
 
         # Checking what kind of filter it is and building template accordingly
-        if self.filter_selector.currentIndex() == 0 or self.filter_selector.currentIndex() == 1 or self.filter_selector.currentIndex() == 4:
+        if self.filter_selector.currentIndex() == 0 or self.filter_selector.currentIndex() == 1:
             template = {
                 'G' : self.filter_data_widgets[filter_index].gain.value(),
                 'fp': self.filter_data_widgets[filter_index].pass_freq.value(),
                 'fa': self.filter_data_widgets[filter_index].stop_freq.value(),
                 'Ap': self.filter_data_widgets[filter_index].pass_att.value(),
+                'Aa': self.filter_data_widgets[filter_index].stop_att.value()
+            }
+        elif self.filter_selector.currentIndex() == 4:
+            template = {
+                'G' : self.filter_data_widgets[filter_index].gain.value(),
+                'fa': self.filter_data_widgets[filter_index].stop_freq.value(),
                 'Aa': self.filter_data_widgets[filter_index].stop_att.value()
             }
         elif self.filter_selector.currentIndex() == 2:
@@ -321,6 +327,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         # Setting filter template to plotter
         # Normalised filters are all low-pass
+        if ()
         wa, Aa, wp, Ap = self.filter_data_widgets[filter_index].approximators[approx_index].get_norm_template()
         template = {
             'G' : 0,

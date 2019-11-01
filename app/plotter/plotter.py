@@ -101,7 +101,7 @@ class FilterPlotter():
                 'Aa' : ...
             }
         '''
-        if self.type == 'low-pass' or self.type == 'group-delay':
+        if self.type == 'low-pass':
             width = abs(template['fp'] - min(self.f_att))
             height = abs((max(self.attenuation) - template['Ap'] + template['G']) * 1.3)
             x_start = min(self.f_att)
@@ -115,6 +115,15 @@ class FilterPlotter():
             stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
             self.axes.add_patch(pass_band_rect)
+            self.axes.add_patch(stop_band_rect)
+
+        elif self.type == 'group-delay':
+            width = abs((max(self.f_att) - template['fa']) * 1.3)
+            height = abs(template['Aa'] + template['G'])
+            x_start = template['fa']
+            y_start = - template['G']
+            stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
+
             self.axes.add_patch(stop_band_rect)
 
         elif self.type == 'high-pass':
