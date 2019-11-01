@@ -239,7 +239,7 @@ class FilterPlotter():
             }
         '''
         width = abs(template['ft'] - min(self.f_gd))
-        height = abs(template['group_delay'] * (100 - template['tol']) / 100)
+        height = abs(template['group_delay'] * (100 - template['tol']) / 100) * 1e-3
         x_start = min(self.f_gd)
         y_start = 0
         group_delay_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)

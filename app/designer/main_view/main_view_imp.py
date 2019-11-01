@@ -113,7 +113,8 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         # Loading transfer_function into plotter and setting filter type
         filter_index = self.filter_selector.currentIndex()
         approx_index = self.approx_selector.currentIndex()
-        if self.filter_data_widgets[filter_index].approximators[approx_index].compute() == ApproximationErrorCode.OK:
+        error_code = self.filter_data_widgets[filter_index].approximators[approx_index].compute()
+        if error_code == ApproximationErrorCode.OK:
             # Enabling all widgets that make sense once the approximation is calculated
             self.enable_when_calculating()
 
@@ -137,7 +138,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             # Clearing stages_list
             self.stages_list.clear()
 
-        elif self.filter_data_widgets[filter_index].approximators[approx_index].compute() == ApproximationErrorCode.INVALID_FREQ:
+        elif error_code == ApproximationErrorCode.INVALID_FREQ:
             mb = QtWid.QMessageBox()
             mb.setIcon(QtWid.QMessageBox.Critical)
             mb.setWindowTitle('Wrong input data.')
@@ -145,7 +146,7 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             mb.setFixedSize(500,200)
             mb.exec()
 
-        elif self.filter_data_widgets[filter_index].approximators[approx_index].compute() == ApproximationErrorCode.INVALID_ATTE:
+        elif error_code == ApproximationErrorCode.INVALID_ATTE:
             mb = QtWid.QMessageBox()
             mb.setIcon(QtWid.QMessageBox.Critical)
             mb.setWindowTitle('Wrong input data.')

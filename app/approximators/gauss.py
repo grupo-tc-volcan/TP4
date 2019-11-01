@@ -1,7 +1,16 @@
 # Third-party modules
-
+from scipy import prod, asarray, amin
+from numpy import unwrap
+from numpy import diff
+from numpy import log
+from numpy import divide
+from numpy import where
+from numpy import pi
+from numpy import amax
+from numpy import angle
 import scipy.signal as ss
 import numpy as np
+from scipy.special import factorial
 
 # filters-tool project modules
 from app.approximators.approximator import GroupDelayFilterApproximator
@@ -21,6 +30,8 @@ class GaussApprox(GroupDelayFilterApproximator):
         z, p, k = self._gauss_norm(order)
         self.h_norm = ss.ZerosPolesGain(z, p, k)
         self.adjust_function_gain(self.h_norm, 1)
+        return ApproximationErrorCode.OK
+
     # -----------------#
     # Private Methods #
     # -----------------#
@@ -45,13 +56,13 @@ class GaussApprox(GroupDelayFilterApproximator):
     def _gauss_des(self, z_n, p_n):
         """ Returns zeros, poles and gain of Gauss denormalized approximation """
 
-        p = p_n / (self.group_delay * 1e-6)  # user's group delay in us
+        p = p_n / (self.group_delay * 1e-3)  # user's group delay in ms
         k = prod(abs(p))
-        w, h = signal.freqs_zpk([], p, k)
-        norm_gd = -diff(unwrap(angle(h))) / diff(w)
-        f_n = w / (2 * pi)
-        plt.semilogx(f_n[:-1], norm_gd)
-        plt.show()
+        w, h = ss.freqs_zpk([], p, k)
+        #norm_gd = -diff(unwrap(angle(h))) / diff(w)
+        #f_n = w / (2 * pi)
+        #plt.semilogx(f_n[:-1], norm_gd)
+        #plt.show()
         return z_n, p, k
 
 
@@ -76,7 +87,7 @@ class GaussApprox(GroupDelayFilterApproximator):
         den = []
         for k in range(n, 0, -1):
             # den.append((-1)**k*gamma**k/factorial(k))
-            den.append((-1) ** k / ss.special.factorial(k, exact = True))  # normalizamos con gamma=1
+            den.append((-1) ** k / factorial(k, exact = True))  # normalizamos con gamma=1
             den.append(0)
         den.append(1.)
         transfer_function = ss.TransferFunction(num, den)  # tengo la transferencia al cuadrado
