@@ -53,7 +53,7 @@ class FilterPlotter():
 
     def plot_attenuation(self):
         # Calculating plot points
-        w, mag, self.phase = ss.bode(self.tf)
+        w, mag, self.phase = ss.bode(self.tf, n=10000)
         self.f_att = [ang_freq/(2*np.pi) for ang_freq in w]
         self.attenuation = [-magnitude for magnitude in mag]
 
@@ -102,14 +102,14 @@ class FilterPlotter():
             }
         '''
         if self.type == 'low-pass' or self.type == 'group-delay':
-            width = template['fp'] - min(self.f_att)
-            height = (max(self.attenuation) - template['Ap'] + template['G']) * 1.3
+            width = abs(template['fp'] - min(self.f_att))
+            height = abs((max(self.attenuation) - template['Ap'] + template['G']) * 1.3)
             x_start = min(self.f_att)
             y_start = template['Ap'] - template['G']
             pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
-            width = (max(self.f_att) - template['fa']) * 1.3
-            height = template['Aa'] + template['G']
+            width = abs((max(self.f_att) - template['fa']) * 1.3)
+            height = abs(template['Aa'] + template['G'])
             x_start = template['fa']
             y_start = - template['G']
             stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
@@ -118,14 +118,14 @@ class FilterPlotter():
             self.axes.add_patch(stop_band_rect)
 
         elif self.type == 'high-pass':
-            width = (max(self.f_att) - template['fp']) * 1.3
-            height = (max(self.attenuation) - template['Ap'] + template['G']) * 1.3
+            width = abs((max(self.f_att) - template['fp']) * 1.3)
+            height = abs((max(self.attenuation) - template['Ap'] + template['G']) * 1.3)
             x_start = template['fp']
             y_start = template['Ap'] - template['G']
             pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
-            width = template['fa'] - min(self.f_att) 
-            height = template['Aa'] + template['G']
+            width = abs(template['fa'] - min(self.f_att))
+            height = abs(template['Aa'] + template['G'])
             x_start = min(self.f_att)
             y_start = - template['G']
             stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
@@ -134,20 +134,20 @@ class FilterPlotter():
             self.axes.add_patch(stop_band_rect)
 
         elif self.type == 'band-pass':
-            width = template['fpr'] - template['fpl']
-            height = max(self.attenuation) - template['Ap'] + template['G']
+            width = abs(template['fpr'] - template['fpl'])
+            height = abs(max(self.attenuation) - template['Ap'] + template['G'])
             x_start = template['fpl']
             y_start = template['Ap'] - template['G']
             pass_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
-            width = template['fal'] - min(self.f_att) 
-            height = template['Aal'] + template['G']
+            width = abs(template['fal'] - min(self.f_att))
+            height = abs(template['Aal'] + template['G'])
             x_start = min(self.f_att)
             y_start = - template['G']
             stop_band_l_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
-            width = (max(self.f_att) - template['far']) * 1.3
-            height = template['Aar'] + template['G']
+            width = abs((max(self.f_att) - template['far']) * 1.3)
+            height = abs(template['Aar'] + template['G'])
             x_start = template['far']
             y_start = - template['G']
             stop_band_r_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
@@ -157,20 +157,20 @@ class FilterPlotter():
             self.axes.add_patch(stop_band_r_rect)
 
         elif self.type == 'band-stop':
-            width = template['fpl'] - min(self.f_att)
-            height = (max(self.attenuation) - template['Apl'] + template['G']) * 1.3
+            width = abs(template['fpl'] - min(self.f_att))
+            height = abs((max(self.attenuation) - template['Apl'] + template['G']) * 1.3)
             x_start = min(self.f_att)
             y_start = template['Apl'] - template['G']
             pass_band_l_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
-            width = (max(self.f_att) - template['fpr']) * 1.3
-            height = (max(self.attenuation) - template['Apr'] + template['G']) * 1.3
+            width = abs((max(self.f_att) - template['fpr']) * 1.3)
+            height = abs((max(self.attenuation) - template['Apr'] + template['G']) * 1.3)
             x_start = template['fpr']
             y_start = template['Apr'] - template['G']
             pass_band_r_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
 
-            width = template['far'] - template['fal']
-            height = template['Aa'] + template['G']
+            width = abs(template['far'] - template['fal'])
+            height = abs(template['Aa'] + template['G'])
             x_start = template['fal']
             y_start = - template['G']
             stop_band_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
@@ -226,8 +226,8 @@ class FilterPlotter():
                 'tol' : ...
             }
         '''
-        width = template['ft'] - min(self.f_gd)
-        height = template['group_delay'] * (100 - template['tol']) / 100
+        width = abs(template['ft'] - min(self.f_gd))
+        height = abs(template['group_delay'] * (100 - template['tol']) / 100)
         x_start = min(self.f_gd)
         y_start = 0
         group_delay_rect = patches.Rectangle((x_start, y_start), width, height, hatch='///', color='r', alpha=0.2)
@@ -237,21 +237,36 @@ class FilterPlotter():
 
 
     def plot_poles_and_zeros(self):
+        poles = {}
+        zeros = {}
+
+        for pole in self.tf.poles:
+            if pole not in poles.keys():
+                poles[pole] = 1
+            else:
+                poles[pole] += 1
+
+        for zero in self.tf.zeros:
+            if zero not in zeros.keys():
+                zeros[zero] = 1
+            else:
+                zeros[zero] += 1
+
         x_poles = [pole.real for pole in self.tf.poles]
         y_poles = [pole.imag for pole in self.tf.poles]
         x_zeros = [zero.real for zero in self.tf.zeros]
         y_zeros = [zero.imag for zero in self.tf.zeros]
 
         self.axes.clear()
-        self.axes.scatter(x_poles, y_poles, marker='x', c='red')
-        self.axes.scatter(x_zeros, y_zeros, marker='o', c='blue')
-        for i_x, i_y in zip(x_poles, y_poles):
-            self.axes.text(i_x, i_y, 'σ={}, ω={}'.format(round(i_x, 3), round(i_y, 3)))
-        for i_x, i_y in zip(x_zeros, y_zeros):
-            self.axes.text(i_x, i_y, 'σ={}, ω={}'.format(round(i_x, 3), round(i_y, 3)))
+        self.axes.scatter(x_poles, y_poles, marker='x', s=80, c='red')
+        self.axes.scatter(x_zeros, y_zeros, marker='o', s=80, c='blue')
+        for pole in poles.keys():
+            self.axes.text(pole.real, pole.imag, '  {} ({:.3E}, {:.3E})'.format(poles[pole], pole.real, pole.imag))
+        for zero in zeros.keys():
+            self.axes.text(zero.real, zero.imag, '  {} ({:.3E}, {:.3E})'.format(zeros[zero], zero.real, zero.imag))
         self.axes.grid(which='major')
         self.axes.grid(which='minor')
-        self.axes.set_xlabel('Real part σ (Hz)')
+        self.axes.set_xlabel('Real part σ (Np)')
         self.axes.set_ylabel('Imaginary part jω (Hz)')
         self.axes.axvline(c='black')
         self.axes.axhline(c='black')
@@ -269,8 +284,7 @@ class FilterPlotter():
         self.axes.clear()
         self.axes.plot(x, y, marker='o')
         for i_x, i_y in zip(x, y):
-            self.axes.text(i_x, i_y, 'fp={}, Q={}'.format(round(i_x, 3), round(i_y, 3)))
-        self.axes.set_xscale('log')
+            self.axes.text(i_x, i_y, '  fp={:.3E}, Q={:.3E}'.format(i_x, i_y))
         self.axes.grid(which='major')
         self.axes.grid(which='minor')
         self.axes.set_xlabel('Frequency (Hz)')

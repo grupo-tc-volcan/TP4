@@ -5,7 +5,6 @@ import numpy as np
 # filters-tool project modules
 from app.approximators.approximator import AttFilterApproximator
 from app.approximators.approximator import ApproximationErrorCode
-from matplotlib import pyplot
 
 
 class ButterworthApprox(AttFilterApproximator):
@@ -13,16 +12,16 @@ class ButterworthApprox(AttFilterApproximator):
     def __init__(self):
         super(ButterworthApprox, self).__init__()
 
-    #-------------------------#
-    # Internal Public Methods #
-    #-------------------------#
+    # ------------------------- #
+    #  Internal Public Methods  #
+    # ------------------------- #
 
-    def compute_normalised_by_template(self, ap, aa, wan) -> ApproximationErrorCode:
+    def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
         order = self.compute_order(ap, aa, wan)
-        return self.compute_normalised_by_order(ap, order)
+        return self.compute_normalised_by_order(ap, order, aa)
 
-    def compute_normalised_by_order(self, ap, n) -> ApproximationErrorCode:
+    def compute_normalised_by_order(self, ap, n, aa) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the fixed order """
         # Computing needed constants 
         epsilon = self.compute_epsilon(ap)
@@ -36,12 +35,12 @@ class ButterworthApprox(AttFilterApproximator):
         new_gain = gain
 
         # Updating the local transfer function, no errors!
-        self.h_norm = ss.lti(new_zeros, new_poles, new_gain)
+        self.h_aux = ss.ZerosPolesGain(new_zeros, new_poles, new_gain)
         return ApproximationErrorCode.OK
 
-    #-----------------#
-    # Private Methods #
-    #-----------------#
+    # ----------------- #
+    #  Private Methods  #
+    # ----------------- #
 
     @staticmethod
     def compute_order(ap, aa, wan):

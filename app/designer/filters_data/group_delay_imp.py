@@ -4,7 +4,7 @@ import PyQt5.QtWidgets as QtWid
 # filters-tool project modules
 from app.designer.filters_data.group_delay import Ui_GroupDelayData
 from app.approximators.butterworth import ButterworthApprox
-from app.approximators.chebyshev_i import ChebyshevIAprrox
+from app.approximators.chebyshev_i import ChebyshevIApprox
 from app.approximators.chebyshev_ii import ChebyshevIIApprox
 from app.approximators.legendre import LegendreApprox
 from app.approximators.bessel import BesselApprox
@@ -18,7 +18,7 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
         self.setupUi(self)
 
         # Approximators for passing data to
-        self.approximators = [ButterworthApprox(), ChebyshevIAprrox(), ChebyshevIIApprox(), LegendreApprox(), BesselApprox(), GaussApprox(), CauerApprox()]
+        self.approximators = [ButterworthApprox(), ChebyshevIApprox(), ChebyshevIIApprox(), LegendreApprox(), BesselApprox(), GaussApprox(), CauerApprox()]
         self.approx_index = 4
 
         # Signal and slot connections
@@ -40,15 +40,49 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
 
     def on_change(self):
         if self.order_fixed.isChecked():
+            if self.approx_index == 6:
+                # Cauer filter needs the stopband attenuation data
+                self.stop_att.setEnabled(True)
+            elif self.approx_index == 2:
+                # Cheby 2 needs the stopband attenuation instead of the passband attenuation
+                self.pass_att.setDisabled(True)
+                self.stop_att.setEnabled(True)
+            else:
+                self.pass_att.setEnabled(True)
+                self.stop_att.setDisabled(True)
+
+            if self.approx_index == 2:
+                # Cheby 2 needs the stopband frequency instead of the passband frequency
+                self.pass_freq.setDisabled(True)
+                self.stop_freq.setEnabled(True)
+            else:
+                self.stop_freq.setDisabled(True)
+                self.pass_freq.setEnabled(True)
+
             self.order.setEnabled(True)
-            self.stop_freq.setDisabled(True)
-            self.stop_att.setDisabled(True)
             self.q_fixed.setDisabled(True)
 
         elif self.q_fixed.isChecked():
+            if self.approx_index == 6:
+                # Cauer filter needs the stopband attenuation data
+                self.stop_att.setEnabled(True)
+            elif self.approx_index == 2:
+                # Cheby 2 needs the stopband attenuation instead of the passband attenuation
+                self.pass_att.setDisabled(True)
+                self.stop_att.setEnabled(True)
+            else:
+                self.pass_att.setEnabled(True)
+                self.stop_att.setDisabled(True)
+
+            if self.approx_index == 2:
+                # Cheby 2 needs the stopband frequency instead of the passband frequency
+                self.pass_freq.setDisabled(True)
+                self.stop_freq.setEnabled(True)
+            else:
+                self.stop_freq.setDisabled(True)
+                self.pass_freq.setEnabled(True)
+
             self.q_max.setEnabled(True)
-            self.stop_freq.setDisabled(True)
-            self.stop_att.setDisabled(True)
             self.order_fixed.setDisabled(True)
 
         else:
@@ -56,8 +90,12 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
             self.q_max.setDisabled(True)
             self.stop_freq.setEnabled(True)
             self.stop_att.setEnabled(True)
+            self.pass_freq.setEnabled(True)
+            self.pass_att.setEnabled(True)
             self.order_fixed.setEnabled(True)
             self.q_fixed.setEnabled(True)
+            self.q_max.setValue(0)
+            self.order.setValue(0)
 
         self.approximators[self.approx_index].type = 'group-delay'
         self.approximators[self.approx_index].gain = self.gain.value()

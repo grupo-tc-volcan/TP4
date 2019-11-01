@@ -7,7 +7,7 @@ from enum import Enum
 from functools import partial
 
 # Constant Values
-MAXIMUM_ORDER = 50
+MAXIMUM_ORDER = 20
 
 
 class ApproximationErrorCode(Enum):
@@ -15,13 +15,14 @@ class ApproximationErrorCode(Enum):
     """
     OK = "OK"                                       # No errors detected
     INVALID_TYPE = "INVALID_TYPE"                   # Non-identified filter type in self.type
-    INVALID_GAIN = "INVALID_GAIN"                   # Gain is 0
+    INVALID_GAIN = "INVALID_GAIN"                   # Gain < 0
     INVALID_FREQ = "INVALID_FREQ"                   # Frequency is <= 0 or fpr < fpl or fp > fa (Depending the type of filter)
     INVALID_ATTE = "INVALID_ATTE"                   # Attenuation is 0, or negative...
     INVALID_Q = "INVALID_Q"                         # Negative Q factor
     INVALID_ORDER = "INVALID_ORDER"                 # Negative order
     INVALID_DENORM = "INVALID_DENORM"               # Invalid range of denormalisation factor
-    MAXIMUM_ORDER_REACHED = "MAXIMUM_ORDER_REACHED" # Iterative approximation reached maximum order
+    MAXIMUM_ORDER_REACHED = "MAXIMUM_ORDER_REACHED"         # Iterative approximation reached maximum order
+    UNDEFINED_APPROXIMATION = "UNDEFINED_APPROXIMATION"     # Using the base class not an specific one
 
 
 class FilterType(Enum):
@@ -32,15 +33,15 @@ class FilterType(Enum):
     BAND_REJECT = "band-stop"
 
 
-class AttFilterApproximator():
+# noinspection PyAttributeOutsideInit,PyUnresolvedReferences
+class AttFilterApproximator:
     def __init__(self):
         # Data to perform approximation
         self.reset_parameters()
 
-    #----------------#
-    # Public Methods #
-    #----------------#
-
+    # ---------------  #
+    #  Public Methods  #
+    # ---------------- #
     def reset_parameters(self):
         """ Resets the parameters of the approximation to
         a default state.
@@ -61,10 +62,11 @@ class AttFilterApproximator():
         self.ord = 0
         self.q = 0
 
+        self.h_aux = None
         self.h_norm = None
         self.h_denorm = None
         self.error_code = None
-    
+
     def get_norm_template(self) -> tuple:
         """ Returns a 4-element tuple containing the normalised
         parameters of the template.
@@ -102,18 +104,19 @@ class AttFilterApproximator():
 
             # Verifying if valid filter type is given
             if self.type == FilterType.LOW_PASS.value:
-                error_code = self._validate_low_pass()
+                error_code = self.validate_low_pass()
             elif self.type == FilterType.HIGH_PASS.value:
-                error_code = self._validate_high_pass()
+                error_code = self.validate_high_pass()
             elif self.type == FilterType.BAND_PASS.value:
-                error_code = self._validate_band_pass()
+                error_code = self.validate_band_pass()
             elif self.type == FilterType.BAND_REJECT.value:
-                error_code = self._validate_band_reject()
+                error_code = self.validate_band_stop()
             else:
                 error_code = ApproximationErrorCode.INVALID_TYPE
 
-            # Findind the transfer function for the given parameters
+            # Finding the transfer function for the given parameters
             if error_code is ApproximationErrorCode.OK:
+                self.adjust_symmetry_condition()
                 
                 # When using a maximum Q value, iterates with fixed orders
                 # and verifies if matches...
@@ -122,14 +125,18 @@ class AttFilterApproximator():
                 for order in range(end_order, begin_order - 1, -1):
                     self.ord = order
 
-                    # When a fixed order is given, it should be prioritised...
-                    # calculates the normalised transfer function
+                    # Normalising the filter template, choosing design mode between fixed order or
+                    # a template based design, trying to match the given parameters
+                    wan, aa, wpn, ap = self.get_norm_template()
                     if self.ord > 0:
-                        error_code = self.compute_normalised_by_order(self.Apl, self.ord)
+                        try:
+                            error_code = self.compute_normalised_by_order(ap, self.ord, aa)
+                        except NotImplementedError:
+                            error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
                     else:
-                        wan, aa, wpn, ap = self._normalised_template()
-                        error_code = self.compute_normalised_by_template(ap, aa, wan)
-                    self.adjust_function_gain(self.h_norm, 1)
+                        error_code = self.compute_normalised_by_template(ap, aa, wpn, wan)
+
+                    # If maxima
                     
                     # Denormalisation process, first we need to pass every transfer function
                     # to a TrasnferFunction object, using that apply the denormalisation
@@ -140,7 +147,7 @@ class AttFilterApproximator():
                         # If using the Q maximum value mode of design, check if valid h_denorm
                         if error_code is ApproximationErrorCode.OK:
                             if self.q > 0:
-                                if self.matches_normalised_selectivity(self.q, self.h_denorm):
+                                if self.matches_selectivity(self.q, self.h_denorm):
                                     break
                         else:
                             break
@@ -148,71 +155,156 @@ class AttFilterApproximator():
                     if self.q > 0:
                         error_code = ApproximationErrorCode.MAXIMUM_ORDER_REACHED
 
-        # Returning the error code...
+        # Returning the error code and storing it in the class
         self.error_code = error_code
         return error_code
     
-    #-------------------------#
-    # Internal Public Methods #
-    #-------------------------#
+    # ------------------------- #
+    # Internal Public Methods   #
+    # ------------------------- #
+    def adjust_symmetry_condition(self):
+        """ Adjusts the template of the bandpass or bandstop filter """
+        if self.type == FilterType.BAND_PASS.value:
+            if self.fpl * self.fpr <= self.fal * self.far:
+                self.far = (self.fpl * self.fpr) / self.fal
+            else:
+                self.fal = (self.fpl * self.fpr) / self.far
+        elif self.type == FilterType.BAND_REJECT.value:
+            if self.fal * self.far <= self.fpl * self.fpr:
+                self.fpr = (self.fal * self.far) / self.fpl
+            else:
+                self.fpl = (self.fal * self.far) / self.fpr
 
-    def compute_normalised_by_template(self, ap, aa, wan) -> ApproximationErrorCode:
+    def adjust_function_gain(self, gain, target=None):
+        """ Adjusts the normalised transfer function to have a given gain """
+        transfer = self.h_aux if target is None else target
+
+        if transfer is not None:
+            current_gain = self.h_aux.gain
+            for zero in transfer.zeros:
+                current_gain *= abs(zero)
+            for pole in transfer.poles:
+                current_gain /= abs(pole)
+
+            transfer.gain = (transfer.gain / current_gain) * gain
+
+    def compute_normalised_by_template(self, ap, aa, wpn, wan) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the normalised template """
-        return self._compute_normalised_by_match(ap, partial(self.matches_normalised_template, ap, aa, wan))
+        return self._compute_normalised_by_match(ap, aa, partial(self.matches_normalised_template, ap, aa, wan))
 
-    def compute_normalised_by_order(self, ap, n) -> ApproximationErrorCode:
+    def compute_normalised_by_order(self, ap, n, aa) -> ApproximationErrorCode:
         """ Generates normalised transfer function prioritising the fixed order """
         raise NotImplementedError
-    
-    #-----------------#
-    # Private Methods #
-    #-----------------#
 
-    def _denormalised_transfer_function(self) -> ApproximationErrorCode:
-        """ Denormalises the transfer function returned by the approximation used. """
-        # Adding the gain and the relative denormalisation between the transition band
-        wa, aa, wp, ap = self.get_norm_template()
+    def validate_low_pass(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation are valid or not using a low-pass. """
+        if self.ord == 0 and self.q == 0:
+            return self._validate_low_pass_by_template()
+        else:
+            return self._validate_low_pass_by_fixed()
 
-        if aa is not None:
-            w_values, mag_values, phase_values = ss.bode(self.h_norm, w=np.linspace(wp / 10, wa * 5, num=100000))
-            stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= -aa]
+    def validate_high_pass(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation are valid or not using a high pass. """
+        if self.ord == 0 and self.q == 0:
+            return self._validate_high_pass_by_template()
+        else:
+            return self._validate_high_pass_by_fixed()
+
+    def validate_band_pass(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation are valid or not using a band pass. """
+        if self.ord == 0 and self.q == 0:
+            return self._validate_band_pass_by_template()
+        else:
+            return self._validate_band_pass_by_fixed()
+
+    def validate_band_stop(self) -> ApproximationErrorCode:
+        """ Returns whether the parameters of the approximation are valid or not using a band stop. """
+        if self.ord == 0 and self.q == 0:
+            return self._validate_band_stop_by_template()
+        else:
+            return self._validate_band_stop_by_fixed()
+
+    def denormalisation_factor(self, wa, aa, wp, ap):
+        """ Returns the denormalisation factor to be used when
+        adjusting the zeros and poles of the transfer function between the transition
+        band. """
+        if self.q == 0 and self.ord == 0:
+            w_values, mag_values, _ = ss.bode(self.h_aux, w=np.linspace(wp / 10, wa * 5, num=100000))
+            stop_band = [w for w, mag in zip(w_values, mag_values) if mag <= (-aa)]
             relative_adjust = ((wa - stop_band[0]) / stop_band[0]) * (self.denorm / 100) + 1
         else:
             relative_adjust = 1
 
-        new_zeros = self.h_norm.zeros * relative_adjust
-        new_poles = self.h_norm.poles * relative_adjust
-        new_gain = self.h_norm.gain
+        return relative_adjust
 
-        self.h_norm = ss.lti(new_zeros, new_poles, new_gain)
-        self.adjust_function_gain(self.h_norm, 10 ** (self.gain / 20))
+    def denormalise_to_low_pass(self) -> tuple:
+        """ Denormalises the filter to low pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2lp_zpk(self.h_aux.zeros, self.h_aux.poles, self.h_aux.gain, 2 * np.pi * self.fpl)
+
+    def denormalise_to_high_pass(self) -> tuple:
+        """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2hp_zpk(self.h_aux.zeros, self.h_aux.poles, self.h_aux.gain, 2 * np.pi * self.fpl)
+
+    def denormalise_to_band_pass(self) -> tuple:
+        """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2bp_zpk(self.h_aux.zeros, self.h_aux.poles, self.h_aux.gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
+
+    def denormalise_to_band_stop(self) -> tuple:
+        """ Denormalises the filter to high pass and returns the denormalised (zeros, poles, gain) """
+        return ss.lp2bs_zpk(self.h_aux.zeros, self.h_aux.poles, self.h_aux.gain, 2 * np.pi * np.sqrt(self.fal * self.far), 2 * np.pi * (self.fpr - self.fpl))
+
+    # ----------------- #
+    # Private Methods   #
+    # ----------------- #
+    def _denormalised_transfer_function(self) -> ApproximationErrorCode:
+        """ Denormalises the transfer function returned by the approximation used. """
+
+        # Unity gain of the normalised transfer function, factor of denormalisation...
+        # moving it between the transition band
+        self.adjust_function_gain(1)
+        wa, aa, wp, ap = self.get_norm_template()
+        relative_adjust = self.denormalisation_factor(wa, aa, wp, ap)
+
+        new_zeros = self.h_aux.zeros * relative_adjust
+        new_poles = self.h_aux.poles * relative_adjust
+        new_gain = self.h_aux.gain * relative_adjust
+
+        self.h_aux = ss.ZerosPolesGain(new_zeros, new_poles, new_gain)
+        self.adjust_function_gain(1)
+
+        # Final normalised transfer function being stored, keep working on auxiliar transfer function
+        self.h_norm = ss.ZerosPolesGain(self.h_aux.zeros, self.h_aux.poles, self.h_aux.gain)
+        self.adjust_function_gain(10 ** (self.gain / 20))
 
         # Frequency transformation to get the desired filter
         if self.type == FilterType.LOW_PASS.value:
-            z, p, k = ss.lp2lp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fpl)
+            z, p, k = self.denormalise_to_low_pass()
         elif self.type == FilterType.HIGH_PASS.value:
-            z, p, k = ss.lp2hp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * self.fpl)
+            z, p, k = self.denormalise_to_high_pass()
         elif self.type == FilterType.BAND_PASS.value:
-            z, p, k = ss.lp2bp_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fpl * self.fpr), 2 * np.pi * (self.fpr - self.fpl))
+            z, p, k = self.denormalise_to_band_pass()
         elif self.type == FilterType.BAND_REJECT.value:
-            z, p, k = ss.lp2bs_zpk(self.h_norm.zeros, self.h_norm.poles, self.h_norm.gain, 2 * np.pi * np.sqrt(self.fal * self.far), 2 * np.pi * (self.fpr - self.fpl))
-        self.h_denorm = ss.lti(z, p, k)
-        self.h_denorm = self.h_denorm.to_zpk()
+            z, p, k = self.denormalise_to_band_stop()
+        self.h_denorm = ss.ZerosPolesGain(z, p, k)
 
         return ApproximationErrorCode.OK
 
-    def _compute_normalised_by_match(self, ap, callback) -> ApproximationErrorCode:
+    def _compute_normalised_by_match(self, ap, aa, callback) -> ApproximationErrorCode:
         """ Generates normalised transfer function for each order until the callbacks
         verifies it matches the requierements. 
         The callback should expect a ZerosPoleGain object from Scipy.Signal,
         returning whether it verifies or not the requirements. """
         for order in range(1, MAXIMUM_ORDER + 1):
-            error_code = self.compute_normalised_by_order(ap, order)
+            try:
+                error_code = self.compute_normalised_by_order(ap, order, aa)
+            except NotImplementedError:
+                error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
+
             if error_code is ApproximationErrorCode.OK:
-                if callback(self.h_norm):
+                if callback(self.h_aux):
                     return ApproximationErrorCode.OK
                 else:
-                    self.h_norm = None
+                    self.h_aux = None
             else:
                 return error_code
         else:
@@ -248,111 +340,122 @@ class AttFilterApproximator():
             aa = aa + self.gain
 
         if self.type == FilterType.LOW_PASS.value:
-            return self.fal / self.fpl, aa, 1, ap
+            return None if self.fpl == 0 else self.fal / self.fpl, aa, 1, ap
         elif self.type == FilterType.HIGH_PASS.value:
-            return self.fpl / self.fal, aa, 1, ap
+            return None if self.fal == 0 else self.fpl / self.fal, aa, 1, ap
         elif self.type == FilterType.BAND_PASS.value:
-            return (self.far - self.fal) / (self.fpr - self.fpl), aa, 1, ap
+            return None if self.fpr == self.fpl else (self.far - self.fal) / (self.fpr - self.fpl), aa, 1, ap
         elif self.type == FilterType.BAND_REJECT.value:
-            return (self.fpr - self.fpl) / (self.far - self.fal), aa, 1, ap
+            return None if self.far == self.fal else (self.fpr - self.fpl) / (self.far - self.fal), aa, 1, ap
 
     def _validate_general(self) -> ApproximationErrorCode:
         """ Returns if general parameters are valid """
-        if self.gain < 0:
+        if self.gain is None or type(self.gain) is str or self.gain < 0:
             return ApproximationErrorCode.INVALID_GAIN
-        elif self.ord < 0:
+        elif self.ord is None or type(self.ord) is str or self.ord < 0 or self.ord > MAXIMUM_ORDER:
             return ApproximationErrorCode.INVALID_ORDER
-        elif self.q < 0:
+        elif self.q is None or type(self.q) is str or self.q < 0:
             return ApproximationErrorCode.INVALID_Q
-        elif self.denorm < 0 or self.denorm > 100:
+        elif self.denorm is None or type(self.denorm) is str or self.denorm < 0 or self.denorm > 100:
             return ApproximationErrorCode.INVALID_DENORM
 
         return ApproximationErrorCode.OK
 
-    def _validate_low_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a low-pass.
-        """
-        if self.ord == 0 and self.q == 0:
-            if self.fpl >= self.fal or self.fpl <= 0 or self.fal <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0 or self.Aal <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
+    def _validate_low_pass_by_template(self) -> ApproximationErrorCode:
+        """ Specializes the validation by template of a low pass design """
+        if self.fpl >= self.fal or self.fpl <= 0 or self.fal <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0 or self.Aal <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.Apl >= self.Aal:
+            return ApproximationErrorCode.INVALID_ATTE
         else:
-            if self.Apl <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
-            elif self.fpl <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-        
-        return ApproximationErrorCode.OK
+            return ApproximationErrorCode.OK
 
-    def _validate_high_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a high-pass.
-        """
-        if self.ord == 0 and self.q == 0:
-            if self.fpl <= self.fal or self.fpl <= 0 or self.fal <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0 or self.Aal <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
+    def _validate_low_pass_by_fixed(self) -> ApproximationErrorCode:
+        """ Specializes the validation by fixed values of a low pass design """
+        if self.Apl <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.fpl <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
         else:
-            if self.Apl <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
-            elif self.fpl <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-        
-        return ApproximationErrorCode.OK
+            return ApproximationErrorCode.OK
 
-    def _validate_band_pass(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a band-pass.
-        """
-        if self.ord == 0 or self.q == 0:
-            if self.fpl <= 0 or self.fpr <= 0 or self.fal <= 0 or self.far <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl >= self.fpr or self.fal >= self.far:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl <= self.fal or self.fpr >= self.far:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0 or self.Aal <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
+    def _validate_high_pass_by_template(self) -> ApproximationErrorCode:
+        """ Specializes the validation by template of a high pass design """
+        if self.fpl <= self.fal or self.fpl <= 0 or self.fal <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0 or self.Aal <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.Apl >= self.Aal:
+            return ApproximationErrorCode.INVALID_ATTE
         else:
-            if self.fpl <= 0 or self.fpr <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl >= self.fpr:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
-        
-        return ApproximationErrorCode.OK
+            return ApproximationErrorCode.OK
 
-    def _validate_band_reject(self) -> ApproximationErrorCode:
-        """ Returns whether the parameters of the approximation
-        are valid or not using a band-reject.
-        """
-        if self.ord == 0 or self.q == 0:
-            if self.fpl <= 0 or self.fpr <= 0 or self.fal <= 0 or self.far <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl >= self.fpr or self.fal >= self.far:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl >= self.fal or self.fpr <= self.far:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0 or self.Aal <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
+    def _validate_high_pass_by_fixed(self) -> ApproximationErrorCode:
+        """Specializes the validation by fixed values of a high pass design """
+        if self.Apl <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.fpl <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
         else:
-            if self.fpl <= 0 or self.fpr <= 0:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.fpl >= self.fpr:
-                return ApproximationErrorCode.INVALID_FREQ
-            elif self.Apl <= 0:
-                return ApproximationErrorCode.INVALID_ATTE
-        
-        return ApproximationErrorCode.OK
+            return ApproximationErrorCode.OK
+
+    def _validate_band_pass_by_template(self) -> ApproximationErrorCode:
+        """ Specializes the validation by template of a band pass design """
+        if self.fpl <= 0 or self.fpr <= 0 or self.fal <= 0 or self.far <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl >= self.fpr or self.fal >= self.far:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl <= self.fal or self.fpr >= self.far:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0 or self.Aal <= 0 or self.Aar < 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.Apl >= self.Aal or self.Apl >= self.Aar:
+            return ApproximationErrorCode.INVALID_ATTE
+        else:
+            return ApproximationErrorCode.OK
+
+    def _validate_band_pass_by_fixed(self) -> ApproximationErrorCode:
+        """ Specializes the validation by fixed values of a band pass design """
+        if self.fpl <= 0 or self.fpr <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl >= self.fpr:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        else:
+            return ApproximationErrorCode.OK
+
+    def _validate_band_stop_by_template(self) -> ApproximationErrorCode:
+        """ Specializes the validation by template of a band stop design """
+        if self.fpl <= 0 or self.fpr <= 0 or self.fal <= 0 or self.far <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl >= self.fpr or self.fal >= self.far:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl >= self.fal or self.fpr <= self.far:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0 or self.Aal <= 0 or self.Apr < 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        elif self.Apl >= self.Aal or self.Apr >= self.Aal:
+            return ApproximationErrorCode.INVALID_ATTE
+        else:
+            return ApproximationErrorCode.OK
+
+    def _validate_band_stop_by_fixed(self) -> ApproximationErrorCode:
+        """ Specializes the validation by fixed values of a band stop design """
+        if self.fpl <= 0 or self.fpr <= 0:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.fpl >= self.fpr:
+            return ApproximationErrorCode.INVALID_FREQ
+        elif self.Apl <= 0:
+            return ApproximationErrorCode.INVALID_ATTE
+        else:
+            return ApproximationErrorCode.OK
     
-    #----------------#
-    # Static Methods #
-    #----------------#
-
+    # ---------------- #
+    #  Static Methods  #
+    # ---------------- #
     @staticmethod
     def calculate_xi(root):
         k = (root.imag / root.real) ** 2
@@ -361,23 +464,12 @@ class AttFilterApproximator():
     @staticmethod
     def calculate_frequency(root):
         xi = AttFilterApproximator.calculate_xi(root)
-        return root.real / (xi * 2 * np.pi)
+        return abs(root.real) / (xi * 2 * np.pi)
 
     @staticmethod
     def calculate_selectivity(root):
         xi = AttFilterApproximator.calculate_xi(root)
         return 1 / (2 * xi)
-
-    @staticmethod
-    def adjust_function_gain(transfer_function, gain):
-        if transfer_function is not None:
-            current_gain = transfer_function.gain
-            for zero in transfer_function.zeros:
-                current_gain *= abs(zero)
-            for pole in transfer_function.poles:
-                current_gain /= abs(pole)
-
-            transfer_function.gain = (transfer_function.gain / current_gain) * gain
 
     @staticmethod
     def matches_normalised_template(ap, aa, wa, zpk) -> bool:
@@ -386,25 +478,25 @@ class AttFilterApproximator():
         if zpk is None:
             return False
 
-        w, mag, phase = ss.bode(zpk, w=[1, wa])
+        _, mag, _ = ss.bode(zpk, w=[1, wa])
         return mag[0] >= -ap and mag[1] <= -aa
 
     @staticmethod
-    def matches_normalised_selectivity(max_q, zpk) -> bool:
+    def matches_selectivity(max_q, zpk) -> bool:
         """ Returns whether the ZeroPolesGain object does not exceed the maximum
         selectivity value given by the user. """
         if zpk is None:
             return False
 
         for pole in zpk.poles:
-            q = AttFilterApproximator.calculate_selectivity(pole)
-            if q > max_q:
-                return False
-        else:
-            return True
+            if pole.imag:
+                q = AttFilterApproximator.calculate_selectivity(pole)
+                if q > max_q:
+                    return False
+        return True
 
 
-class GroupDelayFilterApproximator():
+class GroupDelayFilterApproximator:
     def __init__(self):
         # Data to perform approximation
         self.reset_parameters()

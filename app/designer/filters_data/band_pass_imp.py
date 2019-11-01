@@ -4,7 +4,7 @@ import PyQt5.QtWidgets as QtWid
 # filters-tool project modules
 from app.designer.filters_data.band_pass import Ui_BandPassData
 from app.approximators.butterworth import ButterworthApprox
-from app.approximators.chebyshev_i import ChebyshevIAprrox
+from app.approximators.chebyshev_i import ChebyshevIApprox
 from app.approximators.chebyshev_ii import ChebyshevIIApprox
 from app.approximators.legendre import LegendreApprox
 from app.approximators.bessel import BesselApprox
@@ -18,7 +18,7 @@ class BandPassData(QtWid.QWidget, Ui_BandPassData):
         self.setupUi(self)
 
         # Approximators for passing data to
-        self.approximators = [ButterworthApprox(), ChebyshevIAprrox(), ChebyshevIIApprox(), LegendreApprox(), BesselApprox(), GaussApprox(), CauerApprox()]
+        self.approximators = [ButterworthApprox(), ChebyshevIApprox(), ChebyshevIIApprox(), LegendreApprox(), BesselApprox(), GaussApprox(), CauerApprox()]
         self.approx_index = 0
 
         # Signal and slot connections
@@ -42,25 +42,71 @@ class BandPassData(QtWid.QWidget, Ui_BandPassData):
 
     def on_change(self):
         if self.order_fixed.isChecked():
-            self.order.setEnabled(True)
-            self.stop_freq_l.setDisabled(True)
-            self.stop_freq_r.setDisabled(True)
-            self.stop_att_l.setDisabled(True)
-            self.stop_att_r.setDisabled(True)
+            if self.approx_index == 6:
+                # Cauer filter needs the stopband attenuation data
+                self.stop_att_l.setEnabled(True)
+                self.stop_att_r.setEnabled(True)
+            elif self.approx_index == 2:
+                # Cheby 2 needs the stopband attenuation instead of the passband attenuation
+                self.pass_att.setDisabled(True)
+                self.stop_att_l.setEnabled(True)
+                self.stop_att_r.setEnabled(True)
+            else:
+                self.pass_att.setEnabled(True)
+                self.stop_att_l.setDisabled(True)
+                self.stop_att_r.setDisabled(True)
+
+            if self.approx_index == 2:
+                # Cheby 2 needs the stopband frequency instead of the passband frequency
+                self.pass_freq_l.setDisabled(True)
+                self.pass_freq_r.setDisabled(True)
+                self.stop_freq_l.setEnabled(True)
+                self.stop_freq_r.setEnabled(True)
+            else:
+                self.stop_freq_l.setDisabled(True)
+                self.stop_freq_r.setDisabled(True)
+                self.pass_freq_l.setEnabled(True)
+                self.pass_freq_r.setEnabled(True)
+
             self.denorm_select.setCurrentIndex(0)
             self.denorm_perc.setValue(0)
             self.denorm_select.setDisabled(True)
             self.denorm_perc.setDisabled(True)
+            self.order.setEnabled(True)
             self.q_fixed.setDisabled(True)
 
         elif self.q_fixed.isChecked():
-            self.q_max.setEnabled(True)
-            self.stop_freq_l.setDisabled(True)
-            self.stop_freq_r.setDisabled(True)
-            self.stop_att_l.setDisabled(True)
-            self.stop_att_r.setDisabled(True)
+            if self.approx_index == 6:
+                # Cauer filter needs the stopband attenuation data
+                self.stop_att_l.setEnabled(True)
+                self.stop_att_r.setEnabled(True)
+            elif self.approx_index == 2:
+                # Cheby 2 needs the stopband attenuation instead of the passband attenuation
+                self.pass_att.setDisabled(True)
+                self.stop_att_l.setEnabled(True)
+                self.stop_att_r.setEnabled(True)
+            else:
+                self.pass_att.setEnabled(True)
+                self.stop_att_l.setDisabled(True)
+                self.stop_att_r.setDisabled(True)
+
+            if self.approx_index == 2:
+                # Cheby 2 needs the stopband frequency instead of the passband frequency
+                self.pass_freq_l.setDisabled(True)
+                self.pass_freq_r.setDisabled(True)
+                self.stop_freq_l.setEnabled(True)
+                self.stop_freq_r.setEnabled(True)
+            else:
+                self.stop_freq_l.setDisabled(True)
+                self.stop_freq_r.setDisabled(True)
+                self.pass_freq_l.setEnabled(True)
+                self.pass_freq_r.setEnabled(True)
+
+            self.denorm_select.setCurrentIndex(0)
+            self.denorm_perc.setValue(0)
             self.denorm_select.setDisabled(True)
             self.denorm_perc.setDisabled(True)
+            self.q_max.setEnabled(True)
             self.order_fixed.setDisabled(True)
 
         else:
@@ -70,9 +116,14 @@ class BandPassData(QtWid.QWidget, Ui_BandPassData):
             self.stop_freq_r.setEnabled(True)
             self.stop_att_l.setEnabled(True)
             self.stop_att_r.setEnabled(True)
+            self.pass_att.setEnabled(True)
+            self.pass_freq_l.setEnabled(True)
+            self.pass_freq_r.setEnabled(True)
             self.denorm_select.setEnabled(True)
             self.order_fixed.setEnabled(True)
             self.q_fixed.setEnabled(True)
+            self.q_max.setValue(0)
+            self.order.setValue(0)
 
         if self.denorm_select.currentIndex() != 2:
             self.denorm_perc.setDisabled(True)
