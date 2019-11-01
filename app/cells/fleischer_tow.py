@@ -11,6 +11,7 @@ from app.cells.electronics import random_commercial
 from app.cells.electronics import ComponentType
 
 from app.cells.cell import CellErrorCodes
+from app.cells.cell import CellGroup
 from app.cells.cell import CellError
 from app.cells.cell import CellType
 from app.cells.cell import Cell
@@ -19,6 +20,18 @@ from app.cells.cell import Cell
 # --------------------- #
 # Cell Group Definition #
 # --------------------- #
+class FleischerTow(CellGroup):
+
+    def __init__(self):
+        super(FleischerTow, self).__init__(
+            "Fleischer Tow",
+            {
+                CellType.LOW_PASS.value: FleischerTowLowPass,
+                CellType.HIGH_PASS.value: FleischerTowHighPass,
+                CellType.BAND_PASS.value: FleischerTowBandPass,
+                CellType.BAND_STOP.value: FleischerTowBandStop
+            }
+        )
 
 
 # ---------------- #

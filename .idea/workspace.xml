@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3a62e2b6-981a-48c3-8972-71a9d8682517" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/app/cells/fleischer_tow.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/cells/fleischer_tow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_cells.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_cells.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,14 +11,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.59969556">
+    <splitter split-orientation="horizontal" split-proportion="0.4870624">
       <split-first>
         <leaf>
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/cells/fleischer_tow.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="223">
-                  <caret line="152" column="38" selection-start-line="152" selection-start-column="38" selection-end-line="152" selection-end-column="38" />
+                <state relative-caret-position="391">
+                  <caret line="35" selection-start-line="35" selection-end-line="35" />
                   <folding>
                     <element signature="e#47#51#0" expanded="true" />
                   </folding>
@@ -55,10 +54,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1260">
+                <state relative-caret-position="4032">
                   <caret line="201" column="18" lean-forward="true" selection-start-line="201" selection-start-column="18" selection-end-line="201" selection-end-column="18" />
                   <folding>
                     <element signature="e#24#45#0" expanded="true" />
@@ -67,11 +66,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-111">
-                  <caret line="205" column="4" selection-start-line="205" selection-start-column="4" selection-end-line="205" selection-end-column="4" />
+                <state>
+                  <caret line="57" column="2" selection-start-line="57" selection-start-column="2" selection-end-line="57" selection-end-column="2" />
                   <folding>
                     <element signature="e#22#41#0" expanded="true" />
                   </folding>
@@ -376,9 +375,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 03h 58m 20s.xml">
-      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 03h 58m 31s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
@@ -404,6 +400,9 @@
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
     <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 04h 06m 56s.xml">
+      <configuration name="pytest for test_cells.test_design" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_cells_test_design - 2019.11.01 at 04h 10m 38s.xml">
       <configuration name="pytest for test_cells.test_design" configurationId="tests" />
     </history-entry>
   </component>
@@ -461,18 +460,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/cells/fleischer_tow.py</url>
-          <line>316</line>
+          <line>329</line>
           <option name="timeStamp" value="126" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/cells/fleischer_tow.py</url>
-          <line>123</line>
-          <option name="timeStamp" value="127" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/cells/fleischer_tow.py</url>
-          <line>150</line>
-          <option name="timeStamp" value="128" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -793,9 +782,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="57" column="2" selection-start-line="57" selection-start-column="2" selection-end-line="57" selection-end-column="2" />
+          <folding>
+            <element signature="e#22#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/sallen_key.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1260">
+        <state relative-caret-position="4032">
           <caret line="201" column="18" lean-forward="true" selection-start-line="201" selection-start-column="18" selection-end-line="201" selection-end-column="18" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
@@ -803,20 +802,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/cells/electronics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-111">
-          <caret line="205" column="4" selection-start-line="205" selection-start-column="4" selection-end-line="205" selection-end-column="4" />
-          <folding>
-            <element signature="e#22#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/cells/fleischer_tow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="152" column="38" selection-start-line="152" selection-start-column="38" selection-end-line="152" selection-end-column="38" />
+        <state relative-caret-position="391">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
           <folding>
             <element signature="e#47#51#0" expanded="true" />
           </folding>
