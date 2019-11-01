@@ -542,7 +542,7 @@ class GroupDelayFilterApproximator():
 
             # Normalising the filter template, choosing design mode between fixed order or
             # a template based design, trying to match the given parameters
-            wan, aa, wfn, gdn, tolerance = self.get_norm_template()
+            wan, aa, wfn, gdn, tolerance = self._normalised_template()
             if self.ord > 0:
                 try:
                     error_code = self.compute_normalised_by_order(gdn, wfn, self.ord)
@@ -578,7 +578,8 @@ class GroupDelayFilterApproximator():
         parameters of the template.
         Returns -> (wan, aa, wfn, gdn, tolerance)
         """
-        return self._normalised_template()
+        wan, aa, wfn, gdn, tolerance = self._normalised_template()
+        return wan, aa, 0, 0
 
     def get_normalised_zpk(self):
         """ Returns a tuple of three elements containing Zeros, Poles and Gain,
