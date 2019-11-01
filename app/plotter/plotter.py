@@ -210,9 +210,12 @@ class FilterPlotter():
 
     def plot_group_delay(self):
         # Calculating plot points
-        tf_as_num_and_den = self.tf.to_tf()
-        w, self.group_delay = ss.group_delay((tf_as_num_and_den.num, tf_as_num_and_den.den))
+        tf_as_num_and_den = ss.TransferFunction(self.tf)
+        w, h = ss.freqs(tf_as_num_and_den.num, tf_as_num_and_den.den)
+        self.group_delay = -np.diff(np.unwrap(np.angle(h))) / np.diff(w)
         self.f_gd = [ang_freq/(2*np.pi) for ang_freq in w]
+        # Forcing both arrays to same size
+        self.f_gd.pop()
 
         # Plotting group delay
         self.axes.clear()
