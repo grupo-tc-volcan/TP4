@@ -55,7 +55,56 @@ class FleischerTowBandStop(Cell):
         return zeros, poles, gain
 
     def get_sensitivities(self) -> dict:
-        pass
+        return {
+            "k": {
+                "R1": 0,
+                "R2": 1,
+                "R3": 0,
+                "R4": 0,
+                "R5": -1,
+                "R6": 0,
+                "R7": 0,
+                "R8": 0,
+                "C1": 0,
+                "C2": 0,
+            },
+            "wz": {
+                "R1": 0,
+                "R2": 0,
+                "R3": -1/2,
+                "R4": 0,
+                "R5": -1/2,
+                "R6": 1/2,
+                "R7": -1/2,
+                "R8": 0,
+                "C1": -1/2,
+                "C2": -1/2,
+            },
+            "wp": {
+                "R1": 0,
+                "R2": -1/2,
+                "R3": -1/2,
+                "R4": 0,
+                "R5": 0,
+                "R6": 0,
+                "R7": -1/2,
+                "R8": -1/2,
+                "C1": -1/2,
+                "C2": -1/2,
+            },
+            "qp": {
+                "R1": 1,
+                "R2": -1/2,
+                "R3": -1/2,
+                "R4": 0,
+                "R5": 0,
+                "R6": 0,
+                "R7": -1/2,
+                "R8": 1/2,
+                "C1": 1/2,
+                "C2": -1/2,
+            },
+        }
 
     def design_components(self, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
         pass
@@ -131,7 +180,44 @@ class FleischerTowBandPass(Cell):
         return zeros, poles, gain
 
     def get_sensitivities(self) -> dict:
-        pass
+        return {
+            "k": {
+                "R1": 1,
+                "R2": 0,
+                "R3": 0,
+                "R4": -1,
+                "R5": 0,
+                "R6": 0,
+                "R7": -1,
+                "R8": 1,
+                "C1": 0,
+                "C2": 0,
+            },
+            "wp": {
+                "R1": 0,
+                "R2": -1/2,
+                "R3": -1/2,
+                "R4": 0,
+                "R5": 0,
+                "R6": 0,
+                "R7": -1/2,
+                "R8": -1/2,
+                "C1": -1/2,
+                "C2": -1/2,
+            },
+            "qp": {
+                "R1": 1,
+                "R2": -1/2,
+                "R3": -1/2,
+                "R4": 0,
+                "R5": 0,
+                "R6": 0,
+                "R7": -1/2,
+                "R8": 1/2,
+                "C1": 1/2,
+                "C2": -1/2,
+            },
+        }
 
     def design_components(self, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
         pass
@@ -202,7 +288,44 @@ class FleischerTowHighPass(Cell):
         return zeros, poles, gain
 
     def get_sensitivities(self) -> dict:
-        pass
+        return {
+            "k": {
+                "R1": 0,
+                "R2": 0,
+                "R3": 0,
+                "R4": 0,
+                "R5": 0,
+                "R6": -1,
+                "R7": 0,
+                "R8": 1,
+                "C1": 0,
+                "C2": 0,
+            },
+            "wp": {
+                "R1": 0,
+                "R2": -1/2,
+                "R3": -1/2,
+                "R4": 0,
+                "R5": 0,
+                "R6": 0,
+                "R7": -1/2,
+                "R8": -1/2,
+                "C1": -1/2,
+                "C2": -1/2,
+            },
+            "qp": {
+                "R1": 1,
+                "R2": -1/2,
+                "R3": -1/2,
+                "R4": 0,
+                "R5": 0,
+                "R6": 0,
+                "R7": -1/2,
+                "R8": 1/2,
+                "C1": 1/2,
+                "C2": -1/2,
+            },
+        }
 
     def design_components(self, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
         pass
@@ -273,7 +396,44 @@ class FleischerTowLowPass(Cell):
         return zeros, poles, gain
 
     def get_sensitivities(self) -> dict:
-        pass
+        return {
+            "k": {
+                "R1": 0,
+                "R2": 1,
+                "R3": 0,
+                "R4": 0,
+                "R5": -1,
+                "R6": 0,
+                "R7": 0,
+                "R8": 0,
+                "C1": 0,
+                "C2": 0,
+            },
+            "wp": {
+                "R1": 0,
+                "R2": -1/2,
+                "R3": -1/2,
+                "R4": 0,
+                "R5": 0,
+                "R6": 0,
+                "R7": -1/2,
+                "R8": -1/2,
+                "C1": -1/2,
+                "C2": -1/2,
+            },
+            "qp": {
+                "R1": 1,
+                "R2": -1/2,
+                "R3": -1/2,
+                "R4": 0,
+                "R5": 0,
+                "R6": 0,
+                "R7": -1/2,
+                "R8": 1/2,
+                "C1": 1/2,
+                "C2": -1/2,
+            },
+        }
 
     def design_components(self, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
         pass
