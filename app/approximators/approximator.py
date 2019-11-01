@@ -531,47 +531,49 @@ class GroupDelayFilterApproximator():
         of the approximation. Any error will be returned as an error code.
         """
         error_code = self._validate()
+        if(error_code == ApproximationErrorCode.OK):
+            # if data isa valid, calculate approximation
+            # When using a maximum Q value, iterates with fixed orders
+            # and verifies if matches...
+            begin_order = 1 if self.q > 0 else self.ord
+            end_order = MAXIMUM_ORDER if self.q > 0 else self.ord
+            for order in range(end_order, begin_order - 1, -1):
+                self.ord = order
 
-        # if data isa valid, calculate approximation
-        # When using a maximum Q value, iterates with fixed orders
-        # and verifies if matches...
-        begin_order = 1 if self.q > 0 else self.ord
-        end_order = MAXIMUM_ORDER if self.q > 0 else self.ord
-        for order in range(end_order, begin_order - 1, -1):
-            self.ord = order
-
-            # Normalising the filter template, choosing design mode between fixed order or
-            # a template based design, trying to match the given parameters
-            wan, aa, wfn, gdn, tolerance = self._normalised_template()
-            if self.ord > 0:
-                try:
-                    error_code = self.compute_normalised_by_order(gdn, wfn, self.ord)
-                    self.denorm_order = self.ord
-                except NotImplementedError:
-                    error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
-            else:
-                error_code = self.compute_normalised_by_template(gdn, wfn, aa, wan, tolerance)
-
-            # If maxima
-
-            # Denormalisation process, first we need to pass every transfer function
-            # to a TrasnferFunction object, using that apply the denormalisation
-            # algorithm of scipy.signal... finally translating ir to a ZeroPolesGain object!
-            if error_code is ApproximationErrorCode.OK:
-                error_code = self._denormalised_transfer_function()
-
-                # If using the Q maximum value mode of design, check if valid h_denorm
-                if error_code is ApproximationErrorCode.OK:
-                    if self.q > 0:
-                        if self.matches_selectivity(self.q, self.h_denorm):
-                            break
+                # Normalising the filter template, choosing design mode between fixed order or
+                # a template based design, trying to match the given parameters
+                wan, aa, wfn, gdn, tolerance = self._normalised_template()
+                if self.ord > 0:
+                    try:
+                        error_code = self.compute_normalised_by_order(gdn, wfn, self.ord)
+                        self.denorm_order = self.ord
+                    except NotImplementedError:
+                        error_code = ApproximationErrorCode.UNDEFINED_APPROXIMATION
                 else:
-                    break
+                    error_code = self.compute_normalised_by_template(gdn, wfn, aa, wan, tolerance)
+
+                # If maxima
+
+                # Denormalisation process, first we need to pass every transfer function
+                # to a TrasnferFunction object, using that apply the denormalisation
+                # algorithm of scipy.signal... finally translating ir to a ZeroPolesGain object!
+                if error_code is ApproximationErrorCode.OK:
+                    error_code = self._denormalised_transfer_function()
+
+                    # If using the Q maximum value mode of design, check if valid h_denorm
+                    if error_code is ApproximationErrorCode.OK:
+                        if self.q > 0:
+                            if self.matches_selectivity(self.q, self.h_denorm):
+                                break
+                    else:
+                        break
 
         # if data is not valid, return error code
         else:
             self.error_code = error_code
             return error_code
+        self.error_code = error_code
+        return error_code
 
     def get_norm_template(self) -> tuple:
         """ Returns a 4-element tuple containing the normalised
@@ -636,6 +638,10 @@ class GroupDelayFilterApproximator():
                 return ApproximationErrorCode.INVALID_FREQ
             elif self.Aa <= 0:
                 return ApproximationErrorCode.INVALID_ATTE
+            else:
+                return ApproximationErrorCode.OK
+        else:
+            return ApproximationErrorCode.OK
 
     def _compute_normalised_by_match(self, gdn, wfn, tolerance, callback) -> ApproximationErrorCode:
         """ Generates normalised transfer function for each order until the callbacks
@@ -710,7 +716,7 @@ class GroupDelayFilterApproximator():
             if i < tolerance:
                 index = np.where(gd == i)
                 break
-        gd_cond = w[index] <= wf
+        gd_cond = w[index] >= wf
         return template_cond and gd_cond
 
 
@@ -735,4 +741,4 @@ class GroupDelayFilterApproximator():
         Returns -> (wan, aa, wfn, gdn, tolerance)
         """
 
-        return self.fa * 2 * np.pi * self.group_delay, self.Aa, self.ft * 2 * np.pi * self.group_delay, 1, self.tol/100
+        return self.fa * 2 * np.pi * self.group_delay * 1e-3, self.Aa, self.ft * 2 * np.pi * self.group_delay * 1e-3, 1, 1 - self.tol/100
