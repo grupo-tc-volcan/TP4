@@ -82,12 +82,7 @@
      </property>
      <item>
       <property name="text">
-       <string>Compensated Integrator</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Compensated Derivator</string>
+       <string>Compensated Integrator/Derivator</string>
       </property>
      </item>
      <item>
@@ -130,7 +125,7 @@
    <item row="3" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Parameters&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Parameters and Sensitivities&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
