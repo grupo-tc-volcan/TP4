@@ -23,9 +23,7 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
 
         # Signal and slot connections
         self.gain.valueChanged.connect(self.on_change)
-        self.pass_freq.valueChanged.connect(self.on_change)
         self.stop_freq.valueChanged.connect(self.on_change)
-        self.pass_att.valueChanged.connect(self.on_change)
         self.stop_att.valueChanged.connect(self.on_change)
         self.group_delay_freq.valueChanged.connect(self.on_change)
         self.group_delay.valueChanged.connect(self.on_change)
@@ -45,19 +43,15 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
                 self.stop_att.setEnabled(True)
             elif self.approx_index == 2:
                 # Cheby 2 needs the stopband attenuation instead of the passband attenuation
-                self.pass_att.setDisabled(True)
                 self.stop_att.setEnabled(True)
             else:
-                self.pass_att.setEnabled(True)
                 self.stop_att.setDisabled(True)
 
             if self.approx_index == 2:
                 # Cheby 2 needs the stopband frequency instead of the passband frequency
-                self.pass_freq.setDisabled(True)
                 self.stop_freq.setEnabled(True)
             else:
                 self.stop_freq.setDisabled(True)
-                self.pass_freq.setEnabled(True)
 
             self.order.setEnabled(True)
             self.q_fixed.setDisabled(True)
@@ -68,19 +62,15 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
                 self.stop_att.setEnabled(True)
             elif self.approx_index == 2:
                 # Cheby 2 needs the stopband attenuation instead of the passband attenuation
-                self.pass_att.setDisabled(True)
                 self.stop_att.setEnabled(True)
             else:
-                self.pass_att.setEnabled(True)
                 self.stop_att.setDisabled(True)
 
             if self.approx_index == 2:
                 # Cheby 2 needs the stopband frequency instead of the passband frequency
-                self.pass_freq.setDisabled(True)
                 self.stop_freq.setEnabled(True)
             else:
                 self.stop_freq.setDisabled(True)
-                self.pass_freq.setEnabled(True)
 
             self.q_max.setEnabled(True)
             self.order_fixed.setDisabled(True)
@@ -90,8 +80,6 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
             self.q_max.setDisabled(True)
             self.stop_freq.setEnabled(True)
             self.stop_att.setEnabled(True)
-            self.pass_freq.setEnabled(True)
-            self.pass_att.setEnabled(True)
             self.order_fixed.setEnabled(True)
             self.q_fixed.setEnabled(True)
             self.q_max.setValue(0)
@@ -99,9 +87,7 @@ class GroupDelayData(QtWid.QWidget, Ui_GroupDelayData):
 
         self.approximators[self.approx_index].type = 'group-delay'
         self.approximators[self.approx_index].gain = self.gain.value()
-        self.approximators[self.approx_index].fp = self.pass_freq.value()
         self.approximators[self.approx_index].fa = self.stop_freq.value()
-        self.approximators[self.approx_index].Ap = self.pass_att.value()
         self.approximators[self.approx_index].Aa = self.stop_att.value()
         self.approximators[self.approx_index].ft = self.group_delay_freq.value()
         self.approximators[self.approx_index].group_delay = self.group_delay.value()
