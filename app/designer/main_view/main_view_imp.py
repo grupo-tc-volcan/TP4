@@ -327,7 +327,6 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         # Setting filter template to plotter
         # Normalised filters are all low-pass
-        if ()
         wa, Aa, wp, Ap = self.filter_data_widgets[filter_index].approximators[approx_index].get_norm_template()
         template = {
             'G' : 0,
