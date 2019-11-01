@@ -242,6 +242,8 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
     def set_up_cells_tab(self):
         self.copy_stage_list()
 
+        
+
 
 ############# METHODS FOR PLOTTING #############
 
