@@ -115,7 +115,60 @@ class FleischerTowBandStop(Cell):
         }
 
     def design_components(self, zeros: dict, poles: dict, gain: float, stop_at_first=False) -> dict:
-        pass
+        if "wp" not in poles.keys() or "wz" not in zeros.keys() or "qp" not in poles.keys() or gain >= 0:
+            raise CellError(CellErrorCodes.INVALID_PARAMETERS)
+        else:
+            self.results = []
+
+            # Starts calculating R2=R3 with R5 relationship of gain
+            r2_r5 = compute_commercial_by_iteration(
+                ComponentType.Resistor, ComponentType.Resistor,
+                lambda r5: gain * (-r5),
+                self.error
+            )
+            r2_r3_r5 = [(r2, r2, r5) for r2, r5 in r2_r5]
+
+            # To get the desired Q value, calculate R1 for that
+            r1_r2 = compute_commercial_by_iteration(
+                ComponentType.Resistor, ComponentType.Resistor,
+                lambda r2: poles["qp"] * r2,
+                self.error,
+                fixed_two_values=[r2 for r2, r3, r5 in r2_r3_r5]
+            )
+
+            # Calculating the capacitors for the pole frequency
+            c_r2 = compute_commercial_by_iteration(
+                ComponentType.Capacitor, ComponentType.Resistor,
+                lambda r2: 1 / (r2 * poles["wp"]),
+                self.error,
+                fixed_two_values=[r2 for r2, r3, r5 in r2_r3_r5]
+            )
+            c1_c2_r3 = [(c, c, r2) for c, r2 in c_r2]
+
+            r1_r4_c1_r3 = []
+            r7_r8_r6_c1_r3 = []
+            for c1, c2, r3 in c1_c2_r3:
+                r4_r1 = compute_commercial_by_iteration(
+                    ComponentType.Resistor, ComponentType.Resistor,
+                    lambda r1: r1 * (((zeros["wz"]**2) * (c1**2) * (r3**2) )/ (-gain)),
+                    self.error
+                )
+                r1_r4_c1_r3 += [(r1, r4, c1, r3) for r4, r1 in r4_r1]
+
+                r6_r7 = compute_commercial_by_iteration(
+                    ComponentType.Resistor, ComponentType.Resistor,
+                    lambda r7: r7 * ((zeros["wz"]**2) * (c1**2) * (r3**2) / (-gain)),
+                    self.error
+                )
+                r7_r8_r6_c1_r3 += [(r7, r7, r6, c1, r3) for r6, r7 in r6_r7]
+
+            self.results = nexpand_component_list(self.results, r2_r3_r5, "R2", "R3", "R5")
+            self.results = nexpand_component_list(self.results, r1_r2, "R1", "R2")
+            self.results = nexpand_component_list(self.results, c1_c2_r3, "C1", "C2", "R3")
+            self.results = nexpand_component_list(self.results, r1_r4_c1_r3, "R1", "R4", "C1", "R3")
+            self.results = nexpand_component_list(self.results, r7_r8_r6_c1_r3, "R7", "R8", "R6", "C1", "R3")
+            self.flush_results()
+            self.choose_random_result()
 
     # --------------- #
     # Private Methods #
