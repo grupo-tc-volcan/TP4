@@ -169,14 +169,20 @@ class AutomaticCascader():
         rev_stages = list(stages)
         # This way, the cells with higher Q are going to be looked at first
         rev_stages.reverse()
+        total_max_gain = 1
         for i in range(len(rev_stages)):
             aux_stage = dict(rev_stages[i])
-            aux_stage['gain_data'] = gains[-i-1]
-            aux_stage['v_max_data'] = v_max
-            aux_stage['v_min_data'] = v_min
-            v_max, v_min = self.calculate_v_max_v_min(aux_stage, self.max_gain_for_stage(aux_stage))
+            max_gain = self.max_gain_for_stage(aux_stage)
+            if max_gain > 1:
+                total_max_gain *= 1/max_gain
+            else:
+                total_max_gain *= max_gain
+            #aux_stage['gain_data'] = gains[-i-1]
+            #aux_stage['v_max_data'] = v_max
+            #aux_stage['v_min_data'] = v_min
+            #v_max, v_min = self.calculate_v_max_v_min(aux_stage, self.max_gain_for_stage(aux_stage))
 
-        dr = abs(20 * np.log10(v_max / v_min))
+        dr = abs(20 * np.log10((v_max / v_min) * total_max_gain))
         return dr
 
 

@@ -45,6 +45,10 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.second_order_calc = SecondOrderAuxCalc()
         self.cascader = AutomaticCascader()
 
+        # Auxiliary widgets
+        self.warning_message = QtWid.QMessageBox()
+        self.automatic_cascade_warning()
+
         # Signal and slot connections
         self.filter_selector.currentIndexChanged.connect(self.filter_selected)
         self.approx_selector.currentIndexChanged.connect(self.set_approx)
@@ -218,6 +222,15 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
         self.plot_stage()
 
 
+    def automatic_cascade_warning(self):
+        self.warning_message.setIcon(QtWid.QMessageBox.Warning)
+        self.warning_message.setWindowTitle('Warning.')
+        self.warning_message.setText("If the number of stages is greater than 6, calculating all the combinations for gain distribution may take a while, resulting in a freeze of the program. Separating the stages manually is advised.")
+        self.warning_message.setStandardButtons(QtWid.QMessageBox.Ok | QtWid.QMessageBox.Cancel)
+        self.warning_message.setFixedSize(500,200)
+        #self.warning_message.buttonClicked.connect(self.)
+
+
     def calculate_automatic_cascade(self):
         self.calculate_approx()
         self.stages_list.clear()
@@ -227,6 +240,12 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
         zero_blocks = self.second_order_calc.zero_blocks
         pole_blocks = self.second_order_calc.pole_blocks
+
+        if len(pole_blocks) > 6:
+            ret_val = self.warning_message.exec_()
+            if ret_val == 4194304:
+                return
+
         gain = self.filter_data_widgets[filter_index].gain.value()
         self.cascader.set_zeros_poles_gain(zero_blocks, pole_blocks, gain)
 
