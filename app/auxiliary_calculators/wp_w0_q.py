@@ -53,15 +53,25 @@ class SecondOrderAuxCalc():
             list_q_without_i.remove(aux_q_poles[i])
             if all([(not math.isclose(aux_wp_poles[i], other_wp)) for other_wp in list_wp_without_i]) or all([(not math.isclose(aux_q_poles[i], other_wp)) for other_wp in list_q_without_i]):
                 # If there are no matches, it means this Q and wp belong to a first order pole
-                new_first_order_block = {
-                    'fp' : aux_wp_poles[i] / (2*math.pi),
-                    'q' : 0.5,
-                    'n' : 1,
-                    'poles': [self.tf.poles[i]],
-                    'used': False,
-                    'type': 'pole'
-                }
-                self.pole_blocks.append(new_first_order_block)
+                for pole_block in self.pole_blocks:
+                    if pole_block['n'] == 1:
+                        new_fused_wp, new_fused_q = self.fuse_fst_order_poles(self.tf.poles[i], pole_block['poles'][0])
+                        pole_block['fp'] = new_fused_wp / (2*math.pi)
+                        pole_block['q'] = new_fused_q
+                        pole_block['n'] = 2
+                        pole_block['poles'].append(self.tf.poles[i])
+                        break
+                
+                else:
+                    new_first_order_block = {
+                        'fp' : aux_wp_poles[i] / (2*math.pi),
+                        'q' : 0.5,
+                        'n' : 1,
+                        'poles': [self.tf.poles[i]],
+                        'used': False,
+                        'type': 'pole'
+                    }
+                    self.pole_blocks.append(new_first_order_block)
             else:
                 # If there is a match, it means this Q and wp belong to a second order pole
                 if all([(not math.isclose(aux_wp_poles[i]/(2*math.pi), self.pole_blocks[j]['fp'])) for j in range(len(self.pole_blocks))]) or all([(not math.isclose(aux_q_poles[i], self.pole_blocks[j]['q'])) for j in range(len(self.pole_blocks))]):
@@ -214,3 +224,9 @@ class SecondOrderAuxCalc():
     def calculate_selectivity(root):
         xi = SecondOrderAuxCalc.calculate_xi(root)
         return 1 / (2 * xi)
+
+    @staticmethod
+    def fuse_fst_order_poles(pole_1, pole_2):
+        wp = np.sqrt(pole_1 * pole_2)
+        q = wp / (pole_1 + pole_2)
+        return abs(wp), abs(q)
