@@ -734,13 +734,14 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
 
     @staticmethod
     def adjust_function_gain(zeros: list, poles: list, gain):
+        gain_in_db = 20*np.log10(gain)
         transfer_function = ss.ZerosPolesGain(zeros, poles, gain)
         w, mag, phase = ss.bode(transfer_function, n=1000)
 
         dmag = np.diff(mag)/np.diff(w)
 
         frequencies_to_check = 10
-        zero_condition = 1.0e-4
+        zero_condition = 1.0e-6
         for i in range(len(dmag) - frequencies_to_check):
             values_checked = []
             for j in range(frequencies_to_check):
@@ -748,7 +749,8 @@ class MainView(QtWid.QMainWindow, Ui_MainView):
             
             if all([value < zero_condition for value in values_checked]):
                 frequency_to_evaluate = math.floor(i + frequencies_to_check/2)
-                useless_1, gain_in_passband, useless_2 = ss.bode(transfer_function, [w[frequency_to_evaluate]])
-                gain_in_passband = 10**(gain_in_passband/20)
+                max_freq = w[frequency_to_evaluate]
+                useless_1, gain_in_passband, useless_2 = ss.bode(transfer_function, [max_freq])
+                gain_in_passband = 10**(gain_in_passband[0]/20)
                 gain_needed = gain**2/gain_in_passband
                 return gain_needed

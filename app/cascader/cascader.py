@@ -222,8 +222,9 @@ class AutomaticCascader():
             
             if all([value < zero_condition for value in values_checked]):
                 frequency_to_evaluate = math.floor(i + frequencies_to_check/2)
-                useless_1, gain_in_passband, useless_2 = ss.bode(transfer_function, [w[frequency_to_evaluate]])
-                gain_in_passband = 10**(gain_in_passband/20)
+                max_freq = w[frequency_to_evaluate]
+                useless_1, gain_in_passband, useless_2 = ss.bode(transfer_function, [max_freq])
+                gain_in_passband = 10**(gain_in_passband[0]/20)
                 gain_needed = gain**2/gain_in_passband
                 break
 
