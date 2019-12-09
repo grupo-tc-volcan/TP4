@@ -7,7 +7,7 @@ from enum import Enum
 from functools import partial
 
 # Constant Values
-MAXIMUM_ORDER = 20
+MAXIMUM_ORDER = 25
 
 
 class ApproximationErrorCode(Enum):
